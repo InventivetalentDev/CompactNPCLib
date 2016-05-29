@@ -26,12 +26,32 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.entity;
+package org.inventivetalent.npclib.entity.living.human;
 
-import com.mojang.authlib.GameProfile;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.inventivetalent.npclib.watcher.MethodWatcher;
+import org.inventivetalent.npclib.npc.NPCAbstract;
 
-public interface EntityPlayer extends NPCEntityHuman {
+public interface NPCEntity {
 
-	GameProfile getProfile();
+	void setMethodWatcher(MethodWatcher methodWatcher);
+
+	NPCAbstract getNPC();
+
+//	<T extends Entity> T getBukkitEntity();
+
+	boolean methodCalled(String name, Object[] args);
+
+	Object methodCalled(String name, Object superValue, Object[] args);
+
+	// Overwritten methods
+
+	void setLocation(double x, double y, double z, float yaw, float pitch);
+
+	// Helpers
+
+	void spawn();
+
+	void spawn(CreatureSpawnEvent.SpawnReason spawnReason);
 
 }

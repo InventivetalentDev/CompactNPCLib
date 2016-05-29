@@ -26,20 +26,9 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.npc;
+package org.inventivetalent.npclib.entity.living.creature.monster;
 
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Skeleton;
-import org.inventivetalent.npclib.annotation.NPC;
-import org.inventivetalent.npclib.entity.EntitySkeleton;
+import org.inventivetalent.npclib.entity.living.creature.NPCEntityCreature;
 
-@NPC(id = 51,
-	 type = EntityType.SKELETON,
-	 bukkit = Skeleton.class,
-	 nms = "EntitySkeleton",
-	 entity = EntitySkeleton.class)
-public class NPCSkeleton extends NPCMonsterAbstract<EntitySkeleton, Skeleton> {
-	NPCSkeleton(EntitySkeleton npcEntity) {
-		super(npcEntity);
-	}
+public interface NPCEntityMonster extends NPCEntityCreature {
 }

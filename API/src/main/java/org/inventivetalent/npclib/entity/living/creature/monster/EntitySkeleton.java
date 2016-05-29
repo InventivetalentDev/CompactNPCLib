@@ -26,32 +26,7 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.entity;
+package org.inventivetalent.npclib.entity.living.creature.monster;
 
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.inventivetalent.npclib.watcher.MethodWatcher;
-import org.inventivetalent.npclib.npc.NPCAbstract;
-
-public interface NPCEntity {
-
-	void setMethodWatcher(MethodWatcher methodWatcher);
-
-	NPCAbstract getNPC();
-
-//	<T extends Entity> T getBukkitEntity();
-
-	boolean methodCalled(String name, Object[] args);
-
-	Object methodCalled(String name, Object superValue, Object[] args);
-
-	// Overwritten methods
-
-	void setLocation(double x, double y, double z, float yaw, float pitch);
-
-	// Helpers
-
-	void spawn();
-
-	void spawn(CreatureSpawnEvent.SpawnReason spawnReason);
-
+public interface EntitySkeleton extends NPCEntityMonster {
 }

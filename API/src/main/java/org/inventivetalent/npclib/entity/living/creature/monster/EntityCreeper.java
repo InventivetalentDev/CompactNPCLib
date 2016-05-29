@@ -26,7 +26,9 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.entity;
+package org.inventivetalent.npclib.entity.living.creature.monster;
 
-public interface NPCEntityHuman extends NPCEntityLiving {
+import org.inventivetalent.npclib.entity.living.creature.monster.NPCEntityMonster;
+
+public interface EntityCreeper extends NPCEntityMonster {
 }

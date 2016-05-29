@@ -26,22 +26,14 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.npc;
+package org.inventivetalent.npclib.npc.living.creature.monster;
 
-import org.bukkit.entity.LivingEntity;
-import org.inventivetalent.npclib.entity.NPCEntityLiving;
-import org.inventivetalent.npclib.watcher.Watch;
+import org.bukkit.entity.Monster;
+import org.inventivetalent.npclib.entity.living.creature.monster.NPCEntityMonster;
+import org.inventivetalent.npclib.npc.NPCAbstract;
 
-public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends LivingEntity> extends NPCAbstract<N, B> {
-	NPCLivingAbstract(N npcEntity) {
+public abstract class NPCMonsterAbstract<N extends NPCEntityMonster, B extends Monster> extends NPCAbstract<N, B> {
+	protected NPCMonsterAbstract(N npcEntity) {
 		super(npcEntity);
 	}
-
-	@Watch("die(DamageSource)")
-	public boolean onDie(Object damageSource) {
-		System.out.println("onDie -> NPCLivingAbstract");
-		//TODO: NPCDeathEvent (with damage source)
-		return true;
-	}
-
 }

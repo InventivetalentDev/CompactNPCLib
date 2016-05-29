@@ -30,7 +30,7 @@ package org.inventivetalent.npclib.annotation;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.inventivetalent.npclib.entity.NPCEntity;
+import org.inventivetalent.npclib.entity.living.human.NPCEntity;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

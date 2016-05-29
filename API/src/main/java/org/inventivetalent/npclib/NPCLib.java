@@ -30,7 +30,7 @@ package org.inventivetalent.npclib;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
-import org.inventivetalent.npclib.entity.NPCEntity;
+import org.inventivetalent.npclib.entity.living.human.NPCEntity;
 import org.inventivetalent.npclib.registry.NPCRegistry;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 

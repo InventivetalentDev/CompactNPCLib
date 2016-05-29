@@ -32,7 +32,7 @@ import lombok.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.inventivetalent.npclib.Reflection;
-import org.inventivetalent.npclib.entity.NPCEntity;
+import org.inventivetalent.npclib.entity.living.human.NPCEntity;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.emptyToNull;

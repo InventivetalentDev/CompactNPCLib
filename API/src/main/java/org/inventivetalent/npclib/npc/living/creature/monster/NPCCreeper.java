@@ -26,13 +26,21 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.npc;
+package org.inventivetalent.npclib.npc.living.creature.monster;
 
-import org.bukkit.entity.Monster;
-import org.inventivetalent.npclib.entity.NPCEntityMonster;
+import org.bukkit.entity.Creeper;
+import org.bukkit.entity.EntityType;
+import org.inventivetalent.npclib.annotation.NPC;
+import org.inventivetalent.npclib.entity.living.creature.monster.EntityCreeper;
+import org.inventivetalent.npclib.npc.living.creature.monster.NPCMonsterAbstract;
 
-public abstract class NPCMonsterAbstract<N extends NPCEntityMonster, B extends Monster> extends NPCAbstract<N, B> {
-	NPCMonsterAbstract(N npcEntity) {
+@NPC(id = 50,
+	 type = EntityType.CREEPER,
+	 bukkit = Creeper.class,
+	 nms = "EntityCreeper",
+	 entity = EntityCreeper.class)
+public class NPCCreeper extends NPCMonsterAbstract<EntityCreeper, Creeper> {
+	protected NPCCreeper(EntityCreeper npcEntity) {
 		super(npcEntity);
 	}
 }

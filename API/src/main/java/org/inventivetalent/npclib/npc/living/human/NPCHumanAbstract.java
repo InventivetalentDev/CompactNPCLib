@@ -26,7 +26,14 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.entity;
+package org.inventivetalent.npclib.npc.living.human;
 
-public interface EntityZombie extends NPCEntityInsentient {
+import org.bukkit.entity.HumanEntity;
+import org.inventivetalent.npclib.entity.living.human.NPCEntityHuman;
+import org.inventivetalent.npclib.npc.living.NPCLivingAbstract;
+
+public abstract class NPCHumanAbstract<N extends NPCEntityHuman, B extends HumanEntity> extends NPCLivingAbstract<N, B> {
+	protected NPCHumanAbstract(N npcEntity) {
+		super(npcEntity);
+	}
 }

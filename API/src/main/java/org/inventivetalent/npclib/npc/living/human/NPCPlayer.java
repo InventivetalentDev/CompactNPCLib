@@ -26,7 +26,7 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.npc;
+package org.inventivetalent.npclib.npc.living.human;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -38,7 +38,7 @@ import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
 import org.inventivetalent.npclib.ClassBuilder;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.annotation.NPC;
-import org.inventivetalent.npclib.entity.EntityPlayer;
+import org.inventivetalent.npclib.entity.living.EntityPlayer;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.FieldResolver;
 
@@ -57,7 +57,7 @@ import org.inventivetalent.reflection.resolver.FieldResolver;
 	 })
 public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
-	NPCPlayer(EntityPlayer npcEntity) {
+	protected NPCPlayer(EntityPlayer npcEntity) {
 		super(npcEntity);
 	}
 
@@ -100,14 +100,14 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		return die;
 	}
 
-	void updatePlayerList(final Player player) {
+	protected void updatePlayerList(final Player player) {
 		try {
 			System.out.println(this);
 			System.out.println("Update to " + player);
 			System.out.println(getBukkitEntity());
 			System.out.println(getBukkitEntity().getGameMode());
 			System.out.println(getNpcEntity());
-			this.sendPacket(player, ClassBuilder.buildPlayerInfoPacket(0, getNpcEntity().getProfile(), 0, getBukkitEntity().getGameMode().ordinal(), getBukkitEntity().getName()));
+			sendPacket(player, ClassBuilder.buildPlayerInfoPacket(0, getNpcEntity().getProfile(), 0, getBukkitEntity().getGameMode().ordinal(), getBukkitEntity().getName()));
 			new BukkitRunnable() {
 
 				@Override

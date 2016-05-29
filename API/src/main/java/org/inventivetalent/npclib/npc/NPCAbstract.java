@@ -35,7 +35,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.inventivetalent.npclib.NPCLib;
 import org.inventivetalent.npclib.Reflection;
-import org.inventivetalent.npclib.entity.NPCEntity;
+import org.inventivetalent.npclib.entity.living.human.NPCEntity;
 import org.inventivetalent.npclib.watcher.AnnotatedMethodWatcher;
 import org.inventivetalent.npclib.watcher.Watch;
 import org.inventivetalent.reflection.minecraft.Minecraft;
@@ -52,7 +52,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	protected final FieldResolver  entityFieldResolver  = new FieldResolver(Reflection.nmsClassResolver.resolveSilent("Entity"));
 	protected final MethodResolver entityMethodResolver = new MethodResolver(Reflection.nmsClassResolver.resolveSilent("Entity"));
 
-	NPCAbstract(N npcEntity) {
+	protected NPCAbstract(N npcEntity) {
 		this.npcEntity = npcEntity;
 		this.npcEntityFieldResolver = new FieldResolver(npcEntity.getClass());
 		this.npcEntityMethodResolver = new MethodResolver(npcEntity.getClass());
@@ -143,19 +143,19 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		return entityMethodResolver.resolveWrapper(method).invoke(this.npcEntity, args);
 	}
 
-	void broadcastGlobalPacket(Object packet) {
+	protected void broadcastGlobalPacket(Object packet) {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			sendPacket(player, packet);
 		}
 	}
 
-	void broadcastPacket(Object packet) {
+	protected void broadcastPacket(Object packet) {
 		for (Player player : getBukkitEntity().getWorld().getPlayers()) {
 			sendPacket(player, packet);
 		}
 	}
 
-	void sendPacket(Player player, Object packet) {
+	protected void sendPacket(Player player, Object packet) {
 		if (player == null || packet == null) { return; }
 		if (player == this.getNpcEntity() || player == this.getBukkitEntity()) { return; }
 		if (NPCLib.isNPC(player)) { return; }

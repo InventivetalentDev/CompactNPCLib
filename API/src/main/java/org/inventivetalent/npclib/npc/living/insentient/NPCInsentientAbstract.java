@@ -26,19 +26,20 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.npc;
+package org.inventivetalent.npclib.npc.living.insentient;
 
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.inventivetalent.npclib.Reflection;
-import org.inventivetalent.npclib.entity.NPCEntityInsentient;
+import org.inventivetalent.npclib.entity.living.insentient.NPCEntityInsentient;
+import org.inventivetalent.npclib.npc.living.NPCLivingAbstract;
 import org.inventivetalent.reflection.util.AccessUtil;
 
 import java.util.Collection;
 
 public abstract class NPCInsentientAbstract<N extends NPCEntityInsentient, B extends LivingEntity> extends NPCLivingAbstract<N, B> {
 
-	NPCInsentientAbstract(N npcEntity) {
+	protected NPCInsentientAbstract(N npcEntity) {
 		super(npcEntity);
 	}
 

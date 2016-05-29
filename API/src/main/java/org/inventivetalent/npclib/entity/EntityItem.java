@@ -28,5 +28,7 @@
 
 package org.inventivetalent.npclib.entity;
 
+import org.inventivetalent.npclib.entity.living.human.NPCEntity;
+
 public interface EntityItem extends NPCEntity {
 }

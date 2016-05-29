@@ -32,7 +32,7 @@ import com.google.common.base.Joiner;
 import com.google.common.reflect.Invokable;
 import javassist.*;
 import org.inventivetalent.npclib.annotation.NPCInfo;
-import org.inventivetalent.npclib.entity.NPCEntity;
+import org.inventivetalent.npclib.entity.living.human.NPCEntity;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 
 import java.io.IOException;
