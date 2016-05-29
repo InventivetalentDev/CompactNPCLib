@@ -33,6 +33,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.inventivetalent.boundingbox.BoundingBox;
 import org.inventivetalent.npclib.NPCLib;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.ai.AIAbstract;
@@ -44,6 +45,7 @@ import org.inventivetalent.reflection.resolver.FieldResolver;
 import org.inventivetalent.reflection.resolver.MethodResolver;
 import org.inventivetalent.reflection.resolver.ResolverQuery;
 import org.inventivetalent.reflection.util.AccessUtil;
+import org.inventivetalent.vectors.d3.Vector3DDouble;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -99,6 +101,14 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 				iterator.remove();
 			}
 		}
+	}
+
+	public BoundingBox getAbsoluteBoundingBox() {
+		return BoundingBox.fromNMS(getEntityField("boundingBox"));
+	}
+
+	public BoundingBox getBoundingBox() {
+		return getAbsoluteBoundingBox().translate(new Vector3DDouble(getBukkitEntity().getLocation()).multiply(-1));
 	}
 
 	// Watched

@@ -47,7 +47,9 @@
         <packetlistener.version>3.3.5</packetlistener.version>
         <reflection.version>1.7.0</reflection.version>
         <annotations.version>1.4.0</annotations.version>
-        <wrappers.version>[1.0.1,)</wrappers.version>
+        <wrappers.version>1.0.1</wrappers.version>
+        <vectors.version>1.0.0</vectors.version>
+        <boundingbox.version>1.2.1</boundingbox.version>
     </properties>
 
     <build>

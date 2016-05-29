@@ -79,6 +79,16 @@
             <artifactId>mc-wrappers</artifactId>
             <version>${wrappers.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.inventivetalent</groupId>
+            <artifactId>vectors</artifactId>
+            <version>${vectors.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.inventivetalent</groupId>
+            <artifactId>boundingboxapi</artifactId>
+            <version>${boundingbox.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
