@@ -55,7 +55,7 @@ import org.inventivetalent.reflection.resolver.FieldResolver;
 					 + "  super(minecraftServer, worldServer, gameProfile, playerInteractManager);\n"
 					 + "}"
 	 })
-public class NPCPlayer extends NPCAbstract<EntityPlayer, Player> {
+public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
 	NPCPlayer(EntityPlayer npcEntity) {
 		super(npcEntity);

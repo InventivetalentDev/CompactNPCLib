@@ -26,12 +26,13 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.entity;
+package org.inventivetalent.npclib.npc;
 
-import com.mojang.authlib.GameProfile;
+import org.bukkit.entity.HumanEntity;
+import org.inventivetalent.npclib.entity.NPCEntityHuman;
 
-public interface EntityPlayer extends NPCEntityHuman {
-
-	GameProfile getProfile();
-
+public abstract class NPCHumanAbstract<N extends NPCEntityHuman, B extends HumanEntity> extends NPCLivingAbstract<N, B> {
+	NPCHumanAbstract(N npcEntity) {
+		super(npcEntity);
+	}
 }

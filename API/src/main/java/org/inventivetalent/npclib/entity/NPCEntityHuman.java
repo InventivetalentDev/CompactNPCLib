@@ -28,10 +28,5 @@
 
 package org.inventivetalent.npclib.entity;
 
-import com.mojang.authlib.GameProfile;
-
-public interface EntityPlayer extends NPCEntityHuman {
-
-	GameProfile getProfile();
-
+public interface NPCEntityHuman extends NPCEntityLiving {
 }
