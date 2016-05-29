@@ -26,7 +26,7 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.entity.living.human;
+package org.inventivetalent.npclib.entity;
 
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.inventivetalent.npclib.watcher.MethodWatcher;

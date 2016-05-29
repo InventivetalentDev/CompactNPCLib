@@ -32,7 +32,7 @@ import com.google.common.collect.Maps;
 import lombok.Getter;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.inventivetalent.npclib.entity.living.human.NPCEntity;
+import org.inventivetalent.npclib.entity.NPCEntity;
 
 import java.util.Map;
 

@@ -37,7 +37,7 @@ import org.inventivetalent.boundingbox.BoundingBox;
 import org.inventivetalent.npclib.NPCLib;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.ai.AIAbstract;
-import org.inventivetalent.npclib.entity.living.human.NPCEntity;
+import org.inventivetalent.npclib.entity.NPCEntity;
 import org.inventivetalent.npclib.watcher.AnnotatedMethodWatcher;
 import org.inventivetalent.npclib.watcher.Watch;
 import org.inventivetalent.reflection.minecraft.Minecraft;

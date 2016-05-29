@@ -41,7 +41,7 @@ import org.inventivetalent.npclib.NPCLib;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.annotation.NPCInfo;
 import org.inventivetalent.npclib.entity.living.EntityPlayer;
-import org.inventivetalent.npclib.entity.living.human.NPCEntity;
+import org.inventivetalent.npclib.entity.NPCEntity;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.ConstructorResolver;

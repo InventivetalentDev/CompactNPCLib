@@ -29,7 +29,7 @@
 package org.inventivetalent.npclib;
 
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.inventivetalent.npclib.entity.living.human.NPCEntity;
+import org.inventivetalent.npclib.entity.NPCEntity;
 import org.inventivetalent.npclib.watcher.MethodWatcher;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 
