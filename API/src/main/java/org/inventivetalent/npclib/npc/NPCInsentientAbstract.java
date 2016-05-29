@@ -36,7 +36,7 @@ import org.inventivetalent.reflection.util.AccessUtil;
 
 import java.util.Collection;
 
-public class NPCInsentientAbstract<N extends NPCEntityInsentient, B extends LivingEntity> extends NPCLivingAbstract<N, B> {
+public abstract class NPCInsentientAbstract<N extends NPCEntityInsentient, B extends LivingEntity> extends NPCLivingAbstract<N, B> {
 
 	NPCInsentientAbstract(N npcEntity) {
 		super(npcEntity);
