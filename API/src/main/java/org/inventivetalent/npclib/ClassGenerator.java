@@ -117,14 +117,6 @@ public class ClassGenerator {
 				"}", generated));
 		//TODO
 
-		// Helper methods
-		generated.addMethod(CtMethod.make("public void spawn() {\n"
-				+ "  this.world.addEntity(this);\n"
-				+ "}", generated));
-		generated.addMethod(CtMethod.make("public void spawn(org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) {\n"
-				+ "  this.world.addEntity(this, spawnReason);\n"
-				+ "}", generated));
-
 		// @ExtraMethods in the entity interface
 		Class superInterface = npcInfo.getEntity();
 		while (superInterface != null) {

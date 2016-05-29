@@ -29,8 +29,9 @@
 package org.inventivetalent.npclib.entity;
 
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.inventivetalent.npclib.watcher.MethodWatcher;
+import org.inventivetalent.npclib.annotation.ExtraMethod;
 import org.inventivetalent.npclib.npc.NPCAbstract;
+import org.inventivetalent.npclib.watcher.MethodWatcher;
 
 public interface NPCEntity {
 
@@ -38,7 +39,7 @@ public interface NPCEntity {
 
 	NPCAbstract getNPC();
 
-//	<T extends Entity> T getBukkitEntity();
+	//	<T extends Entity> T getBukkitEntity();
 
 	boolean methodCalled(String name, Object[] args);
 
@@ -50,8 +51,14 @@ public interface NPCEntity {
 
 	// Helpers
 
+	@ExtraMethod("public void spawn() {\n"
+						 + "  this.world.addEntity(this);\n"
+						 + "}")
 	void spawn();
 
+	@ExtraMethod("public void spawn(org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) {\n"
+						 + "  this.world.addEntity(this, spawnReason);\n"
+						 + "}")
 	void spawn(CreatureSpawnEvent.SpawnReason spawnReason);
 
 }
