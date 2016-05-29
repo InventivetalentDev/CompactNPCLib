@@ -30,9 +30,18 @@ package org.inventivetalent.npclib.npc;
 
 import org.bukkit.entity.LivingEntity;
 import org.inventivetalent.npclib.entity.NPCEntityLiving;
+import org.inventivetalent.npclib.watcher.Watch;
 
 public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends LivingEntity> extends NPCAbstract<N, B> {
 	NPCLivingAbstract(N npcEntity) {
 		super(npcEntity);
 	}
+
+	@Watch("die(DamageSource)")
+	public boolean onDie(Object damageSource) {
+		System.out.println("onDie -> NPCLivingAbstract");
+		//TODO: NPCDeathEvent (with damage source)
+		return true;
+	}
+
 }
