@@ -31,6 +31,7 @@ package org.inventivetalent.npclib;
 import com.google.common.base.Joiner;
 import com.google.common.reflect.Invokable;
 import javassist.*;
+import org.inventivetalent.npclib.annotation.ExtraMethod;
 import org.inventivetalent.npclib.annotation.NPCInfo;
 import org.inventivetalent.npclib.entity.living.human.NPCEntity;
 import org.inventivetalent.reflection.minecraft.Minecraft;
@@ -123,6 +124,18 @@ public class ClassGenerator {
 		generated.addMethod(CtMethod.make("public void spawn(org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) {\n"
 				+ "  this.world.addEntity(this, spawnReason);\n"
 				+ "}", generated));
+
+		// @ExtraMethods in the entity interface
+		Class superInterface = npcInfo.getEntity();
+		while (superInterface != null) {
+			for (Method method : superInterface.getMethods()) {
+				ExtraMethod annotation = method.getAnnotation(ExtraMethod.class);
+				if (annotation != null) {
+					generated.addMethod(CtMethod.make(annotation.value(), generated));
+				}
+			}
+			superInterface = superInterface.getSuperclass();
+		}
 
 		// Extra fields & methods
 		for (String field : npcInfo.getExtraFields()) {
