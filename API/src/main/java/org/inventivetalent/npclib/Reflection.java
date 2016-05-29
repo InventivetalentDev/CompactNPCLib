@@ -36,6 +36,7 @@ import org.inventivetalent.reflection.resolver.minecraft.OBCClassResolver;
 import org.inventivetalent.reflection.resolver.wrapper.ClassWrapper;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 public class Reflection {
 
@@ -99,6 +100,19 @@ public class Reflection {
 		} catch (ClassNotFoundException e) {
 		}
 		return false;
+	}
+
+	public static String getMethodSignature(Method method) {
+		StringBuilder stringBuilder = new StringBuilder(method.getName());
+		stringBuilder.append("(");
+
+		boolean first = true;
+		for (Class clazz : method.getParameterTypes()) {
+			if (!first) { stringBuilder.append(","); }
+			stringBuilder.append(clazz.getSimpleName());
+			first = false;
+		}
+		return stringBuilder.append(")").toString();
 	}
 
 }

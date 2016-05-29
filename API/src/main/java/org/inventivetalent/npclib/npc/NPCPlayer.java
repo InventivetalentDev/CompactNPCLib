@@ -39,6 +39,7 @@ import org.inventivetalent.npclib.ClassBuilder;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.annotation.NPC;
 import org.inventivetalent.npclib.entity.EntityPlayer;
+import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.FieldResolver;
 
 @NPC(id = -1,
@@ -67,7 +68,6 @@ public class NPCPlayer extends NPCAbstract<EntityPlayer, Player> {
 		// Initialize Gamemode
 		getBukkitEntity().setGameMode(GameMode.SURVIVAL);
 
-
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			updatePlayerList(player);
 		}
@@ -80,10 +80,30 @@ public class NPCPlayer extends NPCAbstract<EntityPlayer, Player> {
 		return new GameProfileWrapper(getNpcEntity().getProfile());
 	}
 
+	@Override
+	public boolean onDie() {
+		System.out.println("onDie -> NPCPlayer");
+		boolean die = super.onDie();
+		if (die) {
+			// Remove players from the world manually
+			Bukkit.getScheduler().runTaskLater(Bukkit.getPluginManager().getPlugin("NPCLib"), new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Reflection.nmsClassResolver.resolve("World").getDeclaredMethod("removeEntity").invoke(Minecraft.getHandle(getBukkitEntity().getWorld()), getNpcEntity());
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}, 40);// <-- death animation delay
+		}
+		return die;
+	}
+
 	void updatePlayerList(final Player player) {
 		try {
 			System.out.println(this);
-			System.out.println("Update to "+player);
+			System.out.println("Update to " + player);
 			System.out.println(getBukkitEntity());
 			System.out.println(getBukkitEntity().getGameMode());
 			System.out.println(getNpcEntity());
@@ -93,7 +113,7 @@ public class NPCPlayer extends NPCAbstract<EntityPlayer, Player> {
 				@Override
 				public void run() {
 					if (!player.isOnline()) { return; }
-					if (/*TODO!NPCPlayerEntityBase.this.isShownInList()  ||*/ true|| getBukkitEntity().isDead()) {
+					if (/*TODO!NPCPlayerEntityBase.this.isShownInList()  ||*/ true || getBukkitEntity().isDead()) {
 						try {
 							sendPacket(player, ClassBuilder.buildPlayerInfoPacket(4, getNpcEntity().getProfile(), 0, getBukkitEntity().getGameMode().ordinal(), getBukkitEntity().getName()));
 						} catch (Exception e) {

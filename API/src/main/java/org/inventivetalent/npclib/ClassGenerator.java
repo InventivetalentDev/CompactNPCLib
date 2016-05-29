@@ -310,6 +310,7 @@ public class ClassGenerator {
 		String returnType = method.getReturnType().getCanonicalName();
 		String name = method.getName();
 		Class<?>[] parameterTypes = method.getParameterTypes();
+		String signature = Reflection.getMethodSignature(method);
 
 		boolean isVoid = method.getReturnType().equals(Void.TYPE);
 		if (isVoid) {
@@ -341,11 +342,11 @@ public class ClassGenerator {
 		if (isVoid) {
 			methodString += String.format("  if(!this.methodCalled(\"%1$s\", $args)) {\n"// Check if super should be called
 					+ "    return;\n"// Otherwise return
-					+ "  }\n", name
+					+ "  }\n", signature
 			);
 			methodString += String.format("  super.%1$s(%2$s);\n", name, callString); // Call super
 		} else {
-			methodString += String.format("  return (%3$s) this.methodCalled(\"%1$s\", super.%1$s(%2$s), $args);\n", name, callString, returnType);
+			methodString += String.format("  return (%3$s) this.methodCalled(\"%4$s\", super.%1$s(%2$s), $args);\n", name, callString, returnType, signature);
 			//			methodString += String.format("  return (%4$s) super.%1$s(%2$s);\n", name, callString, objectCallString, returnType);
 		}
 		methodString += "}";

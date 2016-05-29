@@ -82,17 +82,24 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	// Watched
 
-	@Watch("U")
+	@Watch("U()")
 	public boolean onBaseTick() {
 		System.out.println("base tick!");
 
 		return true;
 	}
 
-	@Watch("move")
+	@Watch("move(double,double,double)")
 	public boolean onMove(double x, double y, double z) {
 		System.out.println("x = [" + x + "], y = [" + y + "], z = [" + z + "]");
 		//TODO: NPCMoveEvent/NPCMotionEvent
+		return true;
+	}
+
+	@Watch("die()")
+	public boolean onDie() {
+		System.out.println("onDie -> NPCAbstract");
+		//TODO: EntityDeathEvent
 		return true;
 	}
 

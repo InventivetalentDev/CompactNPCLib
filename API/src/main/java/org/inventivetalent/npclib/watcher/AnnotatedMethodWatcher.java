@@ -29,8 +29,10 @@
 package org.inventivetalent.npclib.watcher;
 
 import lombok.AllArgsConstructor;
+import org.inventivetalent.npclib.Reflection;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -60,25 +62,25 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 		for (Method method : clazz.getMethods()) {
 			Watch annotation = method.getAnnotation(Watch.class);
 			if (annotation != null) {
-				String[] names = annotation.value();
-				if (names.length == 0) {names = new String[] { method.getName() }; }
+				String[] signatures = annotation.value();
+				if (signatures.length == 0) {signatures = new String[] { Reflection.getMethodSignature(method) }; }
 				boolean passThrough = true;
 				if (method.getReturnType().equals(Void.TYPE)) { passThrough = annotation.passThrough(); }
 				//				boolean ignoreThiz = annotation.ignoreThiz();
 
-				for (String name : names) {
-					System.out.println("Watching method " + name);
-					watchedMethods.put(name, new WatchedMethod(name, passThrough, /*ignoreThiz,*/method.getReturnType().equals(Void.TYPE), method));
+				for (String signature : signatures) {
+					System.out.println("Watching method " + signature);
+					watchedMethods.put(signature, new WatchedMethod(signature, passThrough, /*ignoreThiz,*/method.getReturnType().equals(Void.TYPE), method));
 				}
 			}
 		}
 	}
 
 	@Override
-	public boolean methodCalled(Object thiz, String methodName, Object[] args) {
-		WatchedMethod watchedMethod = watchedMethods.get(methodName);
+	public boolean methodCalled(Object thiz, String methodSignature, Object[] args) {
+		WatchedMethod watchedMethod = watchedMethods.get(methodSignature);
 		if (watchedMethod == null) {
-			return super.methodCalled(thiz, methodName, args);
+			return super.methodCalled(thiz, methodSignature, args);
 		}
 		try {
 			Object returned = watchedMethod.method.invoke(toWatch, args);
@@ -88,15 +90,15 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 			}
 			return (boolean) returned;
 		} catch (Exception e) {
-			throw new RuntimeException("Failed to invoke @Watch method", e);
+			throw new RuntimeException("Failed to invoke @Watch method with args: " + Arrays.toString(args), e);
 		}
 	}
 
 	@Override
-	public Object methodCalled(Object thiz, String methodName, Object superValue, Object[] args) {
-		WatchedMethod watchedMethod = watchedMethods.get(methodName);
+	public Object methodCalled(Object thiz, String methodSignature, Object superValue, Object[] args) {
+		WatchedMethod watchedMethod = watchedMethods.get(methodSignature);
 		if (watchedMethod == null) {
-			return super.methodCalled(thiz, methodName, superValue, args);
+			return super.methodCalled(thiz, methodSignature, superValue, args);
 		}
 		try {
 			return watchedMethod.method.invoke(toWatch, args);
@@ -107,7 +109,7 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 
 	@AllArgsConstructor
 	class WatchedMethod {
-		String  name;
+		String  signature;
 		boolean passThrough;
 		//		boolean ignoreThiz;
 		boolean isVoid;

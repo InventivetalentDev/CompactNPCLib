@@ -38,9 +38,9 @@ import java.lang.annotation.Target;
 public @interface Watch {
 
 	/**
-	 * Possible method names to watch. If empty, this method's name will be used.
+	 * Possible method signatures to watch. If empty, this method's signature will be used.
 	 *
-	 * @return the watched method name(s)
+	 * @return the watched method signature(s)
 	 */
 	String[] value() default {};
 
