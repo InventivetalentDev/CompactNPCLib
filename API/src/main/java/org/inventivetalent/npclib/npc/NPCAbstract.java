@@ -35,6 +35,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.inventivetalent.npclib.NPCLib;
 import org.inventivetalent.npclib.Reflection;
+import org.inventivetalent.npclib.ai.AIAbstract;
 import org.inventivetalent.npclib.entity.living.human.NPCEntity;
 import org.inventivetalent.npclib.watcher.AnnotatedMethodWatcher;
 import org.inventivetalent.npclib.watcher.Watch;
@@ -44,6 +45,10 @@ import org.inventivetalent.reflection.resolver.MethodResolver;
 import org.inventivetalent.reflection.resolver.ResolverQuery;
 import org.inventivetalent.reflection.util.AccessUtil;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	private final   N              npcEntity;
@@ -51,6 +56,8 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	protected final MethodResolver npcEntityMethodResolver;
 	protected final FieldResolver  entityFieldResolver  = new FieldResolver(Reflection.nmsClassResolver.resolveSilent("Entity"));
 	protected final MethodResolver entityMethodResolver = new MethodResolver(Reflection.nmsClassResolver.resolveSilent("Entity"));
+
+	private final List<AIAbstract> aiList = new ArrayList<>();
 
 	protected NPCAbstract(N npcEntity) {
 		this.npcEntity = npcEntity;
@@ -80,11 +87,27 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		getNpcEntity().spawn(CreatureSpawnEvent.SpawnReason.CUSTOM);
 	}
 
+	public <A extends NPCAbstract<N, B>> boolean registerAI(AIAbstract<A> aiAbstract) {
+		return aiList.add(aiAbstract);
+	}
+
+	public void tickAI() {
+		for (Iterator<AIAbstract> iterator = aiList.iterator(); iterator.hasNext(); ) {
+			AIAbstract next = iterator.next();
+			next.tick();
+			if (next.isFinished()) {
+				iterator.remove();
+			}
+		}
+	}
+
 	// Watched
 
 	@Watch("U()")
 	public boolean onBaseTick() {
 		System.out.println("base tick!");
+
+		tickAI();
 
 		return true;
 	}
