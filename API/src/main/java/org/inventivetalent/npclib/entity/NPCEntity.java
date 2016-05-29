@@ -32,6 +32,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.inventivetalent.npclib.annotation.ExtraMethod;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.npclib.watcher.MethodWatcher;
+import org.inventivetalent.vectors.d3.Vector3DDouble;
 
 public interface NPCEntity {
 
@@ -60,5 +61,10 @@ public interface NPCEntity {
 						 + "  this.world.addEntity(this, spawnReason);\n"
 						 + "}")
 	void spawn(CreatureSpawnEvent.SpawnReason spawnReason);
+
+	@ExtraMethod("public org.inventivetalent.vectors.d3.Vector3DDouble getLocationVector() {\n"
+						 + "  return new org.inventivetalent.vectors.d3.Vector3DDouble(this.locX, this.locY, this.locZ);\n"
+						 + "}")
+	Vector3DDouble getLocationVector();
 
 }
