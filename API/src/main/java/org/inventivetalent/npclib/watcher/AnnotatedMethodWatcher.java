@@ -69,8 +69,10 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 				//				boolean ignoreThiz = annotation.ignoreThiz();
 
 				for (String signature : signatures) {
-					System.out.println("Watching method " + signature);
-					watchedMethods.put(signature, new WatchedMethod(signature, passThrough, /*ignoreThiz,*/method.getReturnType().equals(Void.TYPE), method));
+					if(!watchedMethods.containsKey(signature)) {
+						System.out.println("Watching method " + signature);
+						watchedMethods.put(signature, new WatchedMethod(signature, passThrough, /*ignoreThiz,*/method.getReturnType().equals(Void.TYPE), method));
+					}
 				}
 			}
 		}
