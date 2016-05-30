@@ -43,6 +43,7 @@ import org.inventivetalent.npclib.annotation.NPCInfo;
 import org.inventivetalent.npclib.entity.NPCEntity;
 import org.inventivetalent.npclib.entity.living.EntityPlayer;
 import org.inventivetalent.npclib.npc.NPCAbstract;
+import org.inventivetalent.npclib.npc.living.human.NPCHumanAbstract;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.ConstructorResolver;
 import org.inventivetalent.reflection.resolver.FieldResolver;
@@ -59,11 +60,47 @@ public class NPCRegistry {
 
 	@Getter final Plugin plugin;
 
-	public <T extends NPCEntity> T createEntity(Location location, NPCInfo npcInfo) {
+	/**
+	 * Creates and spawns the specified NPC Entity
+	 *
+	 * @param location {@link Location} to spawn the entity at
+	 * @param npcClass NPC-Class to spawn
+	 * @param <T>      a NPC class extending {@link NPCAbstract}
+	 * @return the spawned NPC Entity
+	 */
+	public <T extends NPCAbstract> T createNPC(Location location, Class<T> npcClass) {
+		try {
+			NPCInfo npcInfo = NPCInfo.of(npcClass);
+			NPCEntity npcEntity = createEntity(location, npcInfo);
+			return wrapAndInitEntity(npcEntity, location, npcClass);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * Creates and spawns a player NPC entity
+	 *
+	 * @param location    {@link Location} to spawn the entity at
+	 * @param npcClass    NPC-Class to spawn
+	 * @param gameProfile {@link GameProfileWrapper} to use for the player
+	 * @param <T>         a NPC class extending {@link NPCHumanAbstract}
+	 * @return the spawned NPC entity
+	 */
+	public <T extends NPCHumanAbstract> T createPlayerNPC(Location location, Class<T> npcClass, GameProfileWrapper gameProfile) {
+		try {
+			NPCInfo npcInfo = NPCInfo.of(npcClass);
+			NPCEntity npcEntity = createPlayerEntity(location, npcInfo, gameProfile);
+			return wrapAndInitEntity(npcEntity, location, npcClass);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected <T extends NPCEntity> T createEntity(Location location, NPCInfo npcInfo) {
 		if ("EntityPlayer".equals(npcInfo.getNms())) { throw new IllegalArgumentException("cannot construct EntityPlayer using #createEntity"); }
 
 		Class clazz = getOrGenerateClass(npcInfo);
-		System.out.println(clazz);
 
 		try {
 			//noinspection unchecked
@@ -75,9 +112,8 @@ public class NPCRegistry {
 		}
 	}
 
-	public EntityPlayer createPlayer(Location location, NPCInfo npcInfo, GameProfileWrapper gameProfile) {
+	protected EntityPlayer createPlayerEntity(Location location, NPCInfo npcInfo, GameProfileWrapper gameProfile) {
 		Class clazz = getOrGenerateClass(npcInfo);
-		System.out.println(clazz);
 		try {
 			Object minecraftServer = new MethodResolver(Bukkit.getServer().getClass()).resolveWrapper("getServer").invoke(Bukkit.getServer());
 			Object worldServer = Minecraft.getHandle(location.getWorld());
@@ -86,26 +122,6 @@ public class NPCRegistry {
 			//noinspection unchecked
 			Constructor constructor = clazz.getConstructor(Reflection.nmsClassResolver.resolve("MinecraftServer"), Reflection.nmsClassResolver.resolve("WorldServer"), gameProfile.getHandle().getClass(), Reflection.nmsClassResolver.resolve("PlayerInteractManager"));
 			return (EntityPlayer) constructor.newInstance(minecraftServer, worldServer, gameProfile.getHandle(), interactManager);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public <T extends NPCAbstract> T createNPC(Location location, Class<T> npcClass) {
-		try {
-			NPCInfo npcInfo = NPCInfo.of(npcClass);
-			NPCEntity npcEntity = createEntity(location, npcInfo);
-			return wrapAndInitEntity(npcEntity, location, npcClass);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public <T extends NPCAbstract> T createPlayerNPC(Location location, Class<T> npcClass, GameProfileWrapper gameProfile) {
-		try {
-			NPCInfo npcInfo = NPCInfo.of(npcClass);
-			NPCEntity npcEntity = createPlayer(location, npcInfo, gameProfile);
-			return wrapAndInitEntity(npcEntity, location, npcClass);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
