@@ -52,6 +52,7 @@ import org.inventivetalent.reflection.resolver.MethodResolver;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class NPCRegistry {
@@ -95,6 +96,20 @@ public class NPCRegistry {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * Creates and spawns a player NPC entity
+	 *
+	 * @param location {@link Location} to spawn the entity at
+	 * @param npcClass NPC-Class to spawn
+	 * @param uuid     {@link UUID} of the player
+	 * @param name     Name of the player
+	 * @param <T>      a NPC class extending {@link NPCHumanAbstract}
+	 * @return the spawned NPC entity
+	 */
+	public <T extends NPCHumanAbstract> T createPlayerNPC(Location location, Class<T> npcClass, UUID uuid, String name) {
+		return createPlayerNPC(location, npcClass, new GameProfileWrapper(uuid, name));
 	}
 
 	protected <T extends NPCEntity> T createEntity(Location location, NPCInfo npcInfo) {
