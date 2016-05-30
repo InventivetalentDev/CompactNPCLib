@@ -50,6 +50,8 @@ public interface NPCEntity {
 
 	void setLocation(double x, double y, double z, float yaw, float pitch);
 
+	void move(double x, double y, double z);
+
 	// Helpers
 
 	@ExtraMethod("public void spawn() {\n"
@@ -66,5 +68,15 @@ public interface NPCEntity {
 						 + "  return new org.inventivetalent.vectors.d3.Vector3DDouble(this.locX, this.locY, this.locZ);\n"
 						 + "}")
 	Vector3DDouble getLocationVector();
+
+	@ExtraMethod("public void setYaw(float yaw) {\n"
+						 + "  this.yaw = yaw;\n"
+						 + "}")
+	void setYaw(float yaw);
+
+	@ExtraMethod("public void setPitch(float pitch) {\n"
+						 + "  this.pitch = pitch;\n"
+						 + "}")
+	void setPitch(float pitch);
 
 }
