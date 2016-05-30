@@ -40,8 +40,8 @@ import org.inventivetalent.npclib.ClassGenerator;
 import org.inventivetalent.npclib.NPCLib;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.annotation.NPCInfo;
-import org.inventivetalent.npclib.entity.living.EntityPlayer;
 import org.inventivetalent.npclib.entity.NPCEntity;
+import org.inventivetalent.npclib.entity.living.EntityPlayer;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.ConstructorResolver;
@@ -95,12 +95,7 @@ public class NPCRegistry {
 		try {
 			NPCInfo npcInfo = NPCInfo.of(npcClass);
 			NPCEntity npcEntity = createEntity(location, npcInfo);
-			System.out.println(new ConstructorResolver(npcClass).resolveFirstConstructorSilent());
-			System.out.println(npcEntity.getClass());
-			NPCAbstract npcAbstract = (NPCAbstract) new ConstructorResolver(npcClass).resolveFirstConstructorSilent().newInstance(npcEntity);
-			npcAbstract.postInit(location);
-			//noinspection unchecked
-			return (T) npcAbstract;
+			return wrapAndInitEntity(npcEntity, location, npcClass);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -110,15 +105,17 @@ public class NPCRegistry {
 		try {
 			NPCInfo npcInfo = NPCInfo.of(npcClass);
 			NPCEntity npcEntity = createPlayer(location, npcInfo, gameProfile);
-			System.out.println(new ConstructorResolver(npcClass).resolveFirstConstructorSilent());
-			System.out.println(npcEntity.getClass());
-			NPCAbstract npcAbstract = (NPCAbstract) new ConstructorResolver(npcClass).resolveFirstConstructorSilent().newInstance(npcEntity);
-			npcAbstract.postInit(location);
-			//noinspection unchecked
-			return (T) npcAbstract;
+			return wrapAndInitEntity(npcEntity, location, npcClass);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	protected <T extends NPCAbstract> T wrapAndInitEntity(NPCEntity entity, Location location, Class<T> npcClass) throws Exception {
+		NPCAbstract npcAbstract = (NPCAbstract) new ConstructorResolver(npcClass).resolveFirstConstructorSilent().newInstance(entity);
+		npcAbstract.postInit(location);
+		//noinspection unchecked
+		return (T) npcAbstract;
 	}
 
 	Class<?> getOrGenerateClass(NPCInfo npcType) {
