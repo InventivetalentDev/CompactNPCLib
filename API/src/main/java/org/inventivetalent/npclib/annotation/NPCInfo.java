@@ -34,6 +34,9 @@ import org.bukkit.entity.EntityType;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.entity.NPCEntity;
 
+import java.lang.reflect.Modifier;
+
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.emptyToNull;
 
@@ -71,7 +74,10 @@ public class NPCInfo {
 	}
 
 	public static NPCInfo of(Class clazz) {
-		NPC annotation = (NPC) checkNotNull(clazz).getAnnotation(NPC.class);
+		checkNotNull(clazz);
+		checkArgument(!Modifier.isAbstract(clazz.getModifiers()), "Cannot use @NPC on abstract class");
+		checkArgument(!clazz.isInterface(), "Cannot use @NPC on interface");
+		NPC annotation = (NPC) clazz.getAnnotation(NPC.class);
 		return of(checkNotNull(annotation, "Class has no @NPC annotation"));
 	}
 
