@@ -38,7 +38,7 @@ import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
 import org.inventivetalent.npclib.ClassBuilder;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.annotation.NPC;
-import org.inventivetalent.npclib.entity.living.EntityPlayer;
+import org.inventivetalent.npclib.entity.living.human.EntityPlayer;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.FieldResolver;
 

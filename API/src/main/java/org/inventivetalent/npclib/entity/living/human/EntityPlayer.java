@@ -26,10 +26,9 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.entity.living;
+package org.inventivetalent.npclib.entity.living.human;
 
 import com.mojang.authlib.GameProfile;
-import org.inventivetalent.npclib.entity.living.human.NPCEntityHuman;
 
 public interface EntityPlayer extends NPCEntityHuman {
 
