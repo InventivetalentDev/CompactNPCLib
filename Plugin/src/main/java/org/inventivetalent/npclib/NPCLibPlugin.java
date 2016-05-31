@@ -36,7 +36,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.inventivetalent.npclib.npc.living.NPCArmorStand;
+import org.inventivetalent.npclib.npc.NPCAbstract;
+import org.inventivetalent.npclib.npc.living.creature.monster.NPCCaveSpider;
 
 public class NPCLibPlugin extends JavaPlugin implements Listener {
 
@@ -51,7 +52,7 @@ public class NPCLibPlugin extends JavaPlugin implements Listener {
 		if (!event.getPlayer().isSneaking()) { return; }
 
 //		NPCPlayer entity = NPCLib.createRegistry(this).createPlayerNPC(event.getPlayer().getLocation(), NPCPlayer.class,new GameProfileWrapper(UUID.randomUUID(),"test"));
-		NPCArmorStand entity = NPCLib.createRegistry(this).createNPC(event.getPlayer().getLocation(), NPCArmorStand.class);
+		NPCAbstract entity = NPCLib.createRegistry(this).createNPC(event.getPlayer().getLocation(), NPCCaveSpider.class);
 //		entity.getNpcEntity().setMethodWatcher(new MethodWatcher() {
 //			@Override
 //			public boolean methodCalled(Object thiz, String methodName, Object[] args) {
