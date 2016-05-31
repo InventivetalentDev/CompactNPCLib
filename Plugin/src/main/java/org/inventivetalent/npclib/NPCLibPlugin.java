@@ -37,7 +37,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.inventivetalent.npclib.npc.NPCAbstract;
-import org.inventivetalent.npclib.npc.living.insentient.flying.NPCGhast;
+import org.inventivetalent.npclib.npc.living.insentient.NPCPigZombie;
 
 public class NPCLibPlugin extends JavaPlugin implements Listener {
 
@@ -48,11 +48,11 @@ public class NPCLibPlugin extends JavaPlugin implements Listener {
 	}
 
 	@EventHandler
-	public void onInteract(PlayerInteractEvent event) {
+	public void onInteract(final PlayerInteractEvent event) {
 		if (!event.getPlayer().isSneaking()) { return; }
 
 //		NPCPlayer entity = NPCLib.createRegistry(this).createPlayerNPC(event.getPlayer().getLocation(), NPCPlayer.class,new GameProfileWrapper(UUID.randomUUID(),"test"));
-		NPCAbstract entity = NPCLib.createRegistry(this).createNPC(event.getPlayer().getLocation(), NPCGhast.class);
+		final NPCAbstract entity = NPCLib.createRegistry(this).createNPC(event.getPlayer().getLocation(), NPCPigZombie.class);
 //		entity.getNpcEntity().setMethodWatcher(new MethodWatcher() {
 //			@Override
 //			public boolean methodCalled(Object thiz, String methodName, Object[] args) {
