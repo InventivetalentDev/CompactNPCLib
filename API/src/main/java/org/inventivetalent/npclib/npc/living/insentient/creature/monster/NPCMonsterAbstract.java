@@ -26,21 +26,14 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.npc.living.creature.monster;
+package org.inventivetalent.npclib.npc.living.insentient.creature.monster;
 
-import org.bukkit.entity.CaveSpider;
-import org.bukkit.entity.EntityType;
-import org.inventivetalent.npclib.annotation.NPC;
-import org.inventivetalent.npclib.entity.living.creature.monster.EntityCaveSpider;
-import org.inventivetalent.npclib.entity.living.creature.monster.EntitySpider;
+import org.bukkit.entity.Monster;
+import org.inventivetalent.npclib.entity.living.insentient.creature.monster.NPCEntityMonster;
+import org.inventivetalent.npclib.npc.living.insentient.NPCInsentientAbstract;
 
-@NPC(id = 59,
-	 type = EntityType.CAVE_SPIDER,
-	 bukkit = CaveSpider.class,
-	 nms = "EntityCaveSpider",
-	 entity = EntityCaveSpider.class)
-public class NPCCaveSpider extends NPCSpider {
-	protected NPCCaveSpider(EntitySpider npcEntity) {
+public abstract class NPCMonsterAbstract<N extends NPCEntityMonster, B extends Monster> extends NPCInsentientAbstract<N, B> {
+	protected NPCMonsterAbstract(N npcEntity) {
 		super(npcEntity);
 	}
 }

@@ -26,14 +26,9 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.npc.living.creature.monster;
+package org.inventivetalent.npclib.entity.living.insentient.creature;
 
-import org.bukkit.entity.Monster;
-import org.inventivetalent.npclib.entity.living.creature.monster.NPCEntityMonster;
-import org.inventivetalent.npclib.npc.living.insentient.NPCInsentientAbstract;
+import org.inventivetalent.npclib.entity.living.insentient.NPCEntityInsentient;
 
-public abstract class NPCMonsterAbstract<N extends NPCEntityMonster, B extends Monster> extends NPCInsentientAbstract<N, B> {
-	protected NPCMonsterAbstract(N npcEntity) {
-		super(npcEntity);
-	}
+public interface NPCEntityCreature extends NPCEntityInsentient {
 }

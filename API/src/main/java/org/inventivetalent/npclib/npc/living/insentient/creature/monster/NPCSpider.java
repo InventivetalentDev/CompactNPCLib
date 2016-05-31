@@ -26,20 +26,20 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.npc.living.creature.monster;
+package org.inventivetalent.npclib.npc.living.insentient.creature.monster;
 
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Giant;
+import org.bukkit.entity.Spider;
 import org.inventivetalent.npclib.annotation.NPC;
-import org.inventivetalent.npclib.entity.living.creature.monster.EntityGiant;
+import org.inventivetalent.npclib.entity.living.insentient.creature.monster.EntitySpider;
 
-@NPC(id = 53,
-	 type = EntityType.GIANT,
-	 bukkit = Giant.class,
-	 nms = "EntityGiantZombie",
-	 entity = EntityGiant.class)
-public class NPCGiant extends NPCMonsterAbstract<EntityGiant, Giant> {
-	protected NPCGiant(EntityGiant npcEntity) {
+@NPC(id = 52,
+	 type = EntityType.SPIDER,
+	 bukkit = Spider.class,
+	 nms = "EntitySpider",
+	 entity = EntitySpider.class)
+public class NPCSpider extends NPCMonsterAbstract<EntitySpider, Spider> {
+	protected NPCSpider(EntitySpider npcEntity) {
 		super(npcEntity);
 	}
 }
