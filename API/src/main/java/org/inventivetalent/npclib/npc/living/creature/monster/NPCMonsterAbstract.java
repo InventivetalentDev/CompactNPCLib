@@ -30,9 +30,9 @@ package org.inventivetalent.npclib.npc.living.creature.monster;
 
 import org.bukkit.entity.Monster;
 import org.inventivetalent.npclib.entity.living.creature.monster.NPCEntityMonster;
-import org.inventivetalent.npclib.npc.NPCAbstract;
+import org.inventivetalent.npclib.npc.living.insentient.NPCInsentientAbstract;
 
-public abstract class NPCMonsterAbstract<N extends NPCEntityMonster, B extends Monster> extends NPCAbstract<N, B> {
+public abstract class NPCMonsterAbstract<N extends NPCEntityMonster, B extends Monster> extends NPCInsentientAbstract<N, B> {
 	protected NPCMonsterAbstract(N npcEntity) {
 		super(npcEntity);
 	}
