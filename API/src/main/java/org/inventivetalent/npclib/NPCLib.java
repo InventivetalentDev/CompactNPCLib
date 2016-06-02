@@ -31,6 +31,7 @@ package org.inventivetalent.npclib;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
 import org.inventivetalent.npclib.entity.NPCEntity;
+import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.npclib.registry.NPCRegistry;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 
@@ -52,6 +53,19 @@ public class NPCLib {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static NPCAbstract getNPC(Entity entity) {
+		if (entity == null) { return null; }
+		try {
+			Object handle = Minecraft.getHandle(entity);
+			if (handle instanceof NPCEntity) {
+				return ((NPCEntity) handle).getNPC();
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return null;
 	}
 
 }
