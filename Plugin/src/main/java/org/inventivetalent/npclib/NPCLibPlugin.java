@@ -36,8 +36,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.inventivetalent.npclib.npc.NPCAbstract;
-import org.inventivetalent.npclib.npc.living.insentient.creature.monster.NPCEnderman;
+import org.inventivetalent.npclib.npc.living.NPCLivingAbstract;
+import org.inventivetalent.npclib.npc.living.human.NPCPlayer;
+import org.inventivetalent.vectors.d3.Vector3DDouble;
+
+import java.util.UUID;
 
 public class NPCLibPlugin extends JavaPlugin implements Listener {
 
@@ -52,7 +55,20 @@ public class NPCLibPlugin extends JavaPlugin implements Listener {
 		if (!event.getPlayer().isSneaking()) { return; }
 
 //		NPCPlayer entity = NPCLib.createRegistry(this).createPlayerNPC(event.getPlayer().getLocation(), NPCPlayer.class,new GameProfileWrapper(UUID.randomUUID(),"test"));
-		final NPCAbstract entity = NPCLib.createRegistry(this).createNPC(event.getPlayer().getLocation(), NPCEnderman.class);
+		final NPCLivingAbstract entity = NPCLib.createRegistry(this).createPlayerNPC(event.getPlayer().getLocation(), NPCPlayer.class, UUID.randomUUID(),"test");
+		Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
+			@Override
+			public void run() {
+//				entity.lookAt(new Vector3DDouble(event.getPlayer().getLocation()));
+			}
+		}, 10, 10);
+		Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
+			@Override
+			public void run() {
+//				entity.moveWithHeading(0,0.5f);
+				entity.pathfindTo(new Vector3DDouble(event.getPlayer().getLocation()),0.2D);
+			}
+		}, 20, 80);
 //		entity.getNpcEntity().setMethodWatcher(new MethodWatcher() {
 //			@Override
 //			public boolean methodCalled(Object thiz, String methodName, Object[] args) {

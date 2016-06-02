@@ -86,7 +86,6 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 		}
 		try {
 			Object returned = watchedMethod.method.invoke(toWatch, args);
-			System.out.println("returned: " + returned);
 			if (watchedMethod.isVoid) {
 				return watchedMethod.passThrough;
 			}

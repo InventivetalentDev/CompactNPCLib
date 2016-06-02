@@ -32,6 +32,8 @@ import org.bukkit.entity.LivingEntity;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.entity.living.NPCEntityLiving;
 import org.inventivetalent.npclib.npc.NPCAbstract;
+import org.inventivetalent.npclib.path.AStarPathfinder;
+import org.inventivetalent.npclib.path.PathfinderAbstract;
 import org.inventivetalent.npclib.watcher.Watch;
 import org.inventivetalent.reflection.resolver.FieldResolver;
 import org.inventivetalent.reflection.resolver.MethodResolver;
@@ -43,6 +45,8 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 	protected FieldResolver  entityLivingFieldResolver  = new FieldResolver(Reflection.nmsClassResolver.resolveSilent("EntityLiving"));
 	protected MethodResolver entityLivingMethodResolver = new MethodResolver(Reflection.nmsClassResolver.resolveSilent("EntityLiving"));
 
+	private PathfinderAbstract pathfinder;
+
 	protected NPCLivingAbstract(N npcEntity) {
 		super(npcEntity);
 	}
@@ -51,6 +55,13 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 	public boolean onDie(Object damageSource) {
 		System.out.println("onDie -> NPCLivingAbstract");
 		//TODO: NPCDeathEvent (with damage source)
+		return true;
+	}
+
+	@Watch("g(float,float)")
+	public boolean onHeadingMove(float strafe, float forward) {
+//		System.out.println("onHeadingMove -> NPCLivingAbstract");
+		//TODO: NPCMoveEvent...
 		return true;
 	}
 
@@ -88,6 +99,33 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 
 		setYaw((float) yaw);
 		setPitch((float) pitch);
+	}
+
+	@Override
+	public void tickAI() {
+		super.tickAI();
+		if (this.pathfinder != null) {
+			this.pathfinder.tick();
+			if (this.pathfinder.isFinished()) {
+				//TODO: PathFinishEvent
+				this.pathfinder = null;
+			}
+		}
+	}
+
+	public void pathfindTo(Vector3DDouble target,double speed) {
+		this.pathfinder = new AStarPathfinder(target, speed, 128);
+		//noinspection unchecked
+		this.pathfinder.setNpc(this);
+		this.pathfinder.find();
+	}
+
+	public void moveWithHeading(float strafeMotion, float forwardMotion) {
+		try {
+			entityLivingMethodResolver.resolve(new ResolverQuery("g", float.class, float.class)).invoke(getNpcEntity(), strafeMotion, forwardMotion);
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public Object getEntityLivingField(String field) {

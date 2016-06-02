@@ -113,9 +113,9 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	// Watched
 
-	@Watch("U()")
+	@Watch("m()")
 	public boolean onBaseTick() {
-		System.out.println("base tick!");
+//		System.out.println("base tick!");
 
 		tickAI();
 
@@ -124,7 +124,6 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	@Watch("move(double,double,double)")
 	public boolean onMove(double x, double y, double z) {
-		System.out.println("x = [" + x + "], y = [" + y + "], z = [" + z + "]");
 		//TODO: NPCMoveEvent/NPCMotionEvent
 		return true;
 	}
