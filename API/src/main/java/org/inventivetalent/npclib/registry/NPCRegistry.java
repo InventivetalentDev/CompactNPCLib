@@ -10,6 +10,7 @@ import org.bukkit.plugin.Plugin;
 import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
 import org.inventivetalent.npclib.ClassGenerator;
 import org.inventivetalent.npclib.NPCLib;
+import org.inventivetalent.npclib.NPCType;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.annotation.NPCInfo;
 import org.inventivetalent.npclib.entity.NPCEntity;
@@ -25,6 +26,8 @@ import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class NPCRegistry {
@@ -49,6 +52,18 @@ public class NPCRegistry {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	/**
+	 * Creates and spawns the specified NPC Type
+	 *
+	 * @param location {@link Location} to spawn the entity at
+	 * @param npcType  type of the NPC
+	 * @return the spawned NPC Entity
+	 */
+
+	public NPCAbstract createNPC(Location location, NPCType npcType) {
+		return createNPC(location, checkNotNull(npcType).getNpcClass());
 	}
 
 	/**
