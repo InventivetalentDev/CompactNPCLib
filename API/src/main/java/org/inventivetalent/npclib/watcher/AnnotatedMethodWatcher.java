@@ -63,7 +63,7 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 			}
 			return (boolean) returned;
 		} catch (Exception e) {
-			throw new RuntimeException("Failed to invoke @Watch method with args: " + Arrays.toString(args), e);
+			throw new RuntimeException("Failed to invoke @Watch method " + methodSignature + " with args: " + Arrays.toString(args), e);
 		}
 	}
 
@@ -76,7 +76,7 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 		try {
 			return watchedMethod.method.invoke(toWatch, args);
 		} catch (Exception e) {
-			throw new RuntimeException("Failed to invoke @Watch method", e);
+			throw new RuntimeException("Failed to invoke @Watch method " + methodSignature, e);
 		}
 	}
 
