@@ -2,6 +2,7 @@ package org.inventivetalent.npclib.npc.living.insentient;
 
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.plugin.Plugin;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.entity.living.insentient.NPCEntityInsentient;
 import org.inventivetalent.npclib.npc.living.NPCLivingAbstract;
@@ -16,11 +17,11 @@ public abstract class NPCInsentientAbstract<N extends NPCEntityInsentient, B ext
 	}
 
 	@Override
-	public void postInit(Location location) throws Exception {
+	public void postInit(Plugin plugin, Location location) throws Exception {
 		clearGoalSelector();
 		clearTargetSelector();
 
-		super.postInit(location);
+		super.postInit(plugin, location);
 	}
 
 	public Object getGoalSelector() throws ReflectiveOperationException {

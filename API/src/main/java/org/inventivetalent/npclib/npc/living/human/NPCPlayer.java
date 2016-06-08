@@ -5,6 +5,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
 import org.inventivetalent.npclib.ClassBuilder;
@@ -34,7 +35,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	}
 
 	@Override
-	public void postInit(Location location) throws Exception {
+	public void postInit(Plugin plugin, Location location) throws Exception {
 		// Create fake PlayerConnection
 		new FieldResolver(Reflection.nmsClassResolver.resolve("EntityPlayer")).resolve("playerConnection").set(getNpcEntity(), ClassBuilder.buildPlayerConnection(ClassBuilder.buildNetworkManager(false), getNpcEntity()));
 		// Initialize Gamemode
@@ -44,7 +45,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 			updatePlayerList(player);
 		}
 
-		super.postInit(location);
+		super.postInit(plugin, location);
 		//TODO: figure out a way to remove fake players from the player list without breaking everything
 	}
 
