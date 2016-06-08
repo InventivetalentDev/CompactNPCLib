@@ -36,6 +36,29 @@ public class NMSPathEntity {
 		this(getHandles(points));
 	}
 
+	static Vector3DDouble nmsToVector(Object vectorHandle) {
+		try {
+			return new Vector3DDouble(
+					(double) Vec3DFieldResolver.resolve("x", "a").get(vectorHandle),
+					(double) Vec3DFieldResolver.resolve("y", "b").get(vectorHandle),
+					(double) Vec3DFieldResolver.resolve("z", "c").get(vectorHandle));
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	static Object[] getHandles(NMSPathPoint[] points) {
+		Object[] handles = ObjectArrays.newArray(NMSPathPoint.nmsPathPoint, points.length);
+		for (int i = 0; i < points.length; i++) {
+			handles[i] = points[i].getHandle();
+		}
+		return handles;
+	}
+
+	static Object[] getHandles(Iterable<NMSPathPoint> points) {
+		return getHandles(Iterables.toArray(points, NMSPathPoint.class));
+	}
+
 	public void nextIndex() {
 		try {
 			nmsPathEntity.getMethod("a").invoke(handle);
@@ -102,29 +125,6 @@ public class NMSPathEntity {
 
 	public Vector3DDouble getVector(Object entityHandle) {
 		return nmsToVector(getVectorHandle(entityHandle));
-	}
-
-	static Vector3DDouble nmsToVector(Object vectorHandle) {
-		try {
-			return new Vector3DDouble(
-					(double) Vec3DFieldResolver.resolve("x", "a").get(vectorHandle),
-					(double) Vec3DFieldResolver.resolve("y", "b").get(vectorHandle),
-					(double) Vec3DFieldResolver.resolve("z", "c").get(vectorHandle));
-		} catch (ReflectiveOperationException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	static Object[] getHandles(NMSPathPoint[] points) {
-		Object[] handles = ObjectArrays.newArray(NMSPathPoint.nmsPathPoint, points.length);
-		for (int i = 0; i < points.length; i++) {
-			handles[i] = points[i].getHandle();
-		}
-		return handles;
-	}
-
-	static Object[] getHandles(Iterable<NMSPathPoint> points) {
-		return getHandles(Iterables.toArray(points, NMSPathPoint.class));
 	}
 
 }

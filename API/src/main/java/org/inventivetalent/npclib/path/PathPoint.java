@@ -53,7 +53,7 @@ public class PathPoint extends Vector3DInt {
 		if (type == Material.AIR) { return true; }
 		if (type == Material.WATER || type == Material.STATIONARY_WATER) { return true; }
 		if (type == Material.LAVA || type == Material.STATIONARY_LAVA) { return true; }
-		if(!type.isSolid())return true;
+		if (!type.isSolid()) { return true; }
 		return false;
 	}
 
@@ -63,7 +63,7 @@ public class PathPoint extends Vector3DInt {
 		if (type == Material.AIR) { return false; }
 		if (type == Material.WATER || type == Material.STATIONARY_WATER) { return false; }
 		if (type == Material.LAVA || type == Material.STATIONARY_LAVA) { return false; }
-		if(!type.isSolid())return false;
+		if (!type.isSolid()) { return false; }
 		return true;
 	}
 

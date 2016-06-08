@@ -28,18 +28,6 @@ public class NPCInfo {
 	private final String[]                   extraFields;
 	private final String[]                   extraMethods;
 
-	public Class<?> getNMSClass() {
-		try {
-			return Reflection.nmsClassResolver.resolve(nms);
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public String getNPCClassName() {
-		return "NPC" + nms;
-	}
-
 	public static NPCInfo of(NPC annotation) {
 		checkNotNull(annotation);
 		return new NPCInfo(annotation.id(), checkNotNull(annotation.type()), checkNotNull(annotation.bukkit()), checkNotNull(emptyToNull(annotation.nms())), checkNotNull(annotation.entity()), annotation.constructors(), annotation.extraPackages(), annotation.extraFields(), annotation.extraMethods());
@@ -51,6 +39,18 @@ public class NPCInfo {
 		checkArgument(!clazz.isInterface(), "Cannot use @NPC on interface");
 		NPC annotation = (NPC) clazz.getAnnotation(NPC.class);
 		return of(checkNotNull(annotation, "Class has no @NPC annotation"));
+	}
+
+	public Class<?> getNMSClass() {
+		try {
+			return Reflection.nmsClassResolver.resolve(nms);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public String getNPCClassName() {
+		return "NPC" + nms;
 	}
 
 }

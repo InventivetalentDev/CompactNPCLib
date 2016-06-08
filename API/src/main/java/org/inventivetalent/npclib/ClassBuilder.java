@@ -14,8 +14,122 @@ import java.util.List;
 
 public class ClassBuilder {
 
+	protected static Class<?> nmsPacketPlayOutPlayerInfo;
+	protected static Class<?> nmsPlayerInfoData;
+	protected static Class<?> nmsEnumPlayerInfoAction;
+	protected static Class<?> nmsEnumGamemode;
 	static Class<?> generatedChannel;
 	static Class<?> generatedPlayerConnection;
+	static Class<?> NetworkManager = Reflection.nmsClassResolver.resolveSilent("NetworkManager");
+
+	//	public static Object buildPacketPlayOutBed(int id, int x, int y, int z) {
+	//		try {
+	//			Object bedPacket = NMSClass.nmsPacketPlayOutBed.newInstance();
+	//			AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("a")).set(bedPacket, id);
+	//			if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_8_R1)) {
+	//				AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("b")).set(bedPacket, x);
+	//				AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("c")).set(bedPacket, y);
+	//				AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("d")).set(bedPacket, z);
+	//			} else {
+	//				AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("b")).set(bedPacket, Reflection.getNMSClass("BlockPosition").getConstructor(int.class, int.class, int.class).newInstance(x, y, z));
+	//			}
+	//			return bedPacket;
+	//		} catch (Exception e) {
+	//			e.printStackTrace();
+	//		}
+	//		return null;
+	//	}
+	//
+	//	public static Object buildPacketPlayOutAnimation(int entID, int animID) {
+	//		try {
+	//			Object animationPacket = NMSClass.nmsPacketPlayOutAnimation.newInstance();
+	//			AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutAnimation.getDeclaredField("a")).set(animationPacket, entID);
+	//			AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutAnimation.getDeclaredField("b")).set(animationPacket, animID);
+	//
+	//			return animationPacket;
+	//		} catch (Exception e) {
+	//			e.printStackTrace();
+	//		}
+	//		return null;
+	//	}
+	//
+	//	public static Object buildPacketPlayOutEntityTeleport(int id, double x, double y, double z, float yaw, float pitch, boolean onGround, boolean heightCorrection) {
+	//		try {
+	//			Object teleportPacket;
+	//			if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_8_R1)) {
+	//				teleportPacket = NMSClass.nmsPacketPlayOutEntityTeleport.getConstructor(int.class, int.class, int.class, int.class, byte.class, byte.class, boolean.class, boolean.class).newInstance(id, MathUtil.floor(x * 32.0D), MathUtil.floor(y * 32.0D), MathUtil.floor(z * 32.0D), (byte) (int) (yaw * 256F / 360F), (byte) (int) (pitch * 256F / 360F), onGround, heightCorrection);
+	//			} else if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_9_R1)) {
+	//				teleportPacket = NMSClass.nmsPacketPlayOutEntityTeleport.getConstructor(int.class, int.class, int.class, int.class, byte.class, byte.class, boolean.class).newInstance(id, MathUtil.floor(x * 32.0D), MathUtil.floor(y * 32.0D), MathUtil.floor(z * 32.0D), (byte) (int) (yaw * 256F / 360F), (byte) (int) (pitch * 256F / 360F), onGround);
+	//			} else {
+	//				teleportPacket = NMSClass.nmsPacketPlayOutEntityTeleport.newInstance();
+	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("a")).set(teleportPacket, id);
+	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("b")).set(teleportPacket, x);
+	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("c")).set(teleportPacket, y);
+	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("d")).set(teleportPacket, z);
+	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("e")).set(teleportPacket, (byte) (int) (yaw * 256F / 360F));
+	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("f")).set(teleportPacket, (byte) (int) (pitch * 256F / 360F));
+	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("g")).set(teleportPacket, onGround);
+	//			}
+	//
+	//			return teleportPacket;
+	//		} catch (Exception e) {
+	//			e.printStackTrace();
+	//		}
+	//		return null;
+	//	}
+	static Class<?> PacketListener = Reflection.nmsClassResolver.resolveSilent("PacketListener");
+	//
+	//	public static Object buildWatchableObject(int type, int index, Object value) throws Exception {
+	//		return NMSClass.nmsWatchableObject.getConstructor(int.class, int.class, Object.class).newInstance(type, index, value);
+	//	}
+	//
+	//	public static Object setDataWatcherValue(Object dataWatcher, int index, Object value) throws Exception {
+	//		int type = getDataWatcherValueType(value);
+	//
+	//		Object map = AccessUtil.setAccessible(NMSClass.nmsDataWatcher.getDeclaredField("dataValues")).get(dataWatcher);
+	//		NMUClass.gnu_trove_map_hash_TIntObjectHashMap.getDeclaredMethod("put", int.class, Object.class).invoke(map, index, buildWatchableObject(type, index, value));
+	//
+	//		return dataWatcher;
+	//	}
+	//
+	//	public static int getDataWatcherValueType(Object value) {
+	//		int type = 0;
+	//		if (value instanceof Number) {
+	//			if (value instanceof Byte) {
+	//				type = 0;
+	//			} else if (value instanceof Short) {
+	//				type = 1;
+	//			} else if (value instanceof Integer) {
+	//				type = 2;
+	//			} else if (value instanceof Float) {
+	//				type = 3;
+	//			}
+	//		} else if (value instanceof String) {
+	//			type = 4;
+	//		}
+	//		// Should not be needed
+	//		// else if (value != null && value.getClass().equals(NMSClass.ItemStack)) {
+	//		// type = 5;
+	//		// } else if (value != null && (value.getClass().equals(NMSClass.ChunkCoordinates) || value.getClass().equals(NMSClass.BlockPosition))) {
+	//		// type = 6;
+	//		// } else if (value != null && value.getClass().equals(NMSClass.Vector3f)) {
+	//		// type = 7;
+	//		// }
+	//
+	//		return type;
+	//	}
+
+	//	public static Object getDataWatcher(org.bukkit.entity.Entity ent) {
+	//		try {
+	//			return NMSClass.nmsEntity.getDeclaredMethod("getDataWatcher").invoke(Reflection.getHandle(ent));
+	//		} catch (Exception e) {
+	//			e.printStackTrace();
+	//		}
+	//		return null;
+	//	}
+	static FieldResolver  NetworkManagerFieldResolver  = new FieldResolver(NetworkManager);
+	static MethodResolver NetworkManagerMethodResolver = new MethodResolver(NetworkManager);
+	private static boolean initialized = false;
 
 	static {
 		try {
@@ -24,6 +138,37 @@ public class ClassBuilder {
 			generatedPlayerConnection = ClassGenerator.generatePlayerConnection(classPool);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	static {
+		if (!initialized) {
+			try {
+				nmsPacketPlayOutPlayerInfo = Reflection.nmsClassResolver.resolve("PacketPlayOutPlayerInfo");
+				if (Minecraft.VERSION.newerThan(Minecraft.Version.v1_8_R1)) {
+					//						if (NPCLib.getServerVersion() <= 181) {
+					//							nmsPlayerInfoData = Reflection.getNMSClassWithException("PlayerInfoData");
+					//						} else {
+					//							nmsPlayerInfoData = Reflection.getNMSClassWithException("PacketPlayOutPlayerInfo$PlayerInfoData");
+					//						}
+					nmsPlayerInfoData = Reflection.nmsClassResolver.resolve("PlayerInfoData", "PacketPlayOutPlayerInfo$PlayerInfoData");
+					//						if (NPCLib.getServerVersion() <= 181) {
+					//							nmsEnumPlayerInfoAction = Reflection.getNMSClassWithException("EnumPlayerInfoAction");
+					//						} else {
+					//							nmsEnumPlayerInfoAction = Reflection.getNMSClassWithException("PacketPlayOutPlayerInfo$EnumPlayerInfoAction");
+					//						}
+					nmsEnumPlayerInfoAction = Reflection.nmsClassResolver.resolve("EnumPlayerInfoAction", "PacketPlayOutPlayerInfo$EnumPlayerInfoAction");
+				}
+				//					if (NPCLib.getServerVersion() <= 181) {
+				//						nmsEnumGamemode = Reflection.getNMSClassWithException("EnumGamemode");
+				//					} else {
+				//						nmsEnumGamemode = Reflection.getNMSClassWithException("WorldSettings$EnumGamemode");
+				//					}
+				nmsEnumGamemode = Reflection.nmsClassResolver.resolve("EnumGamemode", "WorldSettings$EnumGamemode");
+				initialized = true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -105,155 +250,7 @@ public class ClassBuilder {
 		return comp;
 	}
 
-	//	public static Object buildPacketPlayOutBed(int id, int x, int y, int z) {
-	//		try {
-	//			Object bedPacket = NMSClass.nmsPacketPlayOutBed.newInstance();
-	//			AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("a")).set(bedPacket, id);
-	//			if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_8_R1)) {
-	//				AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("b")).set(bedPacket, x);
-	//				AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("c")).set(bedPacket, y);
-	//				AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("d")).set(bedPacket, z);
-	//			} else {
-	//				AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("b")).set(bedPacket, Reflection.getNMSClass("BlockPosition").getConstructor(int.class, int.class, int.class).newInstance(x, y, z));
-	//			}
-	//			return bedPacket;
-	//		} catch (Exception e) {
-	//			e.printStackTrace();
-	//		}
-	//		return null;
-	//	}
-	//
-	//	public static Object buildPacketPlayOutAnimation(int entID, int animID) {
-	//		try {
-	//			Object animationPacket = NMSClass.nmsPacketPlayOutAnimation.newInstance();
-	//			AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutAnimation.getDeclaredField("a")).set(animationPacket, entID);
-	//			AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutAnimation.getDeclaredField("b")).set(animationPacket, animID);
-	//
-	//			return animationPacket;
-	//		} catch (Exception e) {
-	//			e.printStackTrace();
-	//		}
-	//		return null;
-	//	}
-	//
-	//	public static Object buildPacketPlayOutEntityTeleport(int id, double x, double y, double z, float yaw, float pitch, boolean onGround, boolean heightCorrection) {
-	//		try {
-	//			Object teleportPacket;
-	//			if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_8_R1)) {
-	//				teleportPacket = NMSClass.nmsPacketPlayOutEntityTeleport.getConstructor(int.class, int.class, int.class, int.class, byte.class, byte.class, boolean.class, boolean.class).newInstance(id, MathUtil.floor(x * 32.0D), MathUtil.floor(y * 32.0D), MathUtil.floor(z * 32.0D), (byte) (int) (yaw * 256F / 360F), (byte) (int) (pitch * 256F / 360F), onGround, heightCorrection);
-	//			} else if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_9_R1)) {
-	//				teleportPacket = NMSClass.nmsPacketPlayOutEntityTeleport.getConstructor(int.class, int.class, int.class, int.class, byte.class, byte.class, boolean.class).newInstance(id, MathUtil.floor(x * 32.0D), MathUtil.floor(y * 32.0D), MathUtil.floor(z * 32.0D), (byte) (int) (yaw * 256F / 360F), (byte) (int) (pitch * 256F / 360F), onGround);
-	//			} else {
-	//				teleportPacket = NMSClass.nmsPacketPlayOutEntityTeleport.newInstance();
-	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("a")).set(teleportPacket, id);
-	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("b")).set(teleportPacket, x);
-	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("c")).set(teleportPacket, y);
-	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("d")).set(teleportPacket, z);
-	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("e")).set(teleportPacket, (byte) (int) (yaw * 256F / 360F));
-	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("f")).set(teleportPacket, (byte) (int) (pitch * 256F / 360F));
-	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("g")).set(teleportPacket, onGround);
-	//			}
-	//
-	//			return teleportPacket;
-	//		} catch (Exception e) {
-	//			e.printStackTrace();
-	//		}
-	//		return null;
-	//	}
-
 	public static Class<?> getNMUtilClass(String name) throws ClassNotFoundException {
 		if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_8_R1)) { return Class.forName("net.minecraft.util." + name); } else { return Class.forName(name); }
-	}
-	//
-	//	public static Object buildWatchableObject(int type, int index, Object value) throws Exception {
-	//		return NMSClass.nmsWatchableObject.getConstructor(int.class, int.class, Object.class).newInstance(type, index, value);
-	//	}
-	//
-	//	public static Object setDataWatcherValue(Object dataWatcher, int index, Object value) throws Exception {
-	//		int type = getDataWatcherValueType(value);
-	//
-	//		Object map = AccessUtil.setAccessible(NMSClass.nmsDataWatcher.getDeclaredField("dataValues")).get(dataWatcher);
-	//		NMUClass.gnu_trove_map_hash_TIntObjectHashMap.getDeclaredMethod("put", int.class, Object.class).invoke(map, index, buildWatchableObject(type, index, value));
-	//
-	//		return dataWatcher;
-	//	}
-	//
-	//	public static int getDataWatcherValueType(Object value) {
-	//		int type = 0;
-	//		if (value instanceof Number) {
-	//			if (value instanceof Byte) {
-	//				type = 0;
-	//			} else if (value instanceof Short) {
-	//				type = 1;
-	//			} else if (value instanceof Integer) {
-	//				type = 2;
-	//			} else if (value instanceof Float) {
-	//				type = 3;
-	//			}
-	//		} else if (value instanceof String) {
-	//			type = 4;
-	//		}
-	//		// Should not be needed
-	//		// else if (value != null && value.getClass().equals(NMSClass.ItemStack)) {
-	//		// type = 5;
-	//		// } else if (value != null && (value.getClass().equals(NMSClass.ChunkCoordinates) || value.getClass().equals(NMSClass.BlockPosition))) {
-	//		// type = 6;
-	//		// } else if (value != null && value.getClass().equals(NMSClass.Vector3f)) {
-	//		// type = 7;
-	//		// }
-	//
-	//		return type;
-	//	}
-
-	//	public static Object getDataWatcher(org.bukkit.entity.Entity ent) {
-	//		try {
-	//			return NMSClass.nmsEntity.getDeclaredMethod("getDataWatcher").invoke(Reflection.getHandle(ent));
-	//		} catch (Exception e) {
-	//			e.printStackTrace();
-	//		}
-	//		return null;
-	//	}
-
-	private static boolean initialized = false;
-	protected static Class<?> nmsPacketPlayOutPlayerInfo;
-	protected static Class<?> nmsPlayerInfoData;
-	protected static Class<?> nmsEnumPlayerInfoAction;
-	protected static Class<?> nmsEnumGamemode;
-
-	static Class<?> NetworkManager = Reflection.nmsClassResolver.resolveSilent("NetworkManager");
-	static Class<?> PacketListener = Reflection.nmsClassResolver.resolveSilent("PacketListener");
-
-	static FieldResolver  NetworkManagerFieldResolver  = new FieldResolver(NetworkManager);
-	static MethodResolver NetworkManagerMethodResolver = new MethodResolver(NetworkManager);
-
-	static {
-		if (!initialized) {
-			try {
-				nmsPacketPlayOutPlayerInfo = Reflection.nmsClassResolver.resolve("PacketPlayOutPlayerInfo");
-				if (Minecraft.VERSION.newerThan(Minecraft.Version.v1_8_R1)) {
-					//						if (NPCLib.getServerVersion() <= 181) {
-					//							nmsPlayerInfoData = Reflection.getNMSClassWithException("PlayerInfoData");
-					//						} else {
-					//							nmsPlayerInfoData = Reflection.getNMSClassWithException("PacketPlayOutPlayerInfo$PlayerInfoData");
-					//						}
-					nmsPlayerInfoData = Reflection.nmsClassResolver.resolve("PlayerInfoData", "PacketPlayOutPlayerInfo$PlayerInfoData");
-					//						if (NPCLib.getServerVersion() <= 181) {
-					//							nmsEnumPlayerInfoAction = Reflection.getNMSClassWithException("EnumPlayerInfoAction");
-					//						} else {
-					//							nmsEnumPlayerInfoAction = Reflection.getNMSClassWithException("PacketPlayOutPlayerInfo$EnumPlayerInfoAction");
-					//						}
-					nmsEnumPlayerInfoAction = Reflection.nmsClassResolver.resolve("EnumPlayerInfoAction", "PacketPlayOutPlayerInfo$EnumPlayerInfoAction");
-				}
-				//					if (NPCLib.getServerVersion() <= 181) {
-				//						nmsEnumGamemode = Reflection.getNMSClassWithException("EnumGamemode");
-				//					} else {
-				//						nmsEnumGamemode = Reflection.getNMSClassWithException("WorldSettings$EnumGamemode");
-				//					}
-				nmsEnumGamemode = Reflection.nmsClassResolver.resolve("EnumGamemode", "WorldSettings$EnumGamemode");
-				initialized = true;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 	}
 }

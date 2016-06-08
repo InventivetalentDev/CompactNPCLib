@@ -4,7 +4,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Zombie;
 import org.inventivetalent.npclib.annotation.NPC;
 import org.inventivetalent.npclib.entity.living.insentient.EntityZombie;
-import org.inventivetalent.npclib.npc.living.insentient.NPCInsentientAbstract;
 
 @NPC(id = 54,
 	 type = EntityType.ZOMBIE,

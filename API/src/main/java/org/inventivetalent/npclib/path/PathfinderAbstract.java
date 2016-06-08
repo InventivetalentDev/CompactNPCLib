@@ -40,27 +40,27 @@ public abstract class PathfinderAbstract<N extends NPCAbstract> extends AIAbstra
 			return;
 		}
 
-		int i=(int)this.progress;
-		int current =this.progress >= i ? i : i - 1;
+		int i = (int) this.progress;
+		int current = this.progress >= i ? i : i - 1;
 		double d = this.progress - current;
 		double d1 = 1 - d;
 
-//		Vector3DDouble currentPoint = this.currentPoint.add(.5, .5, .5);
+		//		Vector3DDouble currentPoint = this.currentPoint.add(.5, .5, .5);
 
 		if (d + this.speed < 1) {
 			double dx = (currentPoint.getX() - getNpcVector().getX()) * speed;
 			double dz = (currentPoint.getZ() - getNpcVector().getZ()) * speed;
 
 			//TODO: do we really need this?
-//						dx += Math.random() / 10;
-//						dz += Math.random() / 10;
+			//						dx += Math.random() / 10;
+			//						dz += Math.random() / 10;
 
 			getNpc().getNpcEntity().move(dx, 0, dz);
 			if (getNpc() instanceof NPCHumanAbstract) {
 				((NPCEntityHuman) getNpc().getNpcEntity()).checkMovement(dx, 0, dz);
 			}
 			this.progress += this.speed;
-			System.out.println("progress: "+this.progress);
+			System.out.println("progress: " + this.progress);
 		} else {
 			double bx = (currentPoint.getX() - getNpcVector().getX()) * d1;
 			double bz = (currentPoint.getZ() - getNpcVector().getZ()) * d1;
@@ -77,13 +77,14 @@ public abstract class PathfinderAbstract<N extends NPCAbstract> extends AIAbstra
 				double dz = bz + (currentPoint.getZ() - getNpcVector().getZ()) * d2;
 
 				//TODO: do we really need this?
-//								dx += Math.random() / 10;
-//								dz += Math.random() / 10;
+				//								dx += Math.random() / 10;
+				//								dz += Math.random() / 10;
 
 				getNpc().getNpcEntity().move(dx, dy, dz);
 				if (getNpc() instanceof NPCHumanAbstract) {
 					((NPCEntityHuman) getNpc().getNpcEntity()).checkMovement(dx, dy, dz);
-				}this.progress += this.speed;
+				}
+				this.progress += this.speed;
 			} else {
 				getNpc().getNpcEntity().move(bx, 0, bz);
 				if (getNpc() instanceof NPCHumanAbstract) {

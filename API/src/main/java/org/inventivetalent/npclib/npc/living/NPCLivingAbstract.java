@@ -32,7 +32,7 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 
 	@Watch("g(float,float)")
 	public boolean onHeadingMove(float strafe, float forward) {
-//		System.out.println("onHeadingMove -> NPCLivingAbstract");
+		//		System.out.println("onHeadingMove -> NPCLivingAbstract");
 		//TODO: NPCMoveEvent...
 		return true;
 	}
@@ -85,7 +85,7 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 		}
 	}
 
-	public void pathfindTo(Vector3DDouble target,double speed) {
+	public void pathfindTo(Vector3DDouble target, double speed) {
 		this.pathfinder = new AStarPathfinder(target, speed, 128);
 		//noinspection unchecked
 		this.pathfinder.setNpc(this);

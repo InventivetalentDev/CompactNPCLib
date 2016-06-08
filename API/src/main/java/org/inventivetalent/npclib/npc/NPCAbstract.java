@@ -25,12 +25,11 @@ import java.util.List;
 
 public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
-	private final   N              npcEntity;
 	protected final FieldResolver  npcEntityFieldResolver;
 	protected final MethodResolver npcEntityMethodResolver;
 	protected final FieldResolver  entityFieldResolver  = new FieldResolver(Reflection.nmsClassResolver.resolveSilent("Entity"));
 	protected final MethodResolver entityMethodResolver = new MethodResolver(Reflection.nmsClassResolver.resolveSilent("Entity"));
-
+	private final   N              npcEntity;
 	private final List<AIAbstract> aiList = new ArrayList<>();
 
 	protected NPCAbstract(N npcEntity) {
@@ -87,7 +86,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	@Watch("m()")
 	public boolean onBaseTick() {
-//		System.out.println("base tick!");
+		//		System.out.println("base tick!");
 
 		tickAI();
 
