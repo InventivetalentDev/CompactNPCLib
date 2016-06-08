@@ -59,7 +59,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		boolean die = super.onDie();
 		if (die) {
 			// Remove players from the world manually
-			Bukkit.getScheduler().runTaskLater(Bukkit.getPluginManager().getPlugin("NPCLib"), new Runnable() {
+			Bukkit.getScheduler().runTaskLater(getPlugin(), new Runnable() {
 				@Override
 				public void run() {
 					try {
@@ -94,7 +94,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 						}
 					}
 				}
-			}.runTaskLater(Bukkit.getPluginManager().getPlugin("NPCLib"), 10);
+			}.runTaskLater(getPlugin(), 10);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
