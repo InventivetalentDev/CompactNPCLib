@@ -1,5 +1,6 @@
 package org.inventivetalent.npclib;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import lombok.Getter;
 import org.bukkit.entity.EntityType;
@@ -117,6 +118,35 @@ public enum NPCType {
 
 	public static NPCType forEntityType(EntityType entityType) {
 		return entityTypeMap.get(checkNotNull(entityType));
+	}
+
+	public static NPCType fromString(String string) {
+		if (Strings.isNullOrEmpty(string)) { return null; }
+		NPCType type;
+		if ((type = valueOfOrNull(string.toUpperCase())) != null) {
+			return type;
+		}
+		if ((type = valueOfOrNull(string.toUpperCase().replace(" ", "_"))) != null) {
+			return type;
+		}
+		if ((type = valueOfOrNull(string.toUpperCase().replaceAll("\\s", ""))) != null) {
+			return type;
+		}
+		for (NPCType npcType : values()) {
+			String combined = npcType.name().replace("_", "");
+			if (combined.equals(string.toUpperCase())) {
+				return npcType;
+			}
+		}
+		return null;
+	}
+
+	private static NPCType valueOfOrNull(String string) {
+		try {
+			return valueOf(string);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
 	}
 
 }
