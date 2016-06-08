@@ -2,134 +2,121 @@ package org.inventivetalent.npclib;
 
 import com.google.common.collect.Maps;
 import lombok.Getter;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.inventivetalent.npclib.entity.NPCEntity;
+import org.inventivetalent.npclib.npc.NPCAbstract;
+import org.inventivetalent.npclib.npc.NPCExperienceOrb;
+import org.inventivetalent.npclib.npc.NPCItem;
+import org.inventivetalent.npclib.npc.living.NPCArmorStand;
+import org.inventivetalent.npclib.npc.living.insentient.NPCEnderDragon;
+import org.inventivetalent.npclib.npc.living.insentient.NPCPigZombie;
+import org.inventivetalent.npclib.npc.living.insentient.NPCSlime;
+import org.inventivetalent.npclib.npc.living.insentient.NPCZombie;
+import org.inventivetalent.npclib.npc.living.insentient.creature.ageable.NPCVillager;
+import org.inventivetalent.npclib.npc.living.insentient.creature.ageable.animal.*;
+import org.inventivetalent.npclib.npc.living.insentient.creature.ageable.animal.tameable.NPCOcelot;
+import org.inventivetalent.npclib.npc.living.insentient.creature.ageable.animal.tameable.NPCWolf;
+import org.inventivetalent.npclib.npc.living.insentient.creature.golem.NPCIronGolem;
+import org.inventivetalent.npclib.npc.living.insentient.creature.golem.NPCShulker;
+import org.inventivetalent.npclib.npc.living.insentient.creature.golem.NPCSnowman;
+import org.inventivetalent.npclib.npc.living.insentient.creature.monster.*;
+import org.inventivetalent.npclib.npc.living.insentient.flying.NPCGhast;
+import org.inventivetalent.npclib.npc.living.insentient.water.NPCSquid;
 
 import java.util.Map;
 
-public enum NPCType {
-	;
-	//	DROPPED_ITEM("DROPPED_ITEM", "Item", 1, "EntityItem", EntityItem.class),
-	//	EXPERIENCE_ORB("EXPERIENCE_ORB", "ExperienceOrb", 2, "EntityExperienceOrb", EntityExperienceOrb.class),
-	//	LEASH_KNOT("LEASH_HITCH", "LeashHitch", 8, "EntityLeash"),
-	//	PAINTING("PAINTING", "Painting", 9, "EntityPainting"),
-	//	ARROW("ARROW", "Arrow", 10, "EntityTippedArrow"),
-	//	SNOWBALL("SNOWBALL", "Snowball", 11, "EntitySnowball"),
-	//	LARGE_FIREBALL("FIREBALL", "LargeFireball", 12, "EntityLargeFireball"),
-	//	SMALL_FIREBALL("SMALL_FIREBALL", "SmallFireball", 13, "EntitySmallFireball"),
-	//	ENDER_PEARL("ENDER_PEARL", "EnderPearl", 14, "EntityEnderPearl"),
-	//	ENDER_SIGNAL("ENDER_SIGNAL", "EnderSignal", 15, "EntityEnderSignal"),
-	//
-	//	THROWN_EXP_BOTTLE("THROWN_EXP_BOTTLE", "ThrownExpBottle", 17, "EntityThrownExpBottle"),
-	//	ITEM_FRAME("ITEM_FRAME", "ItemFrame", 18, "EntityItemFrame"),
-	//	WITHER_SKULL("WITHER_SKULL", "WitherSkull", 19, "EntityWitherSkull"),
-	//	PRIMED_TNT("PRIMED_TNT", "TNTPrimed", 20, "EntityTNTPrimed"),
-	//	FALLING_BLOCK("FALLING_BLOCK", "FallingBlock", 21, "EntityFallingBlock"),
-	//	FIREWORK("FIREWORK", "Firework", 22, "EntityFireworks"),
-	//	TIPPED_ARROW("TIPPED_ARROW", "TippedArrow", 23, "EntityTippedArrow"),
-	//	SPECTRAL_ARROW("SPECTRAL_ARROW", "SpectralArrow", 24, "EntitySpectralArrow"),
-	//	SHULKER_BULLET("SHULKER_BULLET", "ShulkerBullet", 25, "EntityShulkerBullet"),
-	//	DRAGON_FIREBALL("DRAGON_FIREBALL", "DragonFireball", 26, "EntityDragonFireball"),
-	//
-	//	ARMOR_STAND("ARMOR_STAND", "ArmorStand", 30, "EntityArmorStand"),
-	//
-	//	MINECART_COMMAND("MINECART_COMMAND", "minecart.CommandMinecart", 40, "EntityMinecartCommandBlock"),
-	//	BOAT("BOAT", "Boat", 41, "EntityBoat"),
-	//	MINECART_RIDEABLE("MINECART", "minecart.RideableMinecart", 42, "EntityMinecartRideable"),
-	//	MINECART_CHEST("MINECART_CHEST", "minecart.StorageMinecart", 43, "EntityMinecartChest"),
-	//	MINECART_FURNACE("MINECART_FURNACE", "minecart.PoweredMinecart", 44, "EntityMinecartFurnace"),
-	//	MINECART_TNT("MINECART_TNT", "minecart.ExplosiveMinecart", 45, "EntityMinecartTNT"),
-	//	MINECART_HOPPER("MINECART_HOPPER", "minecart.HopperMinecart", 46, "EntityMinecartHopper"),
-	//	MINECART_MOB_SPAWNER("MINECART_MOB_SPAWNER", "minecart.SpawnerMinecart", 47, "EntityMinecartMobSpawner"),
-	//
-	//	CREEPER("CREEPER", "Creeper", 50, "EntityCreeper"),
-	//	SKELETON("SKELETON", "Skeleton", 51, "EntitySkeleton"),
-	//	SPIDER("SPIDER", "Spider", 52, "EntitySpider"),
-	//	GIANT("GIANT", "Giant", 53, "EntityGiantZombie"),
-	//	ZOMBIE("ZOMBIE", "Zombie", 54, "EntityZombie"),
-	//	SLIME("SLIME", "Slime", 55, "EntitySlime"),
-	//	GHAST("GHAST", "Ghast", 56, "EntityGhast"),
-	//	PIG_ZOMBIE("PIG_ZOMBIE", "PigZombie", 57, "EntityPigZombie"),
-	//	ENDERMAN("ENDERMAN", "Enderman", 58, "EntityEnderman"),
-	//	CAVE_SPIDER("SPIDER", "Spider", 59, "EntityCaveSpider"),
-	//	SILVERFISH("SILVERFISH", "Silverfish", 60, "EntitySilverfish"),
-	//	BLAZE("BLAZE", "Blaze", 61, "EntityBlaze"),
-	//	MAGMA_CUBE("MAGMA_CUBE", "MagmaCube", 62, "EntityMagmaCube"),
-	//	ENDER_DRAGON("ENDER_DRAGON", "EnderDragon", 63, "EntityEnderDragon"),
-	//	WITHER("WITHER", "Wither", 64, "EntityWither"),
-	//	BAT("BAT", "Bat", 65, "EntityBat"),
-	//	WITCH("WITCH", "Witch", 66, "EntityWitch"),
-	//	ENDERMITE("ENDERMITE", "Endermite", 67, "EntityEndermite"),
-	//	GUARDIAN("GUARDIAN", "Guardian", 68, "EntityGuardian"),
-	//	SHULKER("SHULKER", "Shulker", 69, "EntityShulker"),
-	//
-	//	PIG("PIG", "Pig", 90, "EntityPig"),
-	//	SHEEP("SHEEP", "Sheep", 91, "EntitySheep"),
-	//	COW("COW", "Cow", 92, "EntityCow"),
-	//	CHICKEN("CHICKEN", "Chicken", 93, "EntityChicken"),
-	//	SQUID("SQUID", "Squid", 94, "EntitySquid"),
-	//	WOLF("WOLF", "Wolf", 95, "EntityWolf"),
-	//	MUSHROOM_COW("MUSHROOM_COW", "MushroomCow", 96, "EntityMushroomCow"),
-	//	SNOWMAN("SNOWMAN", "Snowman", 97, "EntitySnowman"),
-	//	OCELOT("OCELOT", "Ocelot", 98, "EntityOcelot"),
-	//	IRON_GOLEM("IRON_GOLEM", "IronGolem", 99, "EntityIronGolem"),
-	//	HORSE("HORSE", "Horse", 100, "EntityHorse"),
-	//	RABBIT("RABBIT", "Rabbit", 101, "EntityRabbit"),
-	//
-	//	VILLAGER("VILLAGER", "Villager", 120, "EntityVillager"),
-	//
-	//	ENDER_CRYSTAL("ENDER_CRYSTAL", "EnderCrystal", 200, "EntityEnderCrystal");
+import static com.google.common.base.Preconditions.checkNotNull;
 
-	private static final Map<EntityType, NPCType> ENTITY_TYPE_MAP = Maps.newHashMap();
+public enum NPCType {
+	DROPPED_ITEM(EntityType.DROPPED_ITEM, NPCItem.class),
+	EXPERIENCE_ORB(EntityType.EXPERIENCE_ORB, NPCExperienceOrb.class),
+	//	LEASH_KNOT(EntityType.LEASH_HITCH, NPCLeashKnot.class),
+	//	PAINTING(EntityType.PAINTING,NPCPainting.class),
+	//	ARROW(EntityType.ARROW,NPCArrow.class),
+	//	SNOWBALL(EntityType.SNOWBALL,NPCSnowball.class),
+	//	LARGE_FIREBALL(EntityType.FIREBALL,NPCLargeFireball.class),
+	//	SMALL_FIREBALL(EntityType.SMALL_FIREBALL,NPCSmallFireball.class),
+	//	ENDER_PEARL(EntityType.ENDER_PEARL,NPCEnderPearl.class),
+	//	ENDER_SIGNAL(EntityType.ENDER_SIGNAL,NPCEnderSignal.class),
+
+	//	THROWN_EXP_BOTTLE(EntityType.THROWN_EXP_BOTTLE,NPCExpBottle.class),
+	//	ITEM_FRAME(EntityType.ITEM_FRAME,NPCItemFrame.class),
+	//	WITHER_SKULL(EntityType.WITHER_SKULL,NPCWitherSkull.class),
+	//	PRIMED_TNT(EntityType.PRIMED_TNT,NPCPrimedTnt.class),
+	//	FALLING_BLOCK(EntityType.FALLING_BLOCK,NPCFallingBlock.class),
+	//	FIREWORK(EntityType.FIREWORK,NPCFirework.class),
+	//	TIPPED_ARROW(EntityType.TIPPED_ARROW,NPCTippedArrow.class),
+	//	SPECTRAL_ARROW(EntityType.SPECTRAL_ARROW,NPCSpectralArrow.class),
+	//	SHULKER_BULLET(EntityType.SHULKER_BULLET,NPCShulkerBullet.class),
+	//	DRAGON_FIREBALL(EntityType.DRAGON_FIREBALL,NPCDragonFireball.class),
+
+	ARMOR_STAND(EntityType.ARMOR_STAND, NPCArmorStand.class),
+
+	//	MINECART_COMMAND(EntityType.MINECART_COMMAND,NPCMinecartCommand.class),
+	//	BOAT(EntityType.BOAT,NPCBoat.class),
+	//	MINECART_RIDEABLE(EntityType.MINECART,NPCMinecartRideable.class),
+	//	MINECART_CHEST(EntityType.MINECART_CHEST,NPCMinecartChest.class),
+	//	MINECART_FURNACE(EntityType.MINECART_FURNACE,NPCMinecartFurnace.class),
+	//	MINECART_TNT(EntityType.MINECART_TNT,NPCMinecartTnt.class),
+	//	MINECART_HOPPER(EntityType.MINECART_HOPPER,NPCMinecartHopper.class),
+	//	MINECART_MOB_SPAWNER(EntityType.MINECART_MOB_SPAWNER,NPCMinecartMobSpawner.class),
+
+	CREEPER(EntityType.CREEPER, NPCCreeper.class),
+	SKELETON(EntityType.SKELETON, NPCSkeleton.class),
+	SPIDER(EntityType.SPIDER, NPCSpider.class),
+	GIANT(EntityType.GIANT, NPCGiant.class),
+	ZOMBIE(EntityType.ZOMBIE, NPCZombie.class),
+	SLIME(EntityType.SLIME, NPCSlime.class),
+	GHAST(EntityType.GHAST, NPCGhast.class),
+	PIG_ZOMBIE(EntityType.PIG_ZOMBIE, NPCPigZombie.class),
+	ENDERMAN(EntityType.ENDERMAN, NPCEnderman.class),
+	CAVE_SPIDER(EntityType.CAVE_SPIDER, NPCCaveSpider.class),
+	//	SILVERFISH(EntityType.SILVERFISH, NPCSilverfish.class),
+	//	BLAZE(EntityType.BLAZE, NPCBlaze.class),
+	//	MAGMA_CUBE(EntityType.MAGMA_CUBE, NPCMagmaCube.class),
+	ENDER_DRAGON(EntityType.ENDER_DRAGON, NPCEnderDragon.class),
+	WITHER(EntityType.WITHER, NPCWither.class),
+	//	BAT(EntityType.BAT, NPCBat.class),
+	WITCH(EntityType.WITCH, NPCWitch.class),
+	ENDERMITE(EntityType.ENDERMITE, NPCEndermite.class),
+	GUARDIAN(EntityType.GUARDIAN, NPCGuardian.class),
+	SHULKER(EntityType.SHULKER, NPCShulker.class),
+
+	PIG(EntityType.PIG, NPCPig.class),
+	SHEEP(EntityType.SHEEP, NPCSheep.class),
+	COW(EntityType.COW, NPCCow.class),
+	CHICKEN(EntityType.CHICKEN, NPCChicken.class),
+	SQUID(EntityType.SQUID, NPCSquid.class),
+	WOLF(EntityType.WOLF, NPCWolf.class),
+	MUSHROOM_COW(EntityType.MUSHROOM_COW, NPCMushroomCow.class),
+	SNOWMAN(EntityType.SNOWMAN, NPCSnowman.class),
+	OCELOT(EntityType.OCELOT, NPCOcelot.class),
+	IRON_GOLEM(EntityType.IRON_GOLEM, NPCIronGolem.class),
+	HORSE(EntityType.HORSE, NPCHorse.class),
+	RABBIT(EntityType.RABBIT, NPCRabbit.class),
+
+	VILLAGER(EntityType.VILLAGER, NPCVillager.class),
+
+	//	ENDER_CRYSTAL(EntityType.ENDER_CRYSTAL,NPCEnderCrystal.class),
+	;
+
+	private static final Map<EntityType, NPCType> entityTypeMap = Maps.newHashMap();
 
 	static {
-		//
-		//		for (NPCType npcType : values()) {
-		//			ENTITY_TYPE_MAP.put(npcType.entityTypeName, npcType);
-		//		}
-	}
-
-	@Getter private final String   entityTypeName;
-	@Getter private final String   entityClassName;
-	@Getter private final int      typeId;
-	@Getter private final String   nmsClassName;
-	@Getter private final Class<?> npcInterfaceClass;
-	@Getter private final String npcClassName;
-
-	NPCType(String entityTypeName, String entityClassName, int typeId, String nmsName, Class<? extends NPCEntity> npcInterfaceClass) {
-		this.entityTypeName = entityTypeName;
-		this.entityClassName = entityClassName;
-		this.typeId = typeId;
-		this.nmsClassName = nmsName;
-		this.npcInterfaceClass = npcInterfaceClass;
-
-		this.npcClassName = "NPC" + nmsName;
-	}
-
-	public static NPCType fromEntityType(EntityType entityType) {
-		return ENTITY_TYPE_MAP.get(entityType);
-	}
-
-	public EntityType getEntityType() {
-		return EntityType.valueOf(entityTypeName);
-	}
-
-	public Class<? extends Entity> getEntityClass() {
-		//noinspection unchecked
-		return (Class<? extends Entity>) Reflection.classResolver.resolveSilent("org.bukkit.entity." + entityClassName);
-	}
-
-	public Class<?> getNMSClass() {
-		try {
-			return Reflection.nmsClassResolver.resolve(nmsClassName);
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException(e);
+		for (NPCType npcType : values()) {
+			entityTypeMap.put(npcType.entityType, npcType);
 		}
 	}
 
-	public Class<?> getNPCClass() {
-		return Reflection.getVersionedClass("org.inventivetalent.npc.entity", this.npcClassName).getClazz();
+	@Getter private final EntityType                   entityType;
+	@Getter private       Class<? extends NPCAbstract> npcClass;
+
+	NPCType(EntityType entityType, Class<? extends NPCAbstract> npcClass) {
+		this.entityType = entityType;
+		this.npcClass = npcClass;
+	}
+
+	public static NPCType forEntityType(EntityType entityType) {
+		return entityTypeMap.get(checkNotNull(entityType));
 	}
 
 }
