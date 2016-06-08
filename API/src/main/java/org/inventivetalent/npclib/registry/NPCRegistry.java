@@ -140,7 +140,7 @@ public class NPCRegistry {
 
 	protected <T extends NPCAbstract> T wrapAndInitEntity(NPCEntity entity, Location location, Class<T> npcClass) throws Exception {
 		NPCAbstract npcAbstract = (NPCAbstract) new ConstructorResolver(npcClass).resolveFirstConstructorSilent().newInstance(entity);
-		npcAbstract.postInit(location);
+		npcAbstract.postInit(this.plugin, location);
 		//noinspection unchecked
 		return (T) npcAbstract;
 	}

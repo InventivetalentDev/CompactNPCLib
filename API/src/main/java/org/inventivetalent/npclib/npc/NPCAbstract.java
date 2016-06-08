@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.plugin.Plugin;
 import org.inventivetalent.boundingbox.BoundingBox;
 import org.inventivetalent.npclib.NPCLib;
 import org.inventivetalent.npclib.Reflection;
@@ -29,8 +30,9 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	protected final MethodResolver npcEntityMethodResolver;
 	protected final FieldResolver  entityFieldResolver  = new FieldResolver(Reflection.nmsClassResolver.resolveSilent("Entity"));
 	protected final MethodResolver entityMethodResolver = new MethodResolver(Reflection.nmsClassResolver.resolveSilent("Entity"));
-	private final   N              npcEntity;
+	private final N npcEntity;
 	private final List<AIAbstract> aiList = new ArrayList<>();
+	protected Plugin plugin;
 
 	protected NPCAbstract(N npcEntity) {
 		this.npcEntity = npcEntity;
@@ -44,7 +46,8 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		//		postInit();
 	}
 
-	public void postInit(Location location) throws Exception {
+	public void postInit(Plugin plugin, Location location) throws Exception {
+		this.plugin = plugin;
 		//TODO: Pathfinder
 
 		//		Reflection.nmsClassResolver.resolve("Entity")
@@ -104,6 +107,10 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		System.out.println("onDie -> NPCAbstract");
 		//TODO: EntityDeathEvent
 		return true;
+	}
+
+	public Plugin getPlugin() {
+		return plugin;
 	}
 
 	public N getNpcEntity() {
