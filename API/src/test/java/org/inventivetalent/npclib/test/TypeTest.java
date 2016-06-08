@@ -5,6 +5,7 @@ import org.inventivetalent.npclib.NPCType;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class TypeTest {
 
@@ -21,6 +22,9 @@ public class TypeTest {
 		assertEquals(NPCType.MUSHROOM_COW, NPCType.fromString("mushroomCow"));
 		assertEquals(NPCType.SHULKER, NPCType.fromString("Shulker"));
 		assertEquals(NPCType.ENDER_DRAGON, NPCType.fromString("EnderDragon"));
+
+		assertNull(NPCType.fromString("does not exist"));
+		assertNull(NPCType.fromString("noentity"));
 	}
 
 }
