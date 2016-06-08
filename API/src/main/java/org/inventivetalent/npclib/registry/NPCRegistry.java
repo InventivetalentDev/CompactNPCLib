@@ -1,5 +1,6 @@
 package org.inventivetalent.npclib.registry;
 
+import com.google.common.base.Strings;
 import javassist.ClassPool;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -45,6 +46,8 @@ public class NPCRegistry {
 	 * @return the spawned NPC Entity
 	 */
 	public <T extends NPCAbstract> T createNPC(Location location, Class<T> npcClass) {
+		checkNotNull(location);
+		checkNotNull(npcClass);
 		try {
 			NPCInfo npcInfo = NPCInfo.of(npcClass);
 			NPCEntity npcEntity = createEntity(location, npcInfo);
@@ -76,6 +79,9 @@ public class NPCRegistry {
 	 * @return the spawned NPC entity
 	 */
 	public <T extends NPCHumanAbstract> T createPlayerNPC(Location location, Class<T> npcClass, GameProfileWrapper gameProfile) {
+		checkNotNull(location);
+		checkNotNull(npcClass);
+		checkNotNull(gameProfile);
 		try {
 			NPCInfo npcInfo = NPCInfo.of(npcClass);
 			NPCEntity npcEntity = createPlayerEntity(location, npcInfo, gameProfile);
@@ -96,7 +102,10 @@ public class NPCRegistry {
 	 * @return the spawned NPC entity
 	 */
 	public <T extends NPCHumanAbstract> T createPlayerNPC(Location location, Class<T> npcClass, UUID uuid, String name) {
-		return createPlayerNPC(location, npcClass, new GameProfileWrapper(uuid, name));
+		if (uuid == null && Strings.isNullOrEmpty(name)) {
+			throw new IllegalArgumentException("UUID and Name cannot both be empty");
+		}
+		return createPlayerNPC(location, npcClass, new GameProfileWrapper(checkNotNull(uuid), name));
 	}
 
 	protected <T extends NPCEntity> T createEntity(Location location, NPCInfo npcInfo) {
