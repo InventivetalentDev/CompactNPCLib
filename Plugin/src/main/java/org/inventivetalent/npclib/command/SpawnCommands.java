@@ -26,7 +26,8 @@ public class SpawnCommands {
 			 description = "Spawn an NPC at your location or the specified coordinates",
 			 min = 1,
 			 max = 5,
-			 fallbackPrefix = "npclib")
+			 fallbackPrefix = "npclib",
+			 errorHandler = FeedbackErrorHandler.class)
 	@Permission("npclib.command.spawn")
 	public void spawnNPC(CommandSender sender, String typeString, @OptionalArg Double x, @OptionalArg Double y, @OptionalArg Double z, @OptionalArg String worldName) {
 		NPCType npcType = NPCType.fromString(typeString);
@@ -53,8 +54,8 @@ public class SpawnCommands {
 		sender.sendMessage("§aNPC spawned at §7" + location.getWorld().getName() + "," + location.getX() + "," + location.getY() + "," + location.getZ());
 	}
 
-	@Completion(name="spawnNpc")
-	public void spawnNPC(List<String> list, CommandSender sender,String typeString, @OptionalArg Double x, @OptionalArg Double y, @OptionalArg Double z, @OptionalArg String worldName) {
+	@Completion(name = "spawnNpc")
+	public void spawnNPC(List<String> list, CommandSender sender, String typeString, @OptionalArg Double x, @OptionalArg Double y, @OptionalArg Double z, @OptionalArg String worldName) {
 		if (Strings.isNullOrEmpty(typeString)) {
 			for (NPCType npcType : NPCType.values()) {
 				list.add(npcType.name());
