@@ -8,18 +8,29 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.inventivetalent.npclib.command.SpawnCommands;
 import org.inventivetalent.npclib.npc.living.NPCLivingAbstract;
 import org.inventivetalent.npclib.npc.living.human.NPCPlayer;
+import org.inventivetalent.npclib.registry.NPCRegistry;
+import org.inventivetalent.pluginannotations.PluginAnnotations;
 import org.inventivetalent.vectors.d3.Vector3DDouble;
 
 import java.util.UUID;
 
 public class NPCLibPlugin extends JavaPlugin implements Listener {
 
+	private NPCRegistry pluginNpcRegistry;
+
 	@Override
 	public void onEnable() {
 		NPCLib.logger = getLogger();
 		Bukkit.getPluginManager().registerEvents(this, this);
+		PluginAnnotations.COMMAND.load(this, new SpawnCommands(this));
+		pluginNpcRegistry = NPCLib.createRegistry(this);
+	}
+
+	public NPCRegistry getPluginNpcRegistry() {
+		return pluginNpcRegistry;
 	}
 
 	@EventHandler

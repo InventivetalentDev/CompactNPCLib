@@ -77,6 +77,7 @@
                                     <include>org.mcstats.*</include>
                                     <include>org.inventivetalent.npc-lib:**</include>
                                     <include>org.inventivetalent:reflectionhelper**</include>
+                                    <include>org.inventivetalent:pluginannotations**</include>
                                     <include>org.inventivetalent:mc-wrappers**</include>
                                     <include>org.inventivetalent:vectors**</include>
                                     <include>org.inventivetalent:boundingboxapi**</include>
