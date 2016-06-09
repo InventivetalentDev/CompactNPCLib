@@ -67,17 +67,15 @@ public class SpawnCommands {
 
 	@Completion(name = "spawnNpc")
 	public void spawnNPC(List<String> list, CommandSender sender, String typeString, @OptionalArg Double x, @OptionalArg Double y, @OptionalArg Double z, @OptionalArg String worldName) {
-		if (Strings.isNullOrEmpty(typeString)) {
+		if (x == null && NPCType.fromString(typeString) == null) {
 			for (NPCType npcType : NPCType.values()) {
 				list.add(npcType.name());
 			}
 			return;
 		}
 		if (x != null && y != null && z != null) {
-			if (Strings.isNullOrEmpty(worldName)) {
-				for (World world : Bukkit.getWorlds()) {
-					list.add(world.getName());
-				}
+			for (World world : Bukkit.getWorlds()) {
+				list.add(world.getName());
 			}
 		}
 	}
