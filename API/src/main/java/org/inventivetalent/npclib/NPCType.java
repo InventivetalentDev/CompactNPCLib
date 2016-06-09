@@ -94,6 +94,7 @@ public enum NPCType {
 	IRON_GOLEM(EntityType.IRON_GOLEM, NPCIronGolem.class),
 	HORSE(EntityType.HORSE, NPCHorse.class),
 	RABBIT(EntityType.RABBIT, NPCRabbit.class),
+	POLAR_BEAR(EntityType.POLAR_BEAR, NPCPolarBear.class),
 
 	VILLAGER(EntityType.VILLAGER, NPCVillager.class),
 
