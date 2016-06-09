@@ -38,6 +38,17 @@ public class SpawnCommands {
 		Location location;
 		if (sender instanceof Entity) {
 			location = ((Entity) sender).getLocation();
+			if (x != null) { location.setX(x); }
+			if (y != null) { location.setY(y); }
+			if (z != null) { location.setZ(z); }
+			if (worldName != null) {
+				World world = Bukkit.getWorld(worldName);
+				if (world == null) {
+					sender.sendMessage("§cWorld '" + worldName + "' does not exist");
+					return;
+				}
+				location.setWorld(world);
+			}
 		} else {
 			if (Strings.isNullOrEmpty(worldName)) {
 				sender.sendMessage("§cPlease specify the location");
