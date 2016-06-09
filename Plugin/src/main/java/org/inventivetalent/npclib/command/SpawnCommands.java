@@ -61,7 +61,7 @@ public class SpawnCommands {
 			}
 			location = new Location(world, x, y, z);
 		}
-		plugin.getPluginNpcRegistry().createNPC(location, npcType);
+		plugin.getPluginNpcRegistry().spawnNPC(location, npcType);
 		sender.sendMessage("§aNPC spawned at §7" + location.getWorld().getName() + "," + location.getX() + "," + location.getY() + "," + location.getZ());
 	}
 

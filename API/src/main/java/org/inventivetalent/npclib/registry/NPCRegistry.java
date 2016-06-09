@@ -45,7 +45,7 @@ public class NPCRegistry {
 	 * @param <T>      a NPC class extending {@link NPCAbstract}
 	 * @return the spawned NPC Entity
 	 */
-	public <T extends NPCAbstract> T createNPC(Location location, Class<T> npcClass) {
+	public <T extends NPCAbstract> T spawnNPC(Location location, Class<T> npcClass) {
 		checkNotNull(location);
 		checkNotNull(npcClass);
 		try {
@@ -65,8 +65,8 @@ public class NPCRegistry {
 	 * @return the spawned NPC Entity
 	 */
 
-	public NPCAbstract createNPC(Location location, NPCType npcType) {
-		return createNPC(location, checkNotNull(npcType).getNpcClass());
+	public NPCAbstract spawnNPC(Location location, NPCType npcType) {
+		return spawnNPC(location, checkNotNull(npcType).getNpcClass());
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class NPCRegistry {
 	 * @param <T>         a NPC class extending {@link NPCHumanAbstract}
 	 * @return the spawned NPC entity
 	 */
-	public <T extends NPCHumanAbstract> T createPlayerNPC(Location location, Class<T> npcClass, GameProfileWrapper gameProfile) {
+	public <T extends NPCHumanAbstract> T spawnPlayerNPC(Location location, Class<T> npcClass, GameProfileWrapper gameProfile) {
 		checkNotNull(location);
 		checkNotNull(npcClass);
 		checkNotNull(gameProfile);
@@ -101,11 +101,11 @@ public class NPCRegistry {
 	 * @param <T>      a NPC class extending {@link NPCHumanAbstract}
 	 * @return the spawned NPC entity
 	 */
-	public <T extends NPCHumanAbstract> T createPlayerNPC(Location location, Class<T> npcClass, UUID uuid, String name) {
+	public <T extends NPCHumanAbstract> T spawnPlayerNPC(Location location, Class<T> npcClass, UUID uuid, String name) {
 		if (uuid == null && Strings.isNullOrEmpty(name)) {
 			throw new IllegalArgumentException("UUID and Name cannot both be empty");
 		}
-		return createPlayerNPC(location, npcClass, new GameProfileWrapper(checkNotNull(uuid), name));
+		return spawnPlayerNPC(location, npcClass, new GameProfileWrapper(checkNotNull(uuid), name));
 	}
 
 	protected <T extends NPCEntity> T createEntity(Location location, NPCInfo npcInfo) {
