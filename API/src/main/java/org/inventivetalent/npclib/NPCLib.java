@@ -1,11 +1,11 @@
 package org.inventivetalent.npclib;
 
-import org.bukkit.Bukkit;
+import com.mojang.authlib.GameProfile;
+import lombok.NonNull;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.inventivetalent.apihelper.API;
-import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
 import org.inventivetalent.npclib.entity.NPCEntity;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.npclib.npc.living.human.NPCPlayer;
@@ -23,7 +23,7 @@ public class NPCLib implements API {
 
 	public static Logger logger = Logger.getLogger("NPCLib");
 
-	public static NPCRegistry createRegistry(Plugin plugin) {
+	public static NPCRegistry createRegistry(@NonNull Plugin plugin) {
 		//		return Reflection.newInstance("org.inventivetalent.npc.registry", "NPCRegistry", NPCRegistry.class, plugin);
 		return new NPCRegistry(plugin);
 	}
@@ -59,30 +59,27 @@ public class NPCLib implements API {
 		PacketHandler.addHandler(new PacketHandler(plugin) {
 			@PacketOptions(forcePlayer = true)
 			@Override
-			public void onSend(SentPacket sentPacket) {
+			public void onSend(final SentPacket sentPacket) {
 				if (sentPacket.hasPlayer()) {
 					if ("PacketPlayOutNamedEntitySpawn".equals(sentPacket.getPacketName())) {
 						final Player player = sentPacket.getPlayer();
-						final GameProfileWrapper gameProfile = new GameProfileWrapper(sentPacket.getPacketValue("b"));
-						final UUID uuid = gameProfile.getId();
-						Bukkit.getScheduler().runTask(plugin, new Runnable() {
-							@Override
-							public void run() {
-								Player npcPlayer = null;
-								for (Player worldPlayer : player.getWorld().getPlayers()) {// We can't use Bukkit#getOnlinePlayers, since the server doesn't know about the player NPCs
-									if (worldPlayer.getUniqueId().equals(uuid)) {
-										npcPlayer = worldPlayer;
-										break;
-									}
-								}
-								if (npcPlayer != null) {
-									NPCAbstract npcAbstract = NPCLib.getNPC(npcPlayer);
-									if (npcAbstract != null && npcAbstract instanceof NPCPlayer) {
-										((NPCPlayer) npcAbstract).updateToPlayer(player);
-									}
-								}
+						final UUID uuid = Minecraft.VERSION.newerThan(Minecraft.Version.v1_8_R1) ?
+								((UUID) sentPacket.getPacketValue("b")) :
+								(((GameProfile) sentPacket.getPacketValue("b")).getId());
+						Player npcPlayer = null;
+						//TODO: check if this doesn't cause any ConcurrentModExceptions / make this synchronous somehow
+						for (Player worldPlayer : player.getWorld().getPlayers()) {// We can't use Bukkit#getOnlinePlayers, since the server doesn't know about the player NPCs
+							if (worldPlayer.getUniqueId().equals(uuid)) {
+								npcPlayer = worldPlayer;
+								break;
 							}
-						});
+						}
+						if (npcPlayer != null) {
+							NPCAbstract npcAbstract = NPCLib.getNPC(npcPlayer);
+							if (npcAbstract != null && npcAbstract instanceof NPCPlayer) {
+								((NPCPlayer) npcAbstract).updateToPlayer(player);
+							}
+						}
 					}
 				}
 			}
