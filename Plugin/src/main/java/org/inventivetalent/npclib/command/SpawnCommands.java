@@ -35,32 +35,9 @@ public class SpawnCommands {
 			sender.sendMessage("§cCould not find type for '" + typeString + "'");
 			return;
 		}
-		Location location;
-		if (sender instanceof Entity) {
-			location = ((Entity) sender).getLocation();
-			if (x != null) { location.setX(x); }
-			if (y != null) { location.setY(y); }
-			if (z != null) { location.setZ(z); }
-			if (worldName != null) {
-				World world = Bukkit.getWorld(worldName);
-				if (world == null) {
-					sender.sendMessage("§cWorld '" + worldName + "' does not exist");
-					return;
-				}
-				location.setWorld(world);
-			}
-		} else {
-			if (Strings.isNullOrEmpty(worldName)) {
-				sender.sendMessage("§cPlease specify the location");
-				return;
-			}
-			World world = Bukkit.getWorld(worldName);
-			if (world == null) {
-				sender.sendMessage("§cWorld '" + worldName + "' does not exist");
-				return;
-			}
-			location = new Location(world, x, y, z);
-		}
+		Location location = parseLocation(sender, x, y, z, worldName);
+		if (location == null) { return; }
+
 		plugin.getPluginNpcRegistry().spawnNPC(location, npcType);
 		sender.sendMessage("§aNPC spawned at §7" + location.getWorld().getName() + "," + location.getX() + "," + location.getY() + "," + location.getZ());
 	}
@@ -78,6 +55,36 @@ public class SpawnCommands {
 				list.add(world.getName());
 			}
 		}
+	}
+
+	Location parseLocation(CommandSender sender, Double x, Double y, Double z, String worldName) {
+		Location location;
+		if (sender instanceof Entity) {
+			location = ((Entity) sender).getLocation();
+			if (x != null) { location.setX(x); }
+			if (y != null) { location.setY(y); }
+			if (z != null) { location.setZ(z); }
+			if (worldName != null) {
+				World world = Bukkit.getWorld(worldName);
+				if (world == null) {
+					sender.sendMessage("§cWorld '" + worldName + "' does not exist");
+					return null;
+				}
+				location.setWorld(world);
+			}
+		} else {
+			if (Strings.isNullOrEmpty(worldName)) {
+				sender.sendMessage("§cPlease specify the location");
+				return null;
+			}
+			World world = Bukkit.getWorld(worldName);
+			if (world == null) {
+				sender.sendMessage("§cWorld '" + worldName + "' does not exist");
+				return null;
+			}
+			location = new Location(world, x, y, z);
+		}
+		return location;
 	}
 
 }
