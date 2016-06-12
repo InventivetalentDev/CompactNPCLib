@@ -36,6 +36,8 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
 	@Override
 	public void postInit(Plugin plugin, Location location) throws Exception {
+		this.plugin = plugin;
+
 		// Create fake PlayerConnection
 		new FieldResolver(Reflection.nmsClassResolver.resolve("EntityPlayer")).resolve("playerConnection").set(getNpcEntity(), ClassBuilder.buildPlayerConnection(ClassBuilder.buildNetworkManager(false), getNpcEntity()));
 		// Initialize Gamemode
