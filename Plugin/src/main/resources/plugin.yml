@@ -2,3 +2,5 @@ name: NPCLib
 main: org.inventivetalent.npclib.NPCLibPlugin
 author: inventivetalent
 version: ${project.version}
+
+softdepend: [PacketListenerApi]
