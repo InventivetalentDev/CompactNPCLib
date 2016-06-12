@@ -10,6 +10,9 @@ public interface NPCEntity {
 
 	void setMethodWatcher(MethodWatcher methodWatcher);
 
+	@ExtraMethod("public NPCAbstract getNPC() {\n"
+						 + "  return this.$npc;\n"
+						 + "}")
 	NPCAbstract getNPC();
 
 	//	<T extends Entity> T getBukkitEntity();
