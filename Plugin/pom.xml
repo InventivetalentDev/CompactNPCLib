@@ -81,6 +81,7 @@
                                     <include>org.inventivetalent:mc-wrappers**</include>
                                     <include>org.inventivetalent:vectors**</include>
                                     <include>org.inventivetalent:boundingboxapi**</include>
+                                    <include>org.inventivetalent:apimanager**</include>
                                     <include>org.javassist:**</include>
                                 </includes>
                             </artifactSet>

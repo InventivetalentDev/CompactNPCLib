@@ -89,6 +89,11 @@
             <artifactId>boundingboxapi</artifactId>
             <version>${boundingbox.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.inventivetalent</groupId>
+            <artifactId>apimanager</artifactId>
+            <version>${apimanager.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>

@@ -2,6 +2,7 @@ package org.inventivetalent.npclib;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;
+import org.inventivetalent.apihelper.API;
 import org.inventivetalent.npclib.entity.NPCEntity;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.npclib.registry.NPCRegistry;
@@ -9,7 +10,7 @@ import org.inventivetalent.reflection.minecraft.Minecraft;
 
 import java.util.logging.Logger;
 
-public class NPCLib {
+public class NPCLib implements API {
 
 	public static Logger logger = Logger.getLogger("NPCLib");
 
@@ -40,4 +41,15 @@ public class NPCLib {
 		return null;
 	}
 
+	@Override
+	public void load() {
+	}
+
+	@Override
+	public void init(Plugin plugin) {
+	}
+
+	@Override
+	public void disable(Plugin plugin) {
+	}
 }
