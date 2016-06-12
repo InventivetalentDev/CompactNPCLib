@@ -100,4 +100,8 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		}
 	}
 
+	public void updateToPlayer(final Player player) {
+		this.updatePlayerList(player);
+	}
+
 }
