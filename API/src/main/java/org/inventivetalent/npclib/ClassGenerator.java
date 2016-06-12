@@ -149,30 +149,30 @@ public class ClassGenerator {
 		//			if (!invokable.isOverridable()) { iterator.remove(); }
 		//		}
 
-		System.out.println(overridableMethods.keySet());
+//		System.out.println(overridableMethods.keySet());
 
 		for (Method method : overridableMethods.values()) {
-			System.out.println(method);
-			System.out.println("final: " + Modifier.isFinal(method.getModifiers()));
+//			System.out.println(method);
+//			System.out.println("final: " + Modifier.isFinal(method.getModifiers()));
 			if (Modifier.isPrivate(method.getModifiers()) || Modifier.isFinal(method.getModifiers()) || Modifier.isStatic(method.getModifiers()) || Modifier.isAbstract(method.getModifiers()) || Modifier.isNative(method.getModifiers())) {
 				continue;
 			}
 
 			CtMethod override = makeOverrideMethod(method, generated);
-			System.out.println(override);
+//			System.out.println(override);
 			generated.addMethod(override);
 		}
 
-		System.out.println(generated.toString());
-		System.out.println(" \n \n"
-				+ " \n");
-		//		try {
-		//			System.out.println(new String(generated.toBytecode()));
-		//		} catch (IOException e) {
-		//			e.printStackTrace();
-		//		}
-		System.out.println(" \n \n"
-				+ " \n");
+//		System.out.println(generated.toString());
+//		System.out.println(" \n \n"
+//				+ " \n");
+//		//		try {
+//		//			System.out.println(new String(generated.toBytecode()));
+//		//		} catch (IOException e) {
+//		//			e.printStackTrace();
+//		//		}
+//		System.out.println(" \n \n"
+//				+ " \n");
 		try {
 			generated.writeFile("generated");
 		} catch (IOException e) {
