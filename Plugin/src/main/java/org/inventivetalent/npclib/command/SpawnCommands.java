@@ -8,9 +8,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.inventivetalent.npclib.NPCLibPlugin;
 import org.inventivetalent.npclib.NPCType;
+import org.inventivetalent.npclib.npc.living.human.NPCPlayer;
 import org.inventivetalent.pluginannotations.command.*;
 
 import java.util.List;
+import java.util.UUID;
 
 public class SpawnCommands {
 
@@ -42,6 +44,27 @@ public class SpawnCommands {
 		sender.sendMessage("§aNPC spawned at §7" + location.getWorld().getName() + "," + location.getX() + "," + location.getY() + "," + location.getZ());
 	}
 
+	@Command(name = "spawnPlayer",
+			 aliases = { "spawnNpcPlayer" },
+			 usage = "<Name> [x] [y] [z] [world]",
+			 description = "Spawn a Player NPC at your location or the specified coordinates",
+			 min = 1,
+			 max = 5,
+			 fallbackPrefix = "npclib",
+			 errorHandler = FeedbackErrorHandler.class)
+	@Permission("npclib.command.spawnplayer")
+	public void spawnPlayer(CommandSender sender, String name, @OptionalArg Double x, @OptionalArg Double y, @OptionalArg Double z, @OptionalArg String worldName) {
+		if (name.length() > 16) {
+			sender.sendMessage("§cName is too long (" + name.length() + ">16)");
+			return;
+		}
+		Location location = parseLocation(sender, x, y, z, worldName);
+		if (location == null) { return; }
+
+		plugin.getPluginNpcRegistry().spawnPlayerNPC(location, NPCPlayer.class, UUID.randomUUID(), name);
+		sender.sendMessage("§aNPC spawned at §7" + location.getWorld().getName() + "," + location.getX() + "," + location.getY() + "," + location.getZ());
+	}
+
 	@Completion(name = "spawnNpc")
 	public void spawnNPC(List<String> list, CommandSender sender, String typeString, @OptionalArg Double x, @OptionalArg Double y, @OptionalArg Double z, @OptionalArg String worldName) {
 		if (x == null && NPCType.fromString(typeString) == null) {
@@ -51,6 +74,15 @@ public class SpawnCommands {
 			return;
 		}
 		if (x != null && y != null && z != null) {
+			for (World world : Bukkit.getWorlds()) {
+				list.add(world.getName());
+			}
+		}
+	}
+
+	@Completion(name = "spawnPlayer")
+	public void spawnPlayer(List<String> list, CommandSender sender, String name, @OptionalArg Double x, @OptionalArg Double y, @OptionalArg Double z, @OptionalArg String worldName) {
+		if (name != null && x != null && y != null && z != null) {
 			for (World world : Bukkit.getWorlds()) {
 				list.add(world.getName());
 			}
