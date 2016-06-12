@@ -18,7 +18,7 @@ public class NPCLibPlugin extends JavaPlugin implements Listener {
 
 	@Override
 	public void onLoad() {
-		APIManager.registerAPI(npcLibInstance);
+		APIManager.registerAPI(npcLibInstance, this);
 	}
 
 	@Override
