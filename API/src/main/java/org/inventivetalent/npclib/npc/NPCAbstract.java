@@ -3,11 +3,13 @@ package org.inventivetalent.npclib.npc;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.plugin.Plugin;
 import org.inventivetalent.boundingbox.BoundingBox;
 import org.inventivetalent.npclib.NPCLib;
+import org.inventivetalent.npclib.NPCType;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.ai.AIAbstract;
 import org.inventivetalent.npclib.entity.NPCEntity;
@@ -83,6 +85,15 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	public BoundingBox getBoundingBox() {
 		return getAbsoluteBoundingBox().translate(new Vector3DDouble(getBukkitEntity().getLocation()).multiply(-1));
+	}
+
+	// NPCInfo
+	public NPCType getNpcType() {
+		return NPCType.forEntityType(getNpcEntity().getNpcInfo().getType());
+	}
+
+	public EntityType getEntityType() {
+		return getNpcEntity().getNpcInfo().getType();
 	}
 
 	// Watched
