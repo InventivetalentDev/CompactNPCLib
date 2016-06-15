@@ -2,6 +2,7 @@ package org.inventivetalent.npclib.entity;
 
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.inventivetalent.npclib.annotation.ExtraMethod;
+import org.inventivetalent.npclib.annotation.NPCInfo;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.npclib.watcher.MethodWatcher;
 import org.inventivetalent.vectors.d3.Vector3DDouble;
@@ -20,6 +21,10 @@ public interface NPCEntity {
 	boolean methodCalled(String name, Object[] args);
 
 	Object methodCalled(String name, Object superValue, Object[] args);
+
+	void setNpcInfo(NPCInfo npcInfo);
+
+	NPCInfo getNpcInfo();
 
 	// Overwritten methods
 

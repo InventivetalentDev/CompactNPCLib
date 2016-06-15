@@ -28,6 +28,7 @@ public class ClassGenerator {
 		classPool.importPackage("org.inventivetalent.npclib");
 		classPool.importPackage("org.inventivetalent.npclib.watcher");
 		classPool.importPackage("org.inventivetalent.npclib.npc");
+		classPool.importPackage("org.inventivetalent.npclib.annotation");
 		classPool.importPackage("org.inventivetalent.npclib.entity");
 		classPool.importPackage("org.inventivetalent.npclib.entity.generated");
 
@@ -36,10 +37,17 @@ public class ClassGenerator {
 		}
 
 		generated.addField(CtField.make("public NPCAbstract $npc;", generated));
+		generated.addField(CtField.make("public NPCInfo $npcInfo;", generated));
 		generated.addField(CtField.make("public MethodWatcher $methodWatcher;", generated));
 		generated.addMethod(CtMethod.make("public void setMethodWatcher(MethodWatcher methodWatcher) {\n" +
 				"  this.$methodWatcher=methodWatcher;\n" +
 				"}", generated));
+		generated.addMethod(CtMethod.make("public void setNpcInfo(NPCInfo npcInfo) {\n"
+				+ "  this.$npcInfo=npcInfo;\n"
+				+ "}", generated));
+		generated.addMethod(CtMethod.make("public NPCInfo getNpcInfo() {\n"
+				+ "  return this.$npcInfo;\n"
+				+ "}", generated));
 
 		// Constructor
 		//		generated.addConstructor(CtNewConstructor.make("public " + npcInfo.getNPCClassName() + "(World world){\n"
@@ -149,30 +157,30 @@ public class ClassGenerator {
 		//			if (!invokable.isOverridable()) { iterator.remove(); }
 		//		}
 
-//		System.out.println(overridableMethods.keySet());
+		//		System.out.println(overridableMethods.keySet());
 
 		for (Method method : overridableMethods.values()) {
-//			System.out.println(method);
-//			System.out.println("final: " + Modifier.isFinal(method.getModifiers()));
+			//			System.out.println(method);
+			//			System.out.println("final: " + Modifier.isFinal(method.getModifiers()));
 			if (Modifier.isPrivate(method.getModifiers()) || Modifier.isFinal(method.getModifiers()) || Modifier.isStatic(method.getModifiers()) || Modifier.isAbstract(method.getModifiers()) || Modifier.isNative(method.getModifiers())) {
 				continue;
 			}
 
 			CtMethod override = makeOverrideMethod(method, generated);
-//			System.out.println(override);
+			//			System.out.println(override);
 			generated.addMethod(override);
 		}
 
-//		System.out.println(generated.toString());
-//		System.out.println(" \n \n"
-//				+ " \n");
-//		//		try {
-//		//			System.out.println(new String(generated.toBytecode()));
-//		//		} catch (IOException e) {
-//		//			e.printStackTrace();
-//		//		}
-//		System.out.println(" \n \n"
-//				+ " \n");
+		//		System.out.println(generated.toString());
+		//		System.out.println(" \n \n"
+		//				+ " \n");
+		//		//		try {
+		//		//			System.out.println(new String(generated.toBytecode()));
+		//		//		} catch (IOException e) {
+		//		//			e.printStackTrace();
+		//		//		}
+		//		System.out.println(" \n \n"
+		//				+ " \n");
 		try {
 			generated.writeFile("generated");
 		} catch (IOException e) {

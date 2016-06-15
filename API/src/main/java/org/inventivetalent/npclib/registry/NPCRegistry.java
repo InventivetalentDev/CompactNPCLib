@@ -51,7 +51,7 @@ public class NPCRegistry {
 		try {
 			NPCInfo npcInfo = NPCInfo.of(npcClass);
 			NPCEntity npcEntity = createEntity(location, npcInfo);
-			return wrapAndInitEntity(npcEntity, location, npcClass);
+			return wrapAndInitEntity(npcEntity, location, npcInfo, npcClass);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -85,7 +85,7 @@ public class NPCRegistry {
 		try {
 			NPCInfo npcInfo = NPCInfo.of(npcClass);
 			NPCEntity npcEntity = createPlayerEntity(location, npcInfo, gameProfile);
-			return wrapAndInitEntity(npcEntity, location, npcClass);
+			return wrapAndInitEntity(npcEntity, location, npcInfo, npcClass);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -138,8 +138,9 @@ public class NPCRegistry {
 		}
 	}
 
-	protected <T extends NPCAbstract> T wrapAndInitEntity(NPCEntity entity, Location location, Class<T> npcClass) throws Exception {
+	protected <T extends NPCAbstract> T wrapAndInitEntity(NPCEntity entity, Location location, NPCInfo npcInfo, Class<T> npcClass) throws Exception {
 		NPCAbstract npcAbstract = (NPCAbstract) new ConstructorResolver(npcClass).resolveFirstConstructorSilent().newInstance(entity);
+		npcAbstract.getNpcEntity().setNpcInfo(npcInfo);
 		npcAbstract.postInit(this.plugin, location);
 		//noinspection unchecked
 		return (T) npcAbstract;
