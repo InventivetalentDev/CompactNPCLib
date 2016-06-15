@@ -28,6 +28,7 @@
 
 package org.inventivetalent.npclib.event;
 
+import com.google.common.base.Preconditions;
 import org.bukkit.Location;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -51,6 +52,7 @@ public class NPCSpawnEvent extends NPCEvent {
 	}
 
 	public void setSpawnReason(CreatureSpawnEvent.SpawnReason spawnReason) {
+		Preconditions.checkNotNull(spawnReason);
 		this.spawnReason = spawnReason;
 	}
 
