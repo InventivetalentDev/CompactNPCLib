@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 import org.inventivetalent.boundingbox.BoundingBox;
 import org.inventivetalent.npclib.NPCLib;
@@ -13,6 +14,7 @@ import org.inventivetalent.npclib.NPCType;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.ai.AIAbstract;
 import org.inventivetalent.npclib.entity.NPCEntity;
+import org.inventivetalent.npclib.event.NPCDamageEvent;
 import org.inventivetalent.npclib.event.NPCDeathEvent;
 import org.inventivetalent.npclib.event.NPCSpawnEvent;
 import org.inventivetalent.npclib.watcher.AnnotatedMethodWatcher;
@@ -114,6 +116,17 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	public boolean onMove(double x, double y, double z) {
 		//TODO: NPCMoveEvent/NPCMotionEvent
 		return true;
+	}
+
+	@Watch("damageEntity(DamageSource,float)")
+	public Boolean onDamage(Object damageSource, float amount) {
+		System.out.println("onDamage: damageSource = [" + damageSource + "], amount = [" + amount + "]");
+		String sourceName = Reflection.getDamageSourceName(damageSource);
+		EntityDamageEvent.DamageCause damageCause = Reflection.damageSourceToCause(sourceName);
+		Entity damager = Reflection.getEntityFromDamageSource(damageSource);
+		NPCDamageEvent event = new NPCDamageEvent(this, sourceName, damageCause, amount, damager);
+		Bukkit.getPluginManager().callEvent(event);
+		return !event.isCancelled();
 	}
 
 	@Watch("die()")

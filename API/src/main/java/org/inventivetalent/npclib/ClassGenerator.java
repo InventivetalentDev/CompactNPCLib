@@ -321,6 +321,7 @@ public class ClassGenerator {
 		String methodString = String.format("%1$s %2$s %3$s(%4$s) {\n",// Override method
 				access, returnType, name, paramString);
 		System.out.println(methodString);
+		System.out.println(Reflection.getMethodSignature(method));
 
 		methodString += String.format("Object[] $args = ArrayMaker.fromParameters(%s);\n", objectCallString);
 

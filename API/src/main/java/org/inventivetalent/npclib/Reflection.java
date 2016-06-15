@@ -1,5 +1,6 @@
 package org.inventivetalent.npclib;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.ClassResolver;
@@ -177,6 +178,16 @@ public class Reflection {
 				break;
 		}
 		return cause;
+	}
+
+	public static Entity getEntityFromDamageSource(Object damageSource) {
+		if (damageSource == null) { return null; }
+		try {
+			Class<?> classDamageSource = nmsClassResolver.resolve("DamageSource");
+			return Minecraft.getBukkitEntity(classDamageSource.getDeclaredMethod("getEntity").invoke(damageSource));
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException();
+		}
 	}
 
 }
