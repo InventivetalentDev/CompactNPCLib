@@ -13,6 +13,7 @@ import org.inventivetalent.npclib.NPCType;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.ai.AIAbstract;
 import org.inventivetalent.npclib.entity.NPCEntity;
+import org.inventivetalent.npclib.event.NPCSpawnEvent;
 import org.inventivetalent.npclib.watcher.AnnotatedMethodWatcher;
 import org.inventivetalent.npclib.watcher.Watch;
 import org.inventivetalent.reflection.minecraft.Minecraft;
@@ -61,8 +62,9 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	public void spawn() {
-		//TODO: NPCSpawnEvent
-		getNpcEntity().spawn(CreatureSpawnEvent.SpawnReason.CUSTOM);
+		NPCSpawnEvent event = new NPCSpawnEvent(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
+		Bukkit.getPluginManager().callEvent(event);
+		getNpcEntity().spawn(event.getSpawnReason());
 	}
 
 	public <A extends NPCAbstract<N, B>> boolean registerAI(AIAbstract<A> aiAbstract) {
