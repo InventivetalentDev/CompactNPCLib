@@ -101,11 +101,13 @@ public enum NPCType {
 	//	ENDER_CRYSTAL(EntityType.ENDER_CRYSTAL,NPCEnderCrystal.class),
 	;
 
-	private static final Map<EntityType, NPCType> entityTypeMap = Maps.newHashMap();
+	private static final Map<EntityType, NPCType>                   entityTypeMap = Maps.newHashMap();
+	private static final Map<Class<? extends NPCAbstract>, NPCType> classMap      = Maps.newHashMap();
 
 	static {
 		for (NPCType npcType : values()) {
 			entityTypeMap.put(npcType.entityType, npcType);
+			classMap.put(npcType.npcClass, npcType);
 		}
 	}
 
