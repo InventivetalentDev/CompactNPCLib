@@ -1,5 +1,6 @@
 package org.inventivetalent.npclib;
 
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.ClassResolver;
 import org.inventivetalent.reflection.resolver.ConstructorResolver;
@@ -85,6 +86,97 @@ public class Reflection {
 			first = false;
 		}
 		return stringBuilder.append(")").toString();
+	}
+
+	public static String getDamageSourceName(Object damageSource) {
+		if (damageSource != null) {
+			try {
+				return (String) Reflection.nmsClassResolver.resolve("DamageSource").getField("translationIndex").get(damageSource);
+			} catch (ReflectiveOperationException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return null;
+	}
+
+	public static EntityDamageEvent.DamageCause damageSourceToCause(String damageName) {
+		if (damageName == null) {
+			return EntityDamageEvent.DamageCause.VOID;
+		}
+		EntityDamageEvent.DamageCause cause = EntityDamageEvent.DamageCause.CUSTOM;
+		switch (damageName) {
+			case "inFire":
+				cause = EntityDamageEvent.DamageCause.FIRE;
+				break;
+			case "onFire":
+				cause = EntityDamageEvent.DamageCause.FIRE_TICK;
+				break;
+			case "lava":
+				cause = EntityDamageEvent.DamageCause.LAVA;
+				break;
+			case "inWall":
+				cause = EntityDamageEvent.DamageCause.SUFFOCATION;
+				break;
+			case "drown":
+				cause = EntityDamageEvent.DamageCause.DROWNING;
+				break;
+			case "starve":
+				cause = EntityDamageEvent.DamageCause.STARVATION;
+				break;
+			case "cactus":
+				cause = EntityDamageEvent.DamageCause.CONTACT;
+				break;
+			case "fall":
+				cause = EntityDamageEvent.DamageCause.FALL;
+				break;
+			case "outOfWorld":
+				cause = EntityDamageEvent.DamageCause.VOID;
+				break;
+			case "generic":
+				cause = EntityDamageEvent.DamageCause.CUSTOM;
+				break;
+			case "indirectMagic":
+				cause = EntityDamageEvent.DamageCause.MAGIC;
+				break;
+			case "magic":
+				cause = EntityDamageEvent.DamageCause.POISON;
+				break;
+			case "wither":
+				cause = EntityDamageEvent.DamageCause.WITHER;
+				break;
+			case "anvil":
+			case "fallingBlock":
+				cause = EntityDamageEvent.DamageCause.FALLING_BLOCK;
+				break;
+			case "thorns":
+				cause = EntityDamageEvent.DamageCause.THORNS;
+				break;
+			case "fireball":
+			case "arrow":
+				cause = EntityDamageEvent.DamageCause.PROJECTILE;
+				break;
+			case "thrown":// No idea what causes this
+			case "mob":
+			case "player":
+				cause = EntityDamageEvent.DamageCause.ENTITY_ATTACK;
+				break;
+			case "explosion.player":
+			case "explosion":
+				cause = EntityDamageEvent.DamageCause.ENTITY_EXPLOSION;
+				break;
+			case "dragonBreath":
+				cause = EntityDamageEvent.DamageCause.DRAGON_BREATH;
+				break;
+			case "flyIntoWall":
+				cause = EntityDamageEvent.DamageCause.FLY_INTO_WALL;
+				break;
+			case "hotFloor":
+				cause = EntityDamageEvent.DamageCause.HOT_FLOOR;
+				break;
+			default:
+				break;
+		}
+		return cause;
 	}
 
 }

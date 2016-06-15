@@ -13,6 +13,7 @@ import org.inventivetalent.npclib.NPCType;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.ai.AIAbstract;
 import org.inventivetalent.npclib.entity.NPCEntity;
+import org.inventivetalent.npclib.event.NPCDeathEvent;
 import org.inventivetalent.npclib.event.NPCSpawnEvent;
 import org.inventivetalent.npclib.watcher.AnnotatedMethodWatcher;
 import org.inventivetalent.npclib.watcher.Watch;
@@ -118,8 +119,9 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	@Watch("die()")
 	public boolean onDie() {
 		System.out.println("onDie -> NPCAbstract");
-		//TODO: EntityDeathEvent
-		return true;
+		NPCDeathEvent event = new NPCDeathEvent(this, null, null);
+		Bukkit.getPluginManager().callEvent(event);
+		return !event.isCancelled();
 	}
 
 	public Plugin getPlugin() {

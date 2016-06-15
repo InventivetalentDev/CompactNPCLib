@@ -1,8 +1,11 @@
 package org.inventivetalent.npclib.npc.living;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.entity.living.NPCEntityLiving;
+import org.inventivetalent.npclib.event.NPCDeathEvent;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.npclib.path.AStarPathfinder;
 import org.inventivetalent.npclib.path.PathfinderAbstract;
@@ -26,8 +29,12 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 	@Watch("die(DamageSource)")
 	public boolean onDie(Object damageSource) {
 		System.out.println("onDie -> NPCLivingAbstract");
-		//TODO: NPCDeathEvent (with damage source)
-		return true;
+
+		String damageName = Reflection.getDamageSourceName(damageSource);
+		EntityDamageEvent.DamageCause cause = Reflection.damageSourceToCause(damageName);
+		NPCDeathEvent event = new NPCDeathEvent(this, damageName, cause);
+		Bukkit.getPluginManager().callEvent(event);
+		return !event.isCancelled();
 	}
 
 	@Watch("g(float,float)")
