@@ -123,6 +123,10 @@ public enum NPCType {
 		return entityTypeMap.get(checkNotNull(entityType));
 	}
 
+	public static NPCType forNpcClass(Class<? extends NPCAbstract> clazz) {
+		return classMap.get(clazz);
+	}
+
 	public static NPCType fromString(String string) {
 		if (Strings.isNullOrEmpty(string)) { return null; }
 		NPCType type;
