@@ -43,7 +43,7 @@
     </modules>
 
     <properties>
-        <npclib.version>2.0.0-SNAPSHOT</npclib.version>
+        <npclib.version>2.0.0</npclib.version>
         <packetlistener.version>3.3.5</packetlistener.version>
         <reflection.version>1.7.1</reflection.version>
         <annotations.version>1.4.3</annotations.version>
