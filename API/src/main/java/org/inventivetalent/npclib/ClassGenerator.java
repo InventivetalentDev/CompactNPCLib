@@ -1,6 +1,7 @@
 package org.inventivetalent.npclib;
 
 import com.google.common.base.Joiner;
+import com.google.common.primitives.Primitives;
 import com.google.common.reflect.Invokable;
 import javassist.*;
 import org.inventivetalent.npclib.annotation.ExtraMethod;
@@ -327,7 +328,7 @@ public class ClassGenerator {
 			paramStrings.add(String.format("%1$s param%2$s", clazz.getCanonicalName(), c));
 			callStrings.add(String.format("param%1$s", c));
 			objectCallStrings.add(String.format("ObjectConverter.toObject(param%1$s)", c));
-			superCallStrings.add(String.format("(%1$s) $args[%2$s]", clazz.getCanonicalName(), c));
+			superCallStrings.add(String.format("(%1$s) $mArgs[%2$s]", clazz.getCanonicalName(), c));
 			c++;
 		}
 
@@ -384,14 +385,16 @@ public class ClassGenerator {
 					+ "    return;\n"// Otherwise return
 					+ "  }\n", signature, primitiveSuffix
 			);
-			methodString += "  Object[] $args = ObjectContainer.toObjects($cArgs);\n";
+			methodString += "  Object[] $mArgs = ObjectContainer.toObjects($cArgs);\n";
+			methodString += reAssignContainers(parameterTypes);
 			methodString += String.format("  super.%1$s(%2$s);\n", name, callString); // Call super
 		} else {
 			System.out.println(returnType);
 			System.out.println(method);
 			methodString += String.format(""
 					+ "  %3$s $returned = (%3$s) this.methodCalled%5$s(\"%4$s\", $switch, $cArgs);\n"
-					+ "  Object[] $args = ObjectContainer.toObjects($cArgs);\n"
+					+ "  Object[] $mArgs = ObjectContainer.toObjects($cArgs);\n"
+					+ reAssignContainers(parameterTypes)
 					+ "  if($switch.callSuper()) {\n"
 					+ "    if($switch.isReplace()) {\n"
 					+ "      return (%3$s) $returned;"
@@ -408,6 +411,24 @@ public class ClassGenerator {
 		//		System.out.println(methodString);
 		CtMethod ctMethod = CtMethod.make(methodString, declaring);
 		return ctMethod;
+	}
+
+	static String reAssignContainers(Class<?>[] paramTypes) {
+		StringBuilder stringBuilder = new StringBuilder();
+		int i = 0;
+		for (Class c : paramTypes) {
+			stringBuilder.append("param").append(i).append(" = (");
+			if(c.isPrimitive()){
+				Class<?> wrapped=Primitives.wrap(c);
+				stringBuilder
+						.append("(").append(wrapped.getCanonicalName()).append(") $mArgs[").append(i).append("]).")
+						.append(c.getCanonicalName()).append("Value();\n");// <-- This feels so cheaty
+			}else{
+				stringBuilder.append(c.getCanonicalName()).append(") $mArgs[").append(i).append("];\n");
+			}
+			i++;
+		}
+		return stringBuilder.toString();
 	}
 
 	//	String makeParameters(Class<?>[] parameterTypes) {
