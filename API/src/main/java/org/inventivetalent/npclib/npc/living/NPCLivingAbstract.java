@@ -26,7 +26,7 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 		super(npcEntity);
 	}
 
-	@Watch("die(DamageSource)")
+	@Watch("void die(DamageSource)")
 	public boolean onDie(Object damageSource) {
 		System.out.println("onDie -> NPCLivingAbstract");
 
@@ -37,7 +37,7 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 		return !event.isCancelled();
 	}
 
-	@Watch("g(float,float)")
+	@Watch("void g(float,float)")
 	public boolean onHeadingMove(float strafe, float forward) {
 		//		System.out.println("onHeadingMove -> NPCLivingAbstract");
 		//TODO: NPCMoveEvent...

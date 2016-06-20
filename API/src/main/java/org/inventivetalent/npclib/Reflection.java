@@ -8,6 +8,7 @@ import org.inventivetalent.reflection.resolver.ConstructorResolver;
 import org.inventivetalent.reflection.resolver.minecraft.NMSClassResolver;
 import org.inventivetalent.reflection.resolver.minecraft.OBCClassResolver;
 import org.inventivetalent.reflection.resolver.wrapper.ClassWrapper;
+import org.inventivetalent.reflection.resolver.wrapper.MethodWrapper;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -77,16 +78,17 @@ public class Reflection {
 	}
 
 	public static String getMethodSignature(Method method) {
-		StringBuilder stringBuilder = new StringBuilder(method.getName());
-		stringBuilder.append("(");
-
-		boolean first = true;
-		for (Class clazz : method.getParameterTypes()) {
-			if (!first) { stringBuilder.append(","); }
-			stringBuilder.append(clazz.getSimpleName());
-			first = false;
-		}
-		return stringBuilder.append(")").toString();
+		//		StringBuilder stringBuilder = new StringBuilder(method.getName());
+		//		stringBuilder.append("(");
+		//
+		//		boolean first = true;
+		//		for (Class clazz : method.getParameterTypes()) {
+		//			if (!first) { stringBuilder.append(","); }
+		//			stringBuilder.append(clazz.getSimpleName());
+		//			first = false;
+		//		}
+		//		return stringBuilder.append(")").toString();
+		return MethodWrapper.getMethodSignature(method, false);
 	}
 
 	public static String getDamageSourceName(Object damageSource) {

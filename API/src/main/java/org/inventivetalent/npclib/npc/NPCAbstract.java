@@ -103,7 +103,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	// Watched
 
-	@Watch("m()")
+	@Watch("void m()")
 	public boolean onBaseTick() {
 		//		System.out.println("base tick!");
 
@@ -112,13 +112,13 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		return true;
 	}
 
-	@Watch("move(double,double,double)")
+	@Watch("void move(double,double,double)")
 	public boolean onMove(double x, double y, double z) {
 		//TODO: NPCMoveEvent/NPCMotionEvent
 		return true;
 	}
 
-	@Watch("damageEntity(DamageSource,float)")
+	@Watch("boolean damageEntity(DamageSource,float)")
 	public Boolean onDamage(Object damageSource, float amount) {
 		System.out.println("onDamage: damageSource = [" + damageSource + "], amount = [" + amount + "]");
 		String sourceName = Reflection.getDamageSourceName(damageSource);
@@ -129,7 +129,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		return !event.isCancelled();
 	}
 
-	@Watch("die()")
+	@Watch("void die()")
 	public boolean onDie() {
 		System.out.println("onDie -> NPCAbstract");
 		NPCDeathEvent event = new NPCDeathEvent(this, null, null);
