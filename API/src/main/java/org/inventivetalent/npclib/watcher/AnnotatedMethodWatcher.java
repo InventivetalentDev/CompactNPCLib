@@ -1,7 +1,9 @@
 package org.inventivetalent.npclib.watcher;
 
 import lombok.AllArgsConstructor;
+import org.inventivetalent.npclib.ObjectContainer;
 import org.inventivetalent.npclib.Reflection;
+import org.inventivetalent.npclib.SuperSwitch;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -51,7 +53,7 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 	}
 
 	@Override
-	public boolean methodCalled(Object thiz, String methodSignature, Object[] args) {
+	public boolean methodCalled(Object thiz, String methodSignature, ObjectContainer[] args) {
 		WatchedMethod watchedMethod = watchedMethods.get(methodSignature);
 		if (watchedMethod == null) {
 			return super.methodCalled(thiz, methodSignature, args);
@@ -68,15 +70,15 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 	}
 
 	@Override
-	public Object methodCalled(Object thiz, String methodSignature, Object superValue, Object[] args) {
+	public Object methodCalled(Object thiz, String methodSignature, SuperSwitch superSwitch, ObjectContainer[] args) {
 		WatchedMethod watchedMethod = watchedMethods.get(methodSignature);
 		if (watchedMethod == null) {
-			return super.methodCalled(thiz, methodSignature, superValue, args);
+			return super.methodCalled(thiz, methodSignature, superSwitch, args);
 		}
 		try {
 			return watchedMethod.method.invoke(toWatch, args);
 		} catch (Exception e) {
-			throw new RuntimeException("Failed to invoke @Watch method " + methodSignature, e);
+			throw new RuntimeException("Failed to invoke @Watch method " + methodSignature + " with args: " + Arrays.toString(args), e);
 		}
 	}
 
