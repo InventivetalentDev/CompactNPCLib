@@ -130,6 +130,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		if (event.isCancelled()) {
 			return false;
 		}
+		amount.value = event.getAmount();
 		return !event.isCancelled();
 	}
 
