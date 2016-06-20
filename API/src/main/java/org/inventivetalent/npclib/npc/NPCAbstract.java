@@ -127,6 +127,9 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		Entity damager = Reflection.getEntityFromDamageSource(damageSource.value);
 		NPCDamageEvent event = new NPCDamageEvent(this, sourceName, damageCause, amount.value, damager);
 		Bukkit.getPluginManager().callEvent(event);
+		if (event.isCancelled()) {
+			return false;
+		}
 		return !event.isCancelled();
 	}
 

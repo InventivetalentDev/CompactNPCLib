@@ -64,6 +64,10 @@ public class NPCDamageEvent extends NPCEvent implements Cancellable {
 		return amount;
 	}
 
+	public void setAmount(float amount) {
+		this.amount = amount;
+	}
+
 	public Entity getDamager() {
 		return damager;
 	}
