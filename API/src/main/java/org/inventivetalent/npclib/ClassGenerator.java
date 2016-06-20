@@ -61,39 +61,55 @@ public class ClassGenerator {
 			generated.addConstructor(CtNewConstructor.make(String.format(constructor, npcInfo.getNPCClassName()), generated));
 		}
 
-		generated.addMethod(CtMethod.make("public boolean methodCalled(String name, Object[] args) {\n"
+		generated.addMethod(CtMethod.make("public boolean methodCalled(String name, ObjectContainer[] args) {\n"
 				+ "  if(this.$methodWatcher == null) return true;\n"
 				+ "  return this.$methodWatcher.methodCalled(this, name, args);\n"
 				+ "}", generated));
-		generated.addMethod(CtMethod.make("public Object methodCalled(String name, Object superValue, Object[] args) {\n"
-				+ "  if(this.$methodWatcher == null) return superValue;\n"
-				+ "  return this.$methodWatcher.methodCalled(this, name, superValue, args);\n"
+		generated.addMethod(CtMethod.make("public Object methodCalled(String name, SuperSwitch superSwitch, ObjectContainer[] args) {\n"
+				+ "  if(this.$methodWatcher == null) return null;\n"
+				+ "  return this.$methodWatcher.methodCalled(this, name, superSwitch, args);\n"
 				+ "}", generated));
 
 		// Primitive types
-		generated.addMethod(CtMethod.make("public byte methodCalled(String name, byte superValue, Object[] args) {\n" +
-				"  return ((Byte) this.methodCalled(name, Byte.valueOf(superValue), args)).byteValue();\n" +
+		generated.addMethod(CtMethod.make("public byte methodCalled_byte(String name, SuperSwitch superSwitch, ObjectContainer[] args) {\n" +
+				"  Object $returned = this.methodCalled(name, superSwitch, args);\n" +
+				"  if($returned==null)return 0;" +
+				"  return ((Byte) $returned).byteValue();\n" +
 				"}", generated));
-		generated.addMethod(CtMethod.make("public short methodCalled(String name, short superValue, Object[] args) {\n" +
-				"  return ((Short) this.methodCalled(name, Short.valueOf(superValue), args)).shortValue();\n" +
+		generated.addMethod(CtMethod.make("public short methodCalled_short(String name, SuperSwitch superSwitch, ObjectContainer[] args) {\n" +
+				"  Object $returned = this.methodCalled(name, superSwitch, args);\n" +
+				"  if($returned==null)return 0;" +
+				"  return ((Short) $returned).shortValue();\n" +
 				"}", generated));
-		generated.addMethod(CtMethod.make("public int methodCalled(String name, int superValue, Object[] args) {\n" +
-				"  return ((Integer) this.methodCalled(name, Integer.valueOf(superValue), args)).intValue();\n" +
+		generated.addMethod(CtMethod.make("public int methodCalled_int(String name, SuperSwitch superSwitch, ObjectContainer[] args) {\n" +
+				"  Object $returned = this.methodCalled(name, superSwitch, args);\n" +
+				"  if($returned==null)return 0;" +
+				"  return ((Integer) $returned).intValue();\n" +
 				"}", generated));
-		generated.addMethod(CtMethod.make("public long methodCalled(String name, long superValue, Object[] args) {\n" +
-				"  return ((Long) this.methodCalled(name, Long.valueOf(superValue), args)).longValue();\n" +
+		generated.addMethod(CtMethod.make("public long methodCalled_long(String name, SuperSwitch superSwitch, ObjectContainer[] args) {\n" +
+				"  Object $returned = this.methodCalled(name, superSwitch, args);\n" +
+				"  if($returned==null)return 0L;" +
+				"  return ((Long) $returned).longValue();\n" +
 				"}", generated));
-		generated.addMethod(CtMethod.make("public float methodCalled(String name, float superValue, Object[] args) {\n" +
-				"  return ((Float) this.methodCalled(name, Float.valueOf(superValue), args)).floatValue();\n" +
+		generated.addMethod(CtMethod.make("public float methodCalled_float(String name, SuperSwitch superSwitch, ObjectContainer[] args) {\n" +
+				"  Object $returned = this.methodCalled(name, superSwitch, args);\n" +
+				"  if($returned==null)return 0.0f;" +
+				"  return ((Float) $returned).floatValue();\n" +
 				"}", generated));
-		generated.addMethod(CtMethod.make("public double methodCalled(String name, double superValue, Object[] args) {\n" +
-				"  return ((Double) this.methodCalled(name, Double.valueOf(superValue), args)).doubleValue();\n" +
+		generated.addMethod(CtMethod.make("public double methodCalled_double(String name, SuperSwitch superSwitch, ObjectContainer[] args) {\n" +
+				"  Object $returned = this.methodCalled(name, superSwitch, args);\n" +
+				"  if($returned==null)return 0.0d;" +
+				"  return ((Double) $returned).doubleValue();\n" +
 				"}", generated));
-		generated.addMethod(CtMethod.make("public boolean methodCalled(String name, boolean superValue, Object[] args) {\n" +
-				"  return ((Boolean) this.methodCalled(name, Boolean.valueOf(superValue), args)).booleanValue();\n" +
+		generated.addMethod(CtMethod.make("public boolean methodCalled_boolean(String name, SuperSwitch superSwitch, ObjectContainer[] args) {\n" +
+				"  Object $returned = this.methodCalled(name, superSwitch, args);\n" +
+				"  if($returned==null)return false;" +
+				"  return ((Boolean) $returned).booleanValue();\n" +
 				"}", generated));
-		generated.addMethod(CtMethod.make("public char methodCalled(String name, char superValue, Object[] args) {\n" +
-				"  return ((Character) this.methodCalled(name, Character.valueOf(superValue), args)).charValue();\n" +
+		generated.addMethod(CtMethod.make("public char methodCalled_char(String name, SuperSwitch superSwitch, ObjectContainer[] args) {\n" +
+				"  Object $returned = this.methodCalled(name, superSwitch, args);\n" +
+				"  if($returned==null)return '\\u0000';" +
+				"  return ((Character) $returned).charValue();\n" +
 				"}", generated));
 		//TODO
 
@@ -305,11 +321,13 @@ public class ClassGenerator {
 		List<String> paramStrings = new ArrayList<>();
 		List<String> callStrings = new ArrayList<>();
 		List<String> objectCallStrings = new ArrayList<>();
+		List<String> superCallStrings = new ArrayList<>();
 		int c = 0;
 		for (Class<?> clazz : parameterTypes) {
 			paramStrings.add(String.format("%1$s param%2$s", clazz.getCanonicalName(), c));
 			callStrings.add(String.format("param%1$s", c));
 			objectCallStrings.add(String.format("ObjectConverter.toObject(param%1$s)", c));
+			superCallStrings.add(String.format("(%1$s) $args[%2$s]", clazz.getCanonicalName(), c));
 			c++;
 		}
 
@@ -317,22 +335,72 @@ public class ClassGenerator {
 		String paramString = joiner.join(paramStrings);
 		String callString = joiner.join(callStrings);
 		String objectCallString = joiner.join(objectCallStrings);
+		String superCallString = joiner.join(superCallStrings);
 
 		String methodString = String.format("%1$s %2$s %3$s(%4$s) {\n",// Override method
 				access, returnType, name, paramString);
 		System.out.println(methodString);
 		System.out.println(Reflection.getMethodSignature(method));
 
-		methodString += String.format("Object[] $args = ArrayMaker.fromParameters(%s);\n", objectCallString);
+		/// Note to self:
+		/// Creating a variable
+		/// ("Object[] $args = ...")
+		/// and trying to later re-assign it
+		/// ("$args = ...")
+		/// apparently causes a VerfiyError so
+		/// DON'T DO IT!!
+		/// (Just a reminder: you spent 3 hours trying to figure this out...)
+
+		methodString += String.format("  ObjectContainer[] $cArgs = ObjectContainer.fromObjects(ArrayMaker.fromParameters(%s));\n", objectCallString);
+		methodString += "  SuperSwitch $switch = SuperSwitch.newInstance();\n";
+
+		String primitiveSuffix = "";
+		String primitiveNull = "null";
+		if (!isVoid && method.getReturnType().isPrimitive()) {
+			primitiveSuffix = "_" + method.getReturnType().getName();
+
+			if (Byte.TYPE.equals(method.getReturnType()) || Short.TYPE.equals(method.getReturnType()) || Integer.TYPE.equals(method.getReturnType())) {
+				primitiveNull = "0";
+			}
+			if (Long.TYPE.equals(method.getReturnType())) {
+				primitiveNull = "0L";
+			}
+			if (Float.TYPE.equals(method.getReturnType())) {
+				primitiveNull = "0.0f";
+			}
+			if (Double.TYPE.equals(method.getReturnType())) {
+				primitiveNull = "0.0d";
+			}
+			if (Character.TYPE.isAssignableFrom(method.getReturnType())) {
+				primitiveNull = "'\\u0000'";
+			}
+			if (Boolean.TYPE.isAssignableFrom(method.getReturnType())) {
+				primitiveNull = "false";
+			}
+		}
 
 		if (isVoid) {
-			methodString += String.format("  if(!this.methodCalled(\"%1$s\", $args)) {\n"// Check if super should be called
+			methodString += String.format("  if(!this.methodCalled%2$s(\"%1$s\", $cArgs)) {\n"// Check if super should be called
 					+ "    return;\n"// Otherwise return
-					+ "  }\n", signature
+					+ "  }\n", signature, primitiveSuffix
 			);
+			methodString += "  Object[] $args = ObjectContainer.toObjects($cArgs);\n";
 			methodString += String.format("  super.%1$s(%2$s);\n", name, callString); // Call super
 		} else {
-			methodString += String.format("  return (%3$s) this.methodCalled(\"%4$s\", super.%1$s(%2$s), $args);\n", name, callString, returnType, signature);
+			System.out.println(returnType);
+			System.out.println(method);
+			methodString += String.format(""
+					+ "  %3$s $returned = (%3$s) this.methodCalled%5$s(\"%4$s\", $switch, $cArgs);\n"
+					+ "  Object[] $args = ObjectContainer.toObjects($cArgs);\n"
+					+ "  if($switch.callSuper()) {\n"
+					+ "    if($switch.isReplace()) {\n"
+					+ "      return (%3$s) $returned;"
+					+ "    } else {\n"
+					+ "      return (%3$s) super.%1$s(%2$s);\n"
+					+ "    }\n"
+					+ "  } else {\n"
+					+ "    return (%3$s) %6$s;\n"
+					+ "  }\n", name, callString, returnType, signature, primitiveSuffix, primitiveNull);
 			//			methodString += String.format("  return (%4$s) super.%1$s(%2$s);\n", name, callString, objectCallString, returnType);
 		}
 		methodString += "}";
