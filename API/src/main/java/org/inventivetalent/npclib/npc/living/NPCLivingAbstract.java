@@ -3,6 +3,7 @@ package org.inventivetalent.npclib.npc.living;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.inventivetalent.npclib.ObjectContainer;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.entity.living.NPCEntityLiving;
 import org.inventivetalent.npclib.event.NPCDeathEvent;
@@ -27,10 +28,10 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 	}
 
 	@Watch("void die(DamageSource)")
-	public boolean onDie(Object damageSource) {
+	public boolean onDie(ObjectContainer<Object> damageSource) {
 		System.out.println("onDie -> NPCLivingAbstract");
 
-		String damageName = Reflection.getDamageSourceName(damageSource);
+		String damageName = Reflection.getDamageSourceName(damageSource.value);
 		EntityDamageEvent.DamageCause cause = Reflection.damageSourceToCause(damageName);
 		NPCDeathEvent event = new NPCDeathEvent(this, damageName, cause);
 		Bukkit.getPluginManager().callEvent(event);
@@ -38,7 +39,7 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 	}
 
 	@Watch("void g(float,float)")
-	public boolean onHeadingMove(float strafe, float forward) {
+	public boolean onHeadingMove(ObjectContainer<Float> strafe, ObjectContainer<Float> forward) {
 		//		System.out.println("onHeadingMove -> NPCLivingAbstract");
 		//TODO: NPCMoveEvent...
 		return true;

@@ -1,5 +1,8 @@
 package org.inventivetalent.npclib.watcher;
 
+import org.inventivetalent.npclib.ObjectContainer;
+import org.inventivetalent.npclib.SuperSwitch;
+
 public class MethodWatcher {
 
 	/**
@@ -9,7 +12,7 @@ public class MethodWatcher {
 	 * @param args            method arguments
 	 * @return whether the super method will be called
 	 */
-	public boolean methodCalled(Object thiz, String methodSignature, Object[] args) {
+	public boolean methodCalled(Object thiz, String methodSignature, ObjectContainer[] args) {
 		return true;
 	}
 
@@ -21,8 +24,8 @@ public class MethodWatcher {
 	 * @param args            method arguments
 	 * @return value the method returns
 	 */
-	public Object methodCalled(Object thiz, String methodSignature, Object superValue, Object[] args) {
-		return superValue;
+	public Object methodCalled(Object thiz, String methodSignature, SuperSwitch superSwitch, ObjectContainer[] args) {
+		return null;
 	}
 
 }
