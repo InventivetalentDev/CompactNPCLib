@@ -186,7 +186,9 @@ public class Reflection {
 		if (damageSource == null) { return null; }
 		try {
 			Class<?> classDamageSource = nmsClassResolver.resolve("DamageSource");
-			return Minecraft.getBukkitEntity(classDamageSource.getDeclaredMethod("getEntity").invoke(damageSource));
+			Object nmsEntity = classDamageSource.getDeclaredMethod("getEntity").invoke(damageSource);
+			if (nmsEntity == null) { return null; }
+			return Minecraft.getBukkitEntity(nmsEntity);
 		} catch (ReflectiveOperationException e) {
 			throw new RuntimeException();
 		}
