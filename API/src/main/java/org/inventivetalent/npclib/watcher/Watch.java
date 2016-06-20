@@ -23,6 +23,13 @@ public @interface Watch {
 	 */
 	boolean passThrough() default true;
 
+	/**
+	 * Whether the annotated methods uses {@link org.inventivetalent.npclib.ObjectContainer}s as its parameters. Defaults to <code>true</code>
+	 *
+	 * @return <code>true</code> if all parameters of the annotated method are {@link org.inventivetalent.npclib.ObjectContainer}s, <code>false</code> if the parameters are raw types
+	 */
+	boolean containers() default true;
+
 	//	/**
 	//	 * Whether to exclude the <code>this</code> parameter
 	//	 *

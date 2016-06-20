@@ -40,12 +40,13 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 				if (signatures.length == 0) {signatures = new String[] { Reflection.getMethodSignature(method) }; }
 				boolean passThrough = true;
 				if (method.getReturnType().equals(Void.TYPE)) { passThrough = annotation.passThrough(); }
+				boolean containers = annotation.containers();
 				//				boolean ignoreThiz = annotation.ignoreThiz();
 
 				for (String signature : signatures) {
 					if (!watchedMethods.containsKey(signature)) {
 						System.out.println("Watching method " + signature);
-						watchedMethods.put(signature, new WatchedMethod(signature, passThrough, /*ignoreThiz,*/method.getReturnType().equals(Void.TYPE), method));
+						watchedMethods.put(signature, new WatchedMethod(signature, passThrough, containers,/*ignoreThiz,*/method.getReturnType().equals(Void.TYPE), method));
 					}
 				}
 			}
@@ -59,7 +60,7 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 			return super.methodCalled(thiz, methodSignature, args);
 		}
 		try {
-			Object returned = watchedMethod.method.invoke(toWatch, args);
+			Object returned = watchedMethod.method.invoke(toWatch, watchedMethod.containers ? args : ObjectContainer.toObjects(args));
 			if (watchedMethod.isVoid) {
 				return watchedMethod.passThrough;
 			}
@@ -76,7 +77,7 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 			return super.methodCalled(thiz, methodSignature, superSwitch, args);
 		}
 		try {
-			return watchedMethod.method.invoke(toWatch, args);
+			return watchedMethod.method.invoke(toWatch, watchedMethod.containers ? args : ObjectContainer.toObjects(args));
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to invoke @Watch method " + methodSignature + " with args: " + Arrays.toString(args), e);
 		}
@@ -86,6 +87,7 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 	class WatchedMethod {
 		String  signature;
 		boolean passThrough;
+		boolean containers;
 		//		boolean ignoreThiz;
 		boolean isVoid;
 		Method  method;
