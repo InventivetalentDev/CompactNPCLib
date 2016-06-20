@@ -20,7 +20,7 @@ public class MethodWatcher {
 	 * Called for <code>non-void</code> methods.
 	 *
 	 * @param methodSignature signature of the called method
-	 * @param superValue      original value returned by the superclass
+	 * @param superSwitch     {@link SuperSwitch} to decide the super-call behaviour
 	 * @param args            method arguments
 	 * @return value the method returns
 	 */
