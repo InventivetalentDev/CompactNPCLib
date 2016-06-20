@@ -343,6 +343,8 @@ public class ClassGenerator {
 		System.out.println(methodString);
 		System.out.println(Reflection.getMethodSignature(method));
 
+		/// Edit: Javassist uses $args as a special variable, which is probably why you can't assign it again
+		/// 
 		/// Note to self:
 		/// Creating a variable
 		/// ("Object[] $args = ...")
@@ -418,12 +420,12 @@ public class ClassGenerator {
 		int i = 0;
 		for (Class c : paramTypes) {
 			stringBuilder.append("param").append(i).append(" = (");
-			if(c.isPrimitive()){
-				Class<?> wrapped=Primitives.wrap(c);
+			if (c.isPrimitive()) {
+				Class<?> wrapped = Primitives.wrap(c);
 				stringBuilder
 						.append("(").append(wrapped.getCanonicalName()).append(") $mArgs[").append(i).append("]).")
 						.append(c.getCanonicalName()).append("Value();\n");// <-- This feels so cheaty
-			}else{
+			} else {
 				stringBuilder.append(c.getCanonicalName()).append(") $mArgs[").append(i).append("];\n");
 			}
 			i++;
