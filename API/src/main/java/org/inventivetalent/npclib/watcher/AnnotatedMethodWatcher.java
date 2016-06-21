@@ -65,15 +65,15 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 		if (watchedMethod == null) {
 			return super.methodCalled(thiz, methodSignature, containers);
 		}
+		Object[] args = watchedMethod.containers ? containers : ObjectContainer.toObjects(containers);
 		try {
-			Object[] args = watchedMethod.containers ? containers : ObjectContainer.toObjects(containers);
 			Object returned = watchedMethod.method.invoke(toWatch, args);
 			if (watchedMethod.isVoid) {
 				return watchedMethod.passThrough;
 			}
 			return (boolean) returned;
 		} catch (Exception e) {
-			throw new RuntimeException("Failed to invoke @Watch method " + methodSignature + " with args: " + Arrays.toString(containers), e);
+			throw new RuntimeException("Failed to invoke @Watch method " + methodSignature + " with args: " + Arrays.toString(args), e);
 		}
 	}
 
@@ -83,15 +83,15 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 		if (watchedMethod == null) {
 			return super.methodCalled(thiz, methodSignature, superSwitch, containers);
 		}
+		Object[] args = watchedMethod.containers ? containers : ObjectContainer.toObjects(containers);
 		try {
-			Object[] args = watchedMethod.containers ? containers : ObjectContainer.toObjects(containers);
 			if (watchedMethod.hasSwitch) {
 				args = Arrays.copyOf(args, args.length + 1);
 				args[args.length - 1] = superSwitch;
 			}
 			return watchedMethod.method.invoke(toWatch, args);
 		} catch (Exception e) {
-			throw new RuntimeException("Failed to invoke @Watch method " + methodSignature + " with args: " + Arrays.toString(containers), e);
+			throw new RuntimeException("Failed to invoke @Watch method " + methodSignature + " with args: " + Arrays.toString(args), e);
 		}
 	}
 
