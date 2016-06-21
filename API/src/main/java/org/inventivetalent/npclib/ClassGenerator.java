@@ -65,7 +65,9 @@ public class ClassGenerator {
 
 		generated.addMethod(CtMethod.make("public boolean methodCalled(String name, ObjectContainer[] args) {\n"
 				+ "  if(this.$methodWatcher == null) return true;\n"
-				+ "  return this.$methodWatcher.methodCalled(this, name, args);\n"
+				+ "  SuperSwitch $switch = SuperSwitch.newInstance();\n"
+				+ "  this.$methodWatcher.methodCalled(this, name, $switch, args);\n"
+				+ "  return !$switch.isCancelled();\n"
 				+ "}", generated));
 		generated.addMethod(CtMethod.make("public Object methodCalled(String name, SuperSwitch superSwitch, ObjectContainer[] args) {\n"
 				+ "  if(this.$methodWatcher == null) return null;\n"

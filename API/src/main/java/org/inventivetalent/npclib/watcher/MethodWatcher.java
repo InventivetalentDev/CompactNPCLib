@@ -5,16 +5,16 @@ import org.inventivetalent.npclib.SuperSwitch;
 
 public class MethodWatcher {
 
-	/**
-	 * Called for <code>void</code> methods only. If it returns <code>true</code>, the super method will be called
-	 *
-	 * @param methodSignature signature of the called method
-	 * @param args            method arguments
-	 * @return whether the super method will be called
-	 */
-	public boolean methodCalled(Object thiz, String methodSignature, ObjectContainer[] args) {
-		return true;
-	}
+//	/**
+//	 * Called for <code>void</code> methods only. If it returns <code>true</code>, the super method will be called
+//	 *
+//	 * @param methodSignature signature of the called method
+//	 * @param args            method arguments
+//	 * @return whether the super method will be called
+//	 */
+//	public boolean methodCalled(Object thiz, String methodSignature, ObjectContainer[] args) {
+//		return true;
+//	}
 
 	/**
 	 * Called for <code>non-void</code> methods.
