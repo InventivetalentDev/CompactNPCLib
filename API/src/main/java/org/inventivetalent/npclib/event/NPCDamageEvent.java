@@ -34,6 +34,11 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 
+import javax.annotation.Nullable;
+
+/**
+ * Called if an NPC is damaged
+ */
 public class NPCDamageEvent extends NPCEvent implements Cancellable {
 
 	private boolean cancelled;
@@ -52,22 +57,48 @@ public class NPCDamageEvent extends NPCEvent implements Cancellable {
 		this.damager = damager;
 	}
 
+	/**
+	 * Get the NMS damage source name
+	 *
+	 * @return the source name
+	 */
 	public String getDamageSourceName() {
 		return damageSourceName;
 	}
 
+	/**
+	 * Get the damage cause
+	 *
+	 * @return the event's {@link org.bukkit.event.entity.EntityDamageEvent.DamageCause}
+	 */
 	public EntityDamageEvent.DamageCause getDamageCause() {
 		return damageCause;
 	}
 
+	/**
+	 * Get the amount
+	 *
+	 * @return the damage amount
+	 */
 	public float getAmount() {
 		return amount;
 	}
 
+	/**
+	 * Set the amount
+	 *
+	 * @param amount the new damage amount
+	 */
 	public void setAmount(float amount) {
 		this.amount = amount;
 	}
 
+	/**
+	 * Get the damager
+	 *
+	 * @return the entity that damaged the NPC, or <code>null</code>
+	 */
+	@Nullable
 	public Entity getDamager() {
 		return damager;
 	}
