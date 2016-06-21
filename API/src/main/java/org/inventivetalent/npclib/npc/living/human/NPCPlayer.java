@@ -10,6 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
 import org.inventivetalent.npclib.ClassBuilder;
 import org.inventivetalent.npclib.Reflection;
+import org.inventivetalent.npclib.SuperSwitch;
 import org.inventivetalent.npclib.annotation.NPC;
 import org.inventivetalent.npclib.entity.living.human.EntityPlayer;
 import org.inventivetalent.reflection.minecraft.Minecraft;
@@ -56,10 +57,10 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	}
 
 	@Override
-	public boolean onDie() {
+	public void onDie(SuperSwitch superSwitch) {
 		System.out.println("onDie -> NPCPlayer");
-		boolean die = super.onDie();
-		if (die) {
+		super.onDie(superSwitch);
+		if (!superSwitch.isCancelled()) {
 			// Remove players from the world manually
 			Bukkit.getScheduler().runTaskLater(getPlugin(), new Runnable() {
 				@Override
@@ -72,7 +73,6 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 				}
 			}, 40);// <-- death animation delay
 		}
-		return die;
 	}
 
 	protected void updatePlayerList(final Player player) {

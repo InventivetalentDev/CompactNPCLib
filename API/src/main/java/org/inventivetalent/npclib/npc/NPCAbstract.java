@@ -102,18 +102,13 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	// Watched
 
 	@Watch("void m()")
-	public boolean onBaseTick() {
-		//		System.out.println("base tick!");
-
+	public void onBaseTick(SuperSwitch superSwitch) {
 		tickAI();
-
-		return true;
 	}
 
 	@Watch("void move(double,double,double)")
-	public boolean onMove(ObjectContainer<Double> x, ObjectContainer<Double> y, ObjectContainer<Double> z) {
+	public void onMove(ObjectContainer<Double> x, ObjectContainer<Double> y, ObjectContainer<Double> z, SuperSwitch superSwitch) {
 		//TODO: NPCMoveEvent/NPCMotionEvent
-		return true;
 	}
 
 	@Watch("boolean damageEntity(DamageSource,float)")
@@ -133,11 +128,14 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	@Watch("void die()")
-	public boolean onDie() {
+	public void onDie(SuperSwitch superSwitch) {
 		System.out.println("onDie -> NPCAbstract");
 		NPCDeathEvent event = new NPCDeathEvent(this, null, null);
 		Bukkit.getPluginManager().callEvent(event);
-		return !event.isCancelled();
+		if (event.isCancelled()) {
+			superSwitch.setCancelled(true);
+		}
+		System.out.println(superSwitch);
 	}
 
 	public Plugin getPlugin() {

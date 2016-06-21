@@ -5,6 +5,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.inventivetalent.npclib.ObjectContainer;
 import org.inventivetalent.npclib.Reflection;
+import org.inventivetalent.npclib.SuperSwitch;
 import org.inventivetalent.npclib.entity.living.NPCEntityLiving;
 import org.inventivetalent.npclib.event.NPCDeathEvent;
 import org.inventivetalent.npclib.npc.NPCAbstract;
@@ -28,21 +29,22 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 	}
 
 	@Watch("void die(DamageSource)")
-	public boolean onDie(ObjectContainer<Object> damageSource) {
+	public void onDie(ObjectContainer<Object> damageSource, SuperSwitch superSwitch) {
 		System.out.println("onDie -> NPCLivingAbstract");
 
 		String damageName = Reflection.getDamageSourceName(damageSource.value);
 		EntityDamageEvent.DamageCause cause = Reflection.damageSourceToCause(damageName);
 		NPCDeathEvent event = new NPCDeathEvent(this, damageName, cause);
 		Bukkit.getPluginManager().callEvent(event);
-		return !event.isCancelled();
+		if (event.isCancelled()) {
+			superSwitch.setCancelled(true);
+		}
 	}
 
 	@Watch("void g(float,float)")
-	public boolean onHeadingMove(ObjectContainer<Float> strafe, ObjectContainer<Float> forward) {
+	public void onHeadingMove(ObjectContainer<Float> strafe, ObjectContainer<Float> forward, SuperSwitch superSwitch) {
 		//		System.out.println("onHeadingMove -> NPCLivingAbstract");
 		//TODO: NPCMoveEvent...
-		return true;
 	}
 
 	public void setYaw(float yaw) {
