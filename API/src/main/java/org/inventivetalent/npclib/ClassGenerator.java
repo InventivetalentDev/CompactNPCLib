@@ -19,7 +19,7 @@ public class ClassGenerator {
 	public static Class<?> generateEntityClass(ClassPool classPool, NPCInfo npcInfo) throws ReflectiveOperationException, CannotCompileException, NotFoundException {
 		classPool.insertClassPath(new LoaderClassPath(ClassGenerator.class.getClassLoader()));
 
-		CtClass generated = classPool.makeClass("org.inventivetalent.npc.entity.generated." + npcInfo.getNPCClassName());
+		CtClass generated = classPool.makeClass("org.inventivetalent.npclib.generated.entity." + npcInfo.getNPCClassName());
 
 		CtClass npcInterface = classPool.get(npcInfo.getEntity().getName());
 		generated.setInterfaces(new CtClass[] { npcInterface });
@@ -31,7 +31,8 @@ public class ClassGenerator {
 		classPool.importPackage("org.inventivetalent.npclib.npc");
 		classPool.importPackage("org.inventivetalent.npclib.annotation");
 		classPool.importPackage("org.inventivetalent.npclib.entity");
-		classPool.importPackage("org.inventivetalent.npclib.entity.generated");
+		classPool.importPackage("org.inventivetalent.npclib.generated");
+		classPool.importPackage("org.inventivetalent.npclib.generated.entity");
 
 		for (String packge : npcInfo.getExtraPackages()) {
 			classPool.importPackage(packge);
@@ -335,7 +336,7 @@ public class ClassGenerator {
 	public static Class<?> generatePlayerConnection(ClassPool classPool) throws ReflectiveOperationException, CannotCompileException, NotFoundException {
 		classPool.insertClassPath(new LoaderClassPath(ClassGenerator.class.getClassLoader()));
 
-		CtClass generated = classPool.makeClass("org.inventivetalent.npc.entity.generated.player.NPCPlayerConnection");
+		CtClass generated = classPool.makeClass("org.inventivetalent.npclib.generated.player.NPCPlayerConnection");
 
 		CtClass connectionInterface = classPool.get(INPCPlayerConnection.class.getName());
 		generated.setInterfaces(new CtClass[] { connectionInterface });
@@ -345,8 +346,8 @@ public class ClassGenerator {
 		classPool.importPackage("org.inventivetalent.npclib");
 		classPool.importPackage("org.inventivetalent.npclib.npc");
 		classPool.importPackage("org.inventivetalent.npclib.entity");
-		classPool.importPackage("org.inventivetalent.npclib.entity.generated");
-		classPool.importPackage("org.inventivetalent.npclib.entity.generated.player");
+		classPool.importPackage("org.inventivetalent.npclib.generated.entity");
+		classPool.importPackage("org.inventivetalent.npclib.generated.player");
 
 		generated.addConstructor(CtNewConstructor.make("public NPCPlayerConnection(MinecraftServer minecraftServer, NetworkManager networkManager, EntityPlayer entityPlayer) {\n"
 				+ "  super(minecraftServer, networkManager, entityPlayer);\n"
@@ -365,7 +366,7 @@ public class ClassGenerator {
 	public static Class<?> generateChannel(ClassPool classPool) throws ReflectiveOperationException, CannotCompileException, NotFoundException {
 		classPool.insertClassPath(new LoaderClassPath(ClassGenerator.class.getClassLoader()));
 
-		CtClass generated = classPool.makeClass("org.inventivetalent.npc.entity.generated.netty.NPCChannel");
+		CtClass generated = classPool.makeClass("org.inventivetalent.npclib.generated.netty.NPCChannel");
 
 		CtClass channelInterface = classPool.get(INPCChannel.class.getName());
 		generated.setInterfaces(new CtClass[] { channelInterface });
