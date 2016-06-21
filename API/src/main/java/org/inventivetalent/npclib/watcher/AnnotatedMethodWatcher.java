@@ -86,7 +86,7 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 		Object[] args = watchedMethod.containers ? containers : ObjectContainer.toObjects(containers);
 		try {
 			if (watchedMethod.hasSwitch) {
-				args = Arrays.copyOf(args, args.length + 1);
+				args = Arrays.copyOf(args, args.length + 1, Object[].class);
 				args[args.length - 1] = superSwitch;
 			}
 			return watchedMethod.method.invoke(toWatch, args);
