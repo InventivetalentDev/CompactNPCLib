@@ -344,7 +344,7 @@ public class ClassGenerator {
 		System.out.println(Reflection.getMethodSignature(method));
 
 		/// Edit: Javassist uses $args as a special variable, which is probably why you can't assign it again
-		/// 
+		///
 		/// Note to self:
 		/// Creating a variable
 		/// ("Object[] $args = ...")
