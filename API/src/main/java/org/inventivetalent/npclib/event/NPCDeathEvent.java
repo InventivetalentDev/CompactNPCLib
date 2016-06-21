@@ -5,6 +5,11 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 
+/**
+ * Event called when a NPC dies.
+ *
+ * Note: This event is called twice for living entities. Once for the LivingEntity with a damage source, once for the base entity without a source.
+ */
 public class NPCDeathEvent extends NPCEvent implements Cancellable {
 
 	private boolean                       cancelled;
@@ -26,10 +31,20 @@ public class NPCDeathEvent extends NPCEvent implements Cancellable {
 		return damageSourceName != null;
 	}
 
+	/**
+	 * Get the damage source name
+	 *
+	 * @return the source name
+	 */
 	public String getDamageSourceName() {
 		return damageSourceName;
 	}
 
+	/**
+	 * Get the damage cause
+	 *
+	 * @return the {@link org.bukkit.event.entity.EntityDamageEvent.DamageCause}
+	 */
 	public EntityDamageEvent.DamageCause getDamageCause() {
 		return damageCause;
 	}
