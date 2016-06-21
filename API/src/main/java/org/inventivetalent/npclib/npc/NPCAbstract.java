@@ -9,10 +9,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 import org.inventivetalent.boundingbox.BoundingBox;
-import org.inventivetalent.npclib.NPCLib;
-import org.inventivetalent.npclib.NPCType;
-import org.inventivetalent.npclib.ObjectContainer;
-import org.inventivetalent.npclib.Reflection;
+import org.inventivetalent.npclib.*;
 import org.inventivetalent.npclib.ai.AIAbstract;
 import org.inventivetalent.npclib.entity.NPCEntity;
 import org.inventivetalent.npclib.event.NPCDamageEvent;
@@ -120,14 +117,16 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	@Watch("boolean damageEntity(DamageSource,float)")
-	public Boolean onDamage(ObjectContainer<Object> damageSource, ObjectContainer<Float> amount) {
+	public Boolean onDamage(ObjectContainer<Object> damageSource, ObjectContainer<Float> amount, SuperSwitch superSwitch) {
 		System.out.println("onDamage: damageSource = [" + damageSource + "], amount = [" + amount + "]");
 		String sourceName = Reflection.getDamageSourceName(damageSource.value);
 		EntityDamageEvent.DamageCause damageCause = Reflection.damageSourceToCause(sourceName);
 		Entity damager = Reflection.getEntityFromDamageSource(damageSource.value);
 		NPCDamageEvent event = new NPCDamageEvent(this, sourceName, damageCause, amount.value, damager);
 		Bukkit.getPluginManager().callEvent(event);
+		event.setCancelled(true);
 		if (event.isCancelled()) {
+			superSwitch.setCancelled(true);
 			return false;
 		}
 		amount.value = event.getAmount();
