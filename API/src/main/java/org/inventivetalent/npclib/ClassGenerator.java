@@ -206,107 +206,6 @@ public class ClassGenerator {
 		return generated.toClass(NPCEntity.class.getClassLoader(), NPCEntity.class.getProtectionDomain());
 	}
 
-	public static Class<?> generatePlayerConnection(ClassPool classPool) throws ReflectiveOperationException, CannotCompileException, NotFoundException {
-		classPool.insertClassPath(new LoaderClassPath(ClassGenerator.class.getClassLoader()));
-
-		CtClass generated = classPool.makeClass("org.inventivetalent.npc.entity.generated.player.NPCPlayerConnection");
-
-		CtClass connectionInterface = classPool.get(INPCPlayerConnection.class.getName());
-		generated.setInterfaces(new CtClass[] { connectionInterface });
-		generated.setSuperclass(classPool.get("net.minecraft.server." + Minecraft.VERSION.name() + ".PlayerConnection"));
-
-		classPool.importPackage("net.minecraft.server." + Minecraft.VERSION.name());
-		classPool.importPackage("org.inventivetalent.npclib");
-		classPool.importPackage("org.inventivetalent.npclib.npc");
-		classPool.importPackage("org.inventivetalent.npclib.entity");
-		classPool.importPackage("org.inventivetalent.npclib.entity.generated");
-		classPool.importPackage("org.inventivetalent.npclib.entity.generated.player");
-
-		generated.addConstructor(CtNewConstructor.make("public NPCPlayerConnection(MinecraftServer minecraftServer, NetworkManager networkManager, EntityPlayer entityPlayer) {\n"
-				+ "  super(minecraftServer, networkManager, entityPlayer);\n"
-				+ "}", generated));
-
-		generated.addMethod(CtMethod.make("public void sendPacket(Packet packet) {}", generated));// TODO: NPCPacketEvent?
-
-		try {
-			generated.writeFile("generated");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return generated.toClass(INPCPlayerConnection.class.getClassLoader(), INPCPlayerConnection.class.getProtectionDomain());
-	}
-
-	public static Class<?> generateChannel(ClassPool classPool) throws ReflectiveOperationException, CannotCompileException, NotFoundException {
-		classPool.insertClassPath(new LoaderClassPath(ClassGenerator.class.getClassLoader()));
-
-		CtClass generated = classPool.makeClass("org.inventivetalent.npc.entity.generated.netty.NPCChannel");
-
-		CtClass channelInterface = classPool.get(INPCChannel.class.getName());
-		generated.setInterfaces(new CtClass[] { channelInterface });
-		generated.setSuperclass(classPool.get("io.netty.channel.AbstractChannel"));
-
-		classPool.importPackage("net.minecraft.server." + Minecraft.VERSION.name());
-		classPool.importPackage("io.netty.channel");
-		//		classPool.importPackage("java.net");
-		classPool.importPackage("org.inventivetalent.npclib");
-		classPool.importPackage("org.inventivetalent.npclib.npc");
-		classPool.importPackage("org.inventivetalent.npclib.entity");
-		classPool.importPackage("org.inventivetalent.npclib.entity.generated");
-		classPool.importPackage("org.inventivetalent.npclib.entity.generated.netty");
-
-		generated.addConstructor(CtNewConstructor.make("public NPCChannel(io.netty.channel.Channel parent) {"
-				+ "  super(parent);\n"
-				+ "}", generated));
-		generated.addConstructor(CtNewConstructor.make("public NPCChannel() {\n"
-				+ "  super(null);\n"
-				+ "}", generated));
-
-		generated.addField(CtField.make("private final ChannelConfig config = new DefaultChannelConfig(this);", generated));
-		generated.addField(CtField.make("private boolean open = false;", generated));
-
-		generated.addMethod(CtMethod.make("public ChannelConfig config() {"
-				+ "  this.config.setAutoRead(true);\n"
-				+ "  return this.config;\n"
-				+ "}", generated));
-		generated.addMethod(CtMethod.make("public void setOpen(boolean open) {"
-				+ "  this.open = open;\n"
-				+ "}", generated));
-		generated.addMethod(CtMethod.make("public boolean isOpen() {"
-				+ "  return this.open;\n"
-				+ "}", generated));
-		// Dummy methods
-		generated.addMethod(CtMethod.make("public boolean isActive() {\n"
-				+ "  return false;\n"
-				+ "}", generated));
-		generated.addMethod(CtMethod.make("public ChannelMetadata metadata() {\n"
-				+ "  return null;\n"
-				+ "}", generated));
-		generated.addMethod(CtMethod.make("protected io.netty.channel.AbstractChannel.AbstractUnsafe newUnsafe() {\n"
-				+ "  return null;\n"
-				+ "}", generated));
-		generated.addMethod(CtMethod.make("protected boolean isCompatible(EventLoop eventloop) {\n"
-				+ "  return false;\n"
-				+ "}", generated));
-		generated.addMethod(CtMethod.make("protected java.net.SocketAddress localAddress0() {\n"
-				+ "  return null;\n"
-				+ "}", generated));
-		generated.addMethod(CtMethod.make("protected java.net.SocketAddress remoteAddress0() {\n"
-				+ "  return null;\n"
-				+ "}", generated));
-		generated.addMethod(CtMethod.make("protected void doBind(java.net.SocketAddress socketAddress) throws Exception {}", generated));
-		generated.addMethod(CtMethod.make("protected void doDisconnect() throws Exception {}", generated));
-		generated.addMethod(CtMethod.make("protected void doClose() throws Exception {}", generated));
-		generated.addMethod(CtMethod.make("protected void doBeginRead() throws Exception {}", generated));
-		generated.addMethod(CtMethod.make("protected void doWrite(ChannelOutboundBuffer channelOutboundBuffer) throws Exception {}", generated));
-
-		try {
-			generated.writeFile("generated");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return generated.toClass(INPCChannel.class.getClassLoader(), INPCChannel.class.getProtectionDomain());
-	}
-
 	static CtMethod makeOverrideMethod(Method method, CtClass declaring) throws CannotCompileException {
 		String access = Modifier.toString(method.getModifiers());
 		String returnType = method.getReturnType().getCanonicalName();
@@ -431,6 +330,107 @@ public class ClassGenerator {
 			i++;
 		}
 		return stringBuilder.toString();
+	}
+
+	public static Class<?> generatePlayerConnection(ClassPool classPool) throws ReflectiveOperationException, CannotCompileException, NotFoundException {
+		classPool.insertClassPath(new LoaderClassPath(ClassGenerator.class.getClassLoader()));
+
+		CtClass generated = classPool.makeClass("org.inventivetalent.npc.entity.generated.player.NPCPlayerConnection");
+
+		CtClass connectionInterface = classPool.get(INPCPlayerConnection.class.getName());
+		generated.setInterfaces(new CtClass[] { connectionInterface });
+		generated.setSuperclass(classPool.get("net.minecraft.server." + Minecraft.VERSION.name() + ".PlayerConnection"));
+
+		classPool.importPackage("net.minecraft.server." + Minecraft.VERSION.name());
+		classPool.importPackage("org.inventivetalent.npclib");
+		classPool.importPackage("org.inventivetalent.npclib.npc");
+		classPool.importPackage("org.inventivetalent.npclib.entity");
+		classPool.importPackage("org.inventivetalent.npclib.entity.generated");
+		classPool.importPackage("org.inventivetalent.npclib.entity.generated.player");
+
+		generated.addConstructor(CtNewConstructor.make("public NPCPlayerConnection(MinecraftServer minecraftServer, NetworkManager networkManager, EntityPlayer entityPlayer) {\n"
+				+ "  super(minecraftServer, networkManager, entityPlayer);\n"
+				+ "}", generated));
+
+		generated.addMethod(CtMethod.make("public void sendPacket(Packet packet) {}", generated));// TODO: NPCPacketEvent?
+
+		try {
+			generated.writeFile("generated");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return generated.toClass(INPCPlayerConnection.class.getClassLoader(), INPCPlayerConnection.class.getProtectionDomain());
+	}
+
+	public static Class<?> generateChannel(ClassPool classPool) throws ReflectiveOperationException, CannotCompileException, NotFoundException {
+		classPool.insertClassPath(new LoaderClassPath(ClassGenerator.class.getClassLoader()));
+
+		CtClass generated = classPool.makeClass("org.inventivetalent.npc.entity.generated.netty.NPCChannel");
+
+		CtClass channelInterface = classPool.get(INPCChannel.class.getName());
+		generated.setInterfaces(new CtClass[] { channelInterface });
+		generated.setSuperclass(classPool.get("io.netty.channel.AbstractChannel"));
+
+		classPool.importPackage("net.minecraft.server." + Minecraft.VERSION.name());
+		classPool.importPackage("io.netty.channel");
+		//		classPool.importPackage("java.net");
+		classPool.importPackage("org.inventivetalent.npclib");
+		classPool.importPackage("org.inventivetalent.npclib.npc");
+		classPool.importPackage("org.inventivetalent.npclib.entity");
+		classPool.importPackage("org.inventivetalent.npclib.entity.generated");
+		classPool.importPackage("org.inventivetalent.npclib.entity.generated.netty");
+
+		generated.addConstructor(CtNewConstructor.make("public NPCChannel(io.netty.channel.Channel parent) {"
+				+ "  super(parent);\n"
+				+ "}", generated));
+		generated.addConstructor(CtNewConstructor.make("public NPCChannel() {\n"
+				+ "  super(null);\n"
+				+ "}", generated));
+
+		generated.addField(CtField.make("private final ChannelConfig config = new DefaultChannelConfig(this);", generated));
+		generated.addField(CtField.make("private boolean open = false;", generated));
+
+		generated.addMethod(CtMethod.make("public ChannelConfig config() {"
+				+ "  this.config.setAutoRead(true);\n"
+				+ "  return this.config;\n"
+				+ "}", generated));
+		generated.addMethod(CtMethod.make("public void setOpen(boolean open) {"
+				+ "  this.open = open;\n"
+				+ "}", generated));
+		generated.addMethod(CtMethod.make("public boolean isOpen() {"
+				+ "  return this.open;\n"
+				+ "}", generated));
+		// Dummy methods
+		generated.addMethod(CtMethod.make("public boolean isActive() {\n"
+				+ "  return false;\n"
+				+ "}", generated));
+		generated.addMethod(CtMethod.make("public ChannelMetadata metadata() {\n"
+				+ "  return null;\n"
+				+ "}", generated));
+		generated.addMethod(CtMethod.make("protected io.netty.channel.AbstractChannel.AbstractUnsafe newUnsafe() {\n"
+				+ "  return null;\n"
+				+ "}", generated));
+		generated.addMethod(CtMethod.make("protected boolean isCompatible(EventLoop eventloop) {\n"
+				+ "  return false;\n"
+				+ "}", generated));
+		generated.addMethod(CtMethod.make("protected java.net.SocketAddress localAddress0() {\n"
+				+ "  return null;\n"
+				+ "}", generated));
+		generated.addMethod(CtMethod.make("protected java.net.SocketAddress remoteAddress0() {\n"
+				+ "  return null;\n"
+				+ "}", generated));
+		generated.addMethod(CtMethod.make("protected void doBind(java.net.SocketAddress socketAddress) throws Exception {}", generated));
+		generated.addMethod(CtMethod.make("protected void doDisconnect() throws Exception {}", generated));
+		generated.addMethod(CtMethod.make("protected void doClose() throws Exception {}", generated));
+		generated.addMethod(CtMethod.make("protected void doBeginRead() throws Exception {}", generated));
+		generated.addMethod(CtMethod.make("protected void doWrite(ChannelOutboundBuffer channelOutboundBuffer) throws Exception {}", generated));
+
+		try {
+			generated.writeFile("generated");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return generated.toClass(INPCChannel.class.getClassLoader(), INPCChannel.class.getProtectionDomain());
 	}
 
 	//	String makeParameters(Class<?>[] parameterTypes) {
