@@ -28,77 +28,77 @@ import java.util.Map;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public enum NPCType {
-	DROPPED_ITEM(EntityType.DROPPED_ITEM, NPCItem.class),
-	EXPERIENCE_ORB(EntityType.EXPERIENCE_ORB, NPCExperienceOrb.class),
-	//	LEASH_KNOT(EntityType.LEASH_HITCH, NPCLeashKnot.class),
-	//	PAINTING(EntityType.PAINTING,NPCPainting.class),
-	//	ARROW(EntityType.ARROW,NPCArrow.class),
-	//	SNOWBALL(EntityType.SNOWBALL,NPCSnowball.class),
-	//	LARGE_FIREBALL(EntityType.FIREBALL,NPCLargeFireball.class),
-	//	SMALL_FIREBALL(EntityType.SMALL_FIREBALL,NPCSmallFireball.class),
-	//	ENDER_PEARL(EntityType.ENDER_PEARL,NPCEnderPearl.class),
-	//	ENDER_SIGNAL(EntityType.ENDER_SIGNAL,NPCEnderSignal.class),
+	DROPPED_ITEM("DROPPED_ITEM", NPCItem.class),
+	EXPERIENCE_ORB("EXPERIENCE_ORB", NPCExperienceOrb.class),
+	//	LEASH_KNOT("LEASH_HITCH", NPCLeashKnot.class),
+	//	PAINTING("PAINTING",NPCPainting.class),
+	//	ARROW("ARROW",NPCArrow.class),
+	//	SNOWBALL("SNOWBALL",NPCSnowball.class),
+	//	LARGE_FIREBALL("FIREBALL",NPCLargeFireball.class),
+	//	SMALL_FIREBALL("SMALL_FIREBALL",NPCSmallFireball.class),
+	//	ENDER_PEARL("ENDER_PEARL",NPCEnderPearl.class),
+	//	ENDER_SIGNAL("ENDER_SIGNAL",NPCEnderSignal.class),
 
-	//	THROWN_EXP_BOTTLE(EntityType.THROWN_EXP_BOTTLE,NPCExpBottle.class),
-	//	ITEM_FRAME(EntityType.ITEM_FRAME,NPCItemFrame.class),
-	//	WITHER_SKULL(EntityType.WITHER_SKULL,NPCWitherSkull.class),
-	//	PRIMED_TNT(EntityType.PRIMED_TNT,NPCPrimedTnt.class),
-	//	FALLING_BLOCK(EntityType.FALLING_BLOCK,NPCFallingBlock.class),
-	//	FIREWORK(EntityType.FIREWORK,NPCFirework.class),
-	//	TIPPED_ARROW(EntityType.TIPPED_ARROW,NPCTippedArrow.class),
-	//	SPECTRAL_ARROW(EntityType.SPECTRAL_ARROW,NPCSpectralArrow.class),
-	//	SHULKER_BULLET(EntityType.SHULKER_BULLET,NPCShulkerBullet.class),
-	//	DRAGON_FIREBALL(EntityType.DRAGON_FIREBALL,NPCDragonFireball.class),
+	//	THROWN_EXP_BOTTLE("THROWN_EXP_BOTTLE",NPCExpBottle.class),
+	//	ITEM_FRAME("ITEM_FRAME",NPCItemFrame.class),
+	//	WITHER_SKULL("WITHER_SKULL",NPCWitherSkull.class),
+	//	PRIMED_TNT("PRIMED_TNT",NPCPrimedTnt.class),
+	//	FALLING_BLOCK("FALLING_BLOCK",NPCFallingBlock.class),
+	//	FIREWORK("FIREWORK",NPCFirework.class),
+	//	TIPPED_ARROW("TIPPED_ARROW",NPCTippedArrow.class),
+	//	SPECTRAL_ARROW("SPECTRAL_ARROW",NPCSpectralArrow.class),
+	//	SHULKER_BULLET("SHULKER_BULLET",NPCShulkerBullet.class),
+	//	DRAGON_FIREBALL("DRAGON_FIREBALL",NPCDragonFireball.class),
 
-	ARMOR_STAND(EntityType.ARMOR_STAND, NPCArmorStand.class),
+	ARMOR_STAND("ARMOR_STAND", NPCArmorStand.class),
 
-	//	MINECART_COMMAND(EntityType.MINECART_COMMAND,NPCMinecartCommand.class),
-	//	BOAT(EntityType.BOAT,NPCBoat.class),
-	//	MINECART_RIDEABLE(EntityType.MINECART,NPCMinecartRideable.class),
-	//	MINECART_CHEST(EntityType.MINECART_CHEST,NPCMinecartChest.class),
-	//	MINECART_FURNACE(EntityType.MINECART_FURNACE,NPCMinecartFurnace.class),
-	//	MINECART_TNT(EntityType.MINECART_TNT,NPCMinecartTnt.class),
-	//	MINECART_HOPPER(EntityType.MINECART_HOPPER,NPCMinecartHopper.class),
-	//	MINECART_MOB_SPAWNER(EntityType.MINECART_MOB_SPAWNER,NPCMinecartMobSpawner.class),
+	//	MINECART_COMMAND("MINECART_COMMAND",NPCMinecartCommand.class),
+	//	BOAT("BOAT",NPCBoat.class),
+	//	MINECART_RIDEABLE("MINECART",NPCMinecartRideable.class),
+	//	MINECART_CHEST("MINECART_CHEST",NPCMinecartChest.class),
+	//	MINECART_FURNACE("MINECART_FURNACE",NPCMinecartFurnace.class),
+	//	MINECART_TNT("MINECART_TNT",NPCMinecartTnt.class),
+	//	MINECART_HOPPER("MINECART_HOPPER",NPCMinecartHopper.class),
+	//	MINECART_MOB_SPAWNER("MINECART_MOB_SPAWNER",NPCMinecartMobSpawner.class),
 
-	CREEPER(EntityType.CREEPER, NPCCreeper.class),
-	SKELETON(EntityType.SKELETON, NPCSkeleton.class),
-	SPIDER(EntityType.SPIDER, NPCSpider.class),
-	GIANT(EntityType.GIANT, NPCGiant.class),
-	ZOMBIE(EntityType.ZOMBIE, NPCZombie.class),
-	SLIME(EntityType.SLIME, NPCSlime.class),
-	GHAST(EntityType.GHAST, NPCGhast.class),
-	PIG_ZOMBIE(EntityType.PIG_ZOMBIE, NPCPigZombie.class),
-	ENDERMAN(EntityType.ENDERMAN, NPCEnderman.class),
-	CAVE_SPIDER(EntityType.CAVE_SPIDER, NPCCaveSpider.class),
-	//	SILVERFISH(EntityType.SILVERFISH, NPCSilverfish.class),
-	//	BLAZE(EntityType.BLAZE, NPCBlaze.class),
-	//	MAGMA_CUBE(EntityType.MAGMA_CUBE, NPCMagmaCube.class),
-	ENDER_DRAGON(EntityType.ENDER_DRAGON, NPCEnderDragon.class),
-	WITHER(EntityType.WITHER, NPCWither.class),
-	//	BAT(EntityType.BAT, NPCBat.class),
-	WITCH(EntityType.WITCH, NPCWitch.class),
-	ENDERMITE(EntityType.ENDERMITE, NPCEndermite.class),
-	GUARDIAN(EntityType.GUARDIAN, NPCGuardian.class),
-	SHULKER(EntityType.SHULKER, NPCShulker.class),
+	CREEPER("CREEPER", NPCCreeper.class),
+	SKELETON("SKELETON", NPCSkeleton.class),
+	SPIDER("SPIDER", NPCSpider.class),
+	GIANT("GIANT", NPCGiant.class),
+	ZOMBIE("ZOMBIE", NPCZombie.class),
+	SLIME("SLIME", NPCSlime.class),
+	GHAST("GHAST", NPCGhast.class),
+	PIG_ZOMBIE("PIG_ZOMBIE", NPCPigZombie.class),
+	ENDERMAN("ENDERMAN", NPCEnderman.class),
+	CAVE_SPIDER("CAVE_SPIDER", NPCCaveSpider.class),
+	//	SILVERFISH("SILVERFISH", NPCSilverfish.class),
+	//	BLAZE("BLAZE", NPCBlaze.class),
+	//	MAGMA_CUBE("MAGMA_CUBE", NPCMagmaCube.class),
+	ENDER_DRAGON("ENDER_DRAGON", NPCEnderDragon.class),
+	WITHER("WITHER", NPCWither.class),
+	//	BAT("BAT", NPCBat.class),
+	WITCH("WITCH", NPCWitch.class),
+	ENDERMITE("ENDERMITE", NPCEndermite.class),
+	GUARDIAN("GUARDIAN", NPCGuardian.class),
+	SHULKER("SHULKER", NPCShulker.class),
 
-	PIG(EntityType.PIG, NPCPig.class),
-	SHEEP(EntityType.SHEEP, NPCSheep.class),
-	COW(EntityType.COW, NPCCow.class),
-	CHICKEN(EntityType.CHICKEN, NPCChicken.class),
-	SQUID(EntityType.SQUID, NPCSquid.class),
-	WOLF(EntityType.WOLF, NPCWolf.class),
-	MUSHROOM_COW(EntityType.MUSHROOM_COW, NPCMushroomCow.class),
-	SNOWMAN(EntityType.SNOWMAN, NPCSnowman.class),
-	OCELOT(EntityType.OCELOT, NPCOcelot.class),
-	IRON_GOLEM(EntityType.IRON_GOLEM, NPCIronGolem.class),
-	HORSE(EntityType.HORSE, NPCHorse.class),
-	RABBIT(EntityType.RABBIT, NPCRabbit.class),
-	POLAR_BEAR(EntityType.POLAR_BEAR, NPCPolarBear.class),
+	PIG("PIG", NPCPig.class),
+	SHEEP("SHEEP", NPCSheep.class),
+	COW("COW", NPCCow.class),
+	CHICKEN("CHICKEN", NPCChicken.class),
+	SQUID("SQUID", NPCSquid.class),
+	WOLF("WOLF", NPCWolf.class),
+	MUSHROOM_COW("MUSHROOM_COW", NPCMushroomCow.class),
+	SNOWMAN("SNOWMAN", NPCSnowman.class),
+	OCELOT("OCELOT", NPCOcelot.class),
+	IRON_GOLEM("IRON_GOLEM", NPCIronGolem.class),
+	HORSE("HORSE", NPCHorse.class),
+	RABBIT("RABBIT", NPCRabbit.class),
+	POLAR_BEAR("POLAR_BEAR", NPCPolarBear.class),
 
-	VILLAGER(EntityType.VILLAGER, NPCVillager.class),
+	VILLAGER("VILLAGER", NPCVillager.class),
 
-	//	ENDER_CRYSTAL(EntityType.ENDER_CRYSTAL,NPCEnderCrystal.class),
+	//	ENDER_CRYSTAL("ENDER_CRYSTAL",NPCEnderCrystal.class),
 	;
 
 	private static final Map<EntityType, NPCType>                   entityTypeMap = Maps.newHashMap();
@@ -106,17 +106,30 @@ public enum NPCType {
 
 	static {
 		for (NPCType npcType : values()) {
-			entityTypeMap.put(npcType.entityType, npcType);
-			classMap.put(npcType.npcClass, npcType);
+			if (npcType.entityType != null) {
+				entityTypeMap.put(npcType.entityType, npcType);
+			}
+			if (npcType.npcClass != null) {
+				classMap.put(npcType.npcClass, npcType);
+			}
 		}
 	}
 
-	@Getter private final EntityType                   entityType;
-	@Getter private       Class<? extends NPCAbstract> npcClass;
+	@Getter private EntityType                   entityType;
+	@Getter private Class<? extends NPCAbstract> npcClass;
 
 	NPCType(EntityType entityType, Class<? extends NPCAbstract> npcClass) {
 		this.entityType = entityType;
 		this.npcClass = npcClass;
+	}
+
+	NPCType(String entityTypeName, Class<? extends NPCAbstract> npcClass) {
+		try {
+			this.entityType = EntityType.valueOf(entityTypeName);
+			this.npcClass = npcClass;
+		} catch (NoSuchFieldError | IllegalArgumentException ignored) {
+			NPCLib.logger.warning("NPCType " + name() + " is not supported on this server version");
+		}
 	}
 
 	public static NPCType forEntityType(EntityType entityType) {
