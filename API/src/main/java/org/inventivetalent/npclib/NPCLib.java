@@ -2,11 +2,13 @@ package org.inventivetalent.npclib;
 
 import com.mojang.authlib.GameProfile;
 import lombok.NonNull;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.inventivetalent.apihelper.API;
 import org.inventivetalent.npclib.entity.NPCEntity;
+import org.inventivetalent.npclib.event.NPCInteractEvent;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.npclib.npc.living.human.NPCPlayer;
 import org.inventivetalent.npclib.registry.NPCRegistry;
@@ -84,8 +86,25 @@ public class NPCLib implements API {
 				}
 			}
 
+			@PacketOptions(forcePlayer = true)
 			@Override
 			public void onReceive(ReceivedPacket receivedPacket) {
+				if(receivedPacket.hasPlayer()){
+					if ("PacketPlayInUseEntity".equals(receivedPacket.getPacketName())) {
+						int a = (int) receivedPacket.getPacketValue(0);
+						Entity entity = Reflection.getEntityById(receivedPacket.getPlayer().getWorld(), a);
+						if (entity == null || !NPCLib.isNPC(entity)) {
+							return;
+						}
+						Enum action = (Enum) receivedPacket.getPacketValue(1);
+
+						NPCInteractEvent event = new NPCInteractEvent(NPCLib.getNPC(entity), a, action == null ? -1 : action.ordinal());
+						Bukkit.getPluginManager().callEvent(event);
+						if (event.isCancelled()) {
+							receivedPacket.setCancelled(true);
+						}
+					}
+				}
 			}
 		});
 	}

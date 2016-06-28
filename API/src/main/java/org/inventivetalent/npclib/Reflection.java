@@ -1,5 +1,6 @@
 package org.inventivetalent.npclib;
 
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.inventivetalent.reflection.minecraft.Minecraft;
@@ -9,8 +10,10 @@ import org.inventivetalent.reflection.resolver.minecraft.NMSClassResolver;
 import org.inventivetalent.reflection.resolver.minecraft.OBCClassResolver;
 import org.inventivetalent.reflection.resolver.wrapper.ClassWrapper;
 import org.inventivetalent.reflection.resolver.wrapper.MethodWrapper;
+import org.inventivetalent.reflection.util.AccessUtil;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class Reflection {
@@ -191,6 +194,16 @@ public class Reflection {
 			return Minecraft.getBukkitEntity(nmsEntity);
 		} catch (ReflectiveOperationException e) {
 			throw new RuntimeException();
+		}
+	}
+
+	public static Entity getEntityById(World world, int id) {
+		try {
+			Field mapField = AccessUtil.setAccessible(nmsClassResolver.resolve("World").getDeclaredField("entitiesById"));
+			Object nmsEntity = nmsClassResolver.resolve("IntHashMap").getDeclaredMethod("get", int.class).invoke(mapField.get(Minecraft.getHandle(world)), id);
+			return nmsEntity == null ? null : Minecraft.getBukkitEntity(nmsEntity);
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
