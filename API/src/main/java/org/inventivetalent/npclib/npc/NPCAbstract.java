@@ -138,6 +138,23 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		System.out.println(superSwitch);
 	}
 
+	//NBT
+
+	@Watch("* e(NBTTagCompound)")
+	public void onNBTWrite(ObjectContainer<Object> nbtTagCompound) {
+		System.out.println("onNBTWrite ");
+		System.out.println(nbtTagCompound.value);
+		//TODO: NBTWriteEvent
+	}
+
+	@Watch("void f(NBTTagCompound)")
+	public void onNBTRead(ObjectContainer<Object> nbtTagCompound) {
+		System.out.println("onNBTRead ");
+		System.out.println(nbtTagCompound.value);
+		//TODO: NBTReadEvent
+	}
+
+
 	public Plugin getPlugin() {
 		return plugin;
 	}
