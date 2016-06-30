@@ -51,6 +51,7 @@
         <vectors.version>1.0.0</vectors.version>
         <boundingbox.version>1.2.1</boundingbox.version>
         <apimanager.version>1.0.2</apimanager.version>
+        <nbt.version>1.0.0-SNAPSHOT</nbt.version>
     </properties>
 
     <build>

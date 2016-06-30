@@ -94,6 +94,11 @@
             <artifactId>apimanager</artifactId>
             <version>${apimanager.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.inventivetalent</groupId>
+            <artifactId>nbt-lib</artifactId>
+            <version>${nbt.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
