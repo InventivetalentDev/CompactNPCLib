@@ -140,7 +140,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	//NBT
 
 	@Watch("* e(NBTTagCompound)")
-	public void onNBTWrite(final ObjectContainer<Object> nbtTagCompound, SuperSwitch superSwitch) {
+	public void onNBTWrite(final ObjectContainer<Object> nbtTagCompound) {
 		System.out.println("onNBTWrite ");
 		System.out.println(nbtTagCompound.value);
 
