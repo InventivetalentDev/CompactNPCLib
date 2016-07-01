@@ -9,12 +9,11 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 import org.inventivetalent.boundingbox.BoundingBox;
+import org.inventivetalent.nbt.CompoundTag;
 import org.inventivetalent.npclib.*;
 import org.inventivetalent.npclib.ai.AIAbstract;
 import org.inventivetalent.npclib.entity.NPCEntity;
-import org.inventivetalent.npclib.event.NPCDamageEvent;
-import org.inventivetalent.npclib.event.NPCDeathEvent;
-import org.inventivetalent.npclib.event.NPCSpawnEvent;
+import org.inventivetalent.npclib.event.*;
 import org.inventivetalent.npclib.watcher.AnnotatedMethodWatcher;
 import org.inventivetalent.npclib.watcher.Watch;
 import org.inventivetalent.reflection.minecraft.Minecraft;
@@ -141,19 +140,39 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	//NBT
 
 	@Watch("* e(NBTTagCompound)")
-	public void onNBTWrite(ObjectContainer<Object> nbtTagCompound) {
+	public void onNBTWrite(final ObjectContainer<Object> nbtTagCompound, SuperSwitch superSwitch) {
 		System.out.println("onNBTWrite ");
 		System.out.println(nbtTagCompound.value);
-		//TODO: NBTWriteEvent
+
+		try {
+			CompoundTag compoundTag = new CompoundTag().fromNMS(nbtTagCompound.value);
+			NBTWriteEvent event = new NBTWriteEvent(this, nbtTagCompound.value, compoundTag);
+			Bukkit.getPluginManager().callEvent(event);
+
+			// Just replacing the nbtTagCompound.value would be easier,
+			// but that seems to completely mess up the NBT compound and only leaves the 'id' field.
+			// Merging works fine apparently.
+			Reflection.mergeNBTCompound(nbtTagCompound.value, compoundTag.toNMS());
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException("Failed to convert NBTWrite compound", e);
+		}
 	}
 
 	@Watch("void f(NBTTagCompound)")
 	public void onNBTRead(ObjectContainer<Object> nbtTagCompound) {
 		System.out.println("onNBTRead ");
 		System.out.println(nbtTagCompound.value);
-		//TODO: NBTReadEvent
-	}
 
+		try {
+			CompoundTag compoundTag = new CompoundTag().fromNMS(nbtTagCompound.value);
+			NBTReadEvent event = new NBTReadEvent(this, nbtTagCompound.value, compoundTag);
+			Bukkit.getPluginManager().callEvent(event);
+			// ^ See note above
+			Reflection.mergeNBTCompound(nbtTagCompound.value, compoundTag.toNMS());
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException("Failed to convert NBTRead compound", e);
+		}
+	}
 
 	public Plugin getPlugin() {
 		return plugin;

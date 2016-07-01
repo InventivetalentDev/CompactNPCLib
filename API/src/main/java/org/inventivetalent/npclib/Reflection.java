@@ -6,6 +6,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.ClassResolver;
 import org.inventivetalent.reflection.resolver.ConstructorResolver;
+import org.inventivetalent.reflection.resolver.MethodResolver;
+import org.inventivetalent.reflection.resolver.ResolverQuery;
 import org.inventivetalent.reflection.resolver.minecraft.NMSClassResolver;
 import org.inventivetalent.reflection.resolver.minecraft.OBCClassResolver;
 import org.inventivetalent.reflection.resolver.wrapper.ClassWrapper;
@@ -202,6 +204,16 @@ public class Reflection {
 			Field mapField = AccessUtil.setAccessible(nmsClassResolver.resolve("World").getDeclaredField("entitiesById"));
 			Object nmsEntity = nmsClassResolver.resolve("IntHashMap").getDeclaredMethod("get", int.class).invoke(mapField.get(Minecraft.getHandle(world)), id);
 			return nmsEntity == null ? null : Minecraft.getBukkitEntity(nmsEntity);
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static void mergeNBTCompound(Object originalTag, Object toMerge) {
+		try {
+			Class<?> clazz = nmsClassResolver.resolve("NBTTagCompound");
+			Method method = new MethodResolver(clazz).resolve(new ResolverQuery("merge", clazz)/*(SRG mapping)*/, new ResolverQuery("a", clazz));
+			method.invoke(originalTag, toMerge);
 		} catch (ReflectiveOperationException e) {
 			throw new RuntimeException(e);
 		}

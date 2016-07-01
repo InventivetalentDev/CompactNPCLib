@@ -8,6 +8,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.inventivetalent.apihelper.APIManager;
 import org.inventivetalent.npclib.command.SpawnCommands;
+import org.inventivetalent.npclib.event.NBTWriteEvent;
 import org.inventivetalent.npclib.registry.NPCRegistry;
 import org.inventivetalent.pluginannotations.PluginAnnotations;
 
@@ -48,4 +49,8 @@ public class NPCLibPlugin extends JavaPlugin implements Listener {
 		event.setCancelled(false);
 	}
 
+	@EventHandler
+	public void on(NBTWriteEvent event) {
+		event.getNbtTag().set("NPCLib.npcType", event.getNpc().getNpcType().name());
+	}
 }
