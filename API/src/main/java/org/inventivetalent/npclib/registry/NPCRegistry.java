@@ -146,7 +146,7 @@ public class NPCRegistry {
 		return (T) npcAbstract;
 	}
 
-	Class<?> getOrGenerateClass(NPCInfo npcType) {
+	static Class<?> getOrGenerateClass(NPCInfo npcType) {
 		if (generatedClasses.containsKey(npcType)) {
 			return generatedClasses.get(npcType);
 		}
@@ -163,7 +163,7 @@ public class NPCRegistry {
 		}
 	}
 
-	void injectEntity(Class<?> clazz, int id, String name) {
+	static void injectEntity(Class<?> clazz, int id, String name) {
 		Class EntityTypes = Reflection.nmsClassResolver.resolveSilent("EntityTypes");
 		FieldResolver fieldResolver = new FieldResolver(EntityTypes);
 
