@@ -108,6 +108,17 @@ public class NPCRegistry {
 		return spawnPlayerNPC(location, npcClass, new GameProfileWrapper(checkNotNull(uuid), name));
 	}
 
+	/**
+	 * Injects the specified NPC classes, so the entities can be loaded properly by the server
+	 *
+	 * @param classes classes to inject
+	 */
+	public static void injectClasses(Class<? extends NPCAbstract>... classes) {
+		for (Class<? extends NPCAbstract> clazz : classes) {
+			getOrGenerateClass(NPCInfo.of(clazz));
+		}
+	}
+
 	protected <T extends NPCEntity> T createEntity(Location location, NPCInfo npcInfo) {
 		if ("EntityPlayer".equals(npcInfo.getNms())) { throw new IllegalArgumentException("cannot construct EntityPlayer using #createEntity"); }
 
