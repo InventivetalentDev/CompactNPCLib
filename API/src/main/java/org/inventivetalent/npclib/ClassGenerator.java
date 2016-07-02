@@ -52,13 +52,6 @@ public class ClassGenerator {
 				+ "}", generated));
 
 		// Constructor
-		//		generated.addConstructor(CtNewConstructor.make("public " + npcInfo.getNPCClassName() + "(World world){\n"
-		//				+ "  super(world);\n"//TODO notify about constructor
-		//				+ "}", generated));
-		//		generated.addConstructor(CtNewConstructor.make("public " + npcInfo.getNPCClassName() + "(World world, MethodWatcher methodWatcher){\n"
-		//				+ "  super(world);\n"//TODO notify about constructor
-		//				+ "  this.$methodWatcher=methodWatcher;\n"
-		//				+ "}", generated));
 		for (String constructor : npcInfo.getConstructors()) {
 			generated.addConstructor(CtNewConstructor.make(String.format(constructor, npcInfo.getNPCClassName()), generated));
 		}
@@ -115,7 +108,6 @@ public class ClassGenerator {
 				"  if($returned==null)return '\\u0000';" +
 				"  return ((Character) $returned).charValue();\n" +
 				"}", generated));
-		//TODO
 
 		// @ExtraMethods in the entity interface
 		Class superInterface = npcInfo.getEntity();
@@ -157,50 +149,15 @@ public class ClassGenerator {
 			entityClass = entityClass.getSuperclass();
 		}
 
-		//		entityClass = npcType.getNMSClass();
-		//			for (Method method : entityClass.getDeclaredMethods()) {
-		//				String signature = method.getName() + Arrays.toString(method.getParameterTypes());
-		//				if (!Invokable.from(method).isOverridable()) {
-		//					overridableMethods.remove(signature);
-		//					ignoredMethods.add(signature);
-		//					continue;
-		//				}
-		//
-		//				if (!overridableMethods.containsKey(signature) && !ignoredMethods.contains(signature)) {
-		//					overridableMethods.put(signature, method);
-		//				}
-		//			}
-		//
-		//		for (Iterator<Map.Entry<String, Method>> iterator = overridableMethods.entrySet().iterator(); iterator.hasNext(); ) {
-		//			Map.Entry<String, Method> next = iterator.next();
-		//			Invokable invokable = Invokable.from(next.getValue());
-		//			if (!invokable.isOverridable()) { iterator.remove(); }
-		//		}
-
-		//		System.out.println(overridableMethods.keySet());
-
 		for (Method method : overridableMethods.values()) {
-			//			System.out.println(method);
-			//			System.out.println("final: " + Modifier.isFinal(method.getModifiers()));
 			if (Modifier.isPrivate(method.getModifiers()) || Modifier.isFinal(method.getModifiers()) || Modifier.isStatic(method.getModifiers()) || Modifier.isAbstract(method.getModifiers()) || Modifier.isNative(method.getModifiers())) {
 				continue;
 			}
 
 			CtMethod override = makeOverrideMethod(method, generated);
-			//			System.out.println(override);
 			generated.addMethod(override);
 		}
 
-		//		System.out.println(generated.toString());
-		//		System.out.println(" \n \n"
-		//				+ " \n");
-		//		//		try {
-		//		//			System.out.println(new String(generated.toBytecode()));
-		//		//		} catch (IOException e) {
-		//		//			e.printStackTrace();
-		//		//		}
-		//		System.out.println(" \n \n"
-		//				+ " \n");
 		try {
 			generated.writeFile("generated");
 		} catch (IOException e) {
@@ -242,8 +199,6 @@ public class ClassGenerator {
 
 		String methodString = String.format("%1$s %2$s %3$s(%4$s) {\n",// Override method
 				access, returnType, name, paramString);
-		System.out.println(methodString);
-		System.out.println(Reflection.getMethodSignature(method));
 
 		/// Edit: Javassist uses $args as a special variable, which is probably why you can't assign it again
 		///
@@ -312,7 +267,6 @@ public class ClassGenerator {
 		}
 		methodString += "}";
 
-		//		System.out.println(methodString);
 		CtMethod ctMethod = CtMethod.make(methodString, declaring);
 		return ctMethod;
 	}
@@ -435,20 +389,5 @@ public class ClassGenerator {
 		}
 		return generated.toClass(INPCChannel.class.getClassLoader(), INPCChannel.class.getProtectionDomain());
 	}
-
-	//	String makeParameters(Class<?>[] parameterTypes) {
-	//		Set<String> paramStrings = new HashSet<>();
-	//		Set<String> callStrings = new HashSet<>();
-	//		int c = 0;
-	//		for (Class<?> clazz : parameterTypes) {
-	//			paramStrings.add(String.format("%1$s param%2$s", clazz.getName(), c));
-	//			callStrings.add(String.format("param%1$s", c));
-	//			c++;
-	//		}
-	//
-	//		Joiner joiner = Joiner.on(",");
-	//		String paramString = joiner.join(paramStrings);
-	//		String callString = joiner.join(callStrings);
-	//	}
 
 }
