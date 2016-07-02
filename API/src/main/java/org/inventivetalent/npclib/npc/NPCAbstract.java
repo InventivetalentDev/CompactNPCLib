@@ -146,6 +146,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 		try {
 			CompoundTag compoundTag = new CompoundTag().fromNMS(nbtTagCompound.value);
+			writeToNBT(compoundTag);
 			NBTWriteEvent event = new NBTWriteEvent(this, nbtTagCompound.value, compoundTag);
 			Bukkit.getPluginManager().callEvent(event);
 
@@ -165,6 +166,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 		try {
 			CompoundTag compoundTag = new CompoundTag().fromNMS(nbtTagCompound.value);
+			readFromNBT(compoundTag);
 			NBTReadEvent event = new NBTReadEvent(this, nbtTagCompound.value, compoundTag);
 			Bukkit.getPluginManager().callEvent(event);
 			// ^ See note above
@@ -172,6 +174,14 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		} catch (ReflectiveOperationException e) {
 			throw new RuntimeException("Failed to convert NBTRead compound", e);
 		}
+	}
+
+	public void writeToNBT(CompoundTag compoundTag) {
+		
+	}
+
+	public void readFromNBT(CompoundTag compoundTag) {
+
 	}
 
 	public Plugin getPlugin() {
