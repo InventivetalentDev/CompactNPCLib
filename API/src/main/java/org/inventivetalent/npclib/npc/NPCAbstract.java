@@ -177,7 +177,8 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	public void writeToNBT(CompoundTag compoundTag) {
-		
+		compoundTag.set("npclib.type", getNpcType().name());
+		compoundTag.set("npclib.plugin", getPlugin().getName());
 	}
 
 	public void readFromNBT(CompoundTag compoundTag) {
