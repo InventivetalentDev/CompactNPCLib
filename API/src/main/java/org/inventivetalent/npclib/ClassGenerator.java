@@ -248,8 +248,6 @@ public class ClassGenerator {
 			methodString += reAssignContainers(parameterTypes);
 			methodString += String.format("  super.%1$s(%2$s);\n", name, callString); // Call super
 		} else {
-			System.out.println(returnType);
-			System.out.println(method);
 			methodString += String.format(""
 					+ "  %3$s $returned = (%3$s) this.methodCalled%5$s(\"%4$s\", $switch, $cArgs);\n"
 					+ "  Object[] $mArgs = ObjectContainer.toObjects($cArgs);\n"
