@@ -132,6 +132,15 @@ public enum NPCType {
 		}
 	}
 
+	/**
+	 * Check if this NPC type is available for the current server version
+	 *
+	 * @return whether this type is available
+	 */
+	public boolean isAvailable() {
+		return this.entityType != null && this.npcClass != null;
+	}
+
 	public static NPCType forEntityType(EntityType entityType) {
 		return entityTypeMap.get(checkNotNull(entityType));
 	}
