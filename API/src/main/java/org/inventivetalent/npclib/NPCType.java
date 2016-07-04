@@ -8,6 +8,7 @@ import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.npclib.npc.NPCExperienceOrb;
 import org.inventivetalent.npclib.npc.NPCItem;
 import org.inventivetalent.npclib.npc.living.NPCArmorStand;
+import org.inventivetalent.npclib.npc.living.human.NPCPlayer;
 import org.inventivetalent.npclib.npc.living.insentient.NPCEnderDragon;
 import org.inventivetalent.npclib.npc.living.insentient.NPCPigZombie;
 import org.inventivetalent.npclib.npc.living.insentient.NPCSlime;
@@ -99,6 +100,8 @@ public enum NPCType {
 	VILLAGER("VILLAGER", NPCVillager.class),
 
 	//	ENDER_CRYSTAL("ENDER_CRYSTAL",NPCEnderCrystal.class),
+
+	PLAYER("PLAYER", NPCPlayer.class),
 	;
 
 	private static final Map<EntityType, NPCType>                   entityTypeMap = Maps.newHashMap();

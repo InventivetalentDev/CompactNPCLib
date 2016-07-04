@@ -14,17 +14,24 @@ import org.inventivetalent.npclib.entity.living.human.EntityPlayer;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.FieldResolver;
 
-@NPC(id = -1,
+@NPC(id = 1337,
 	 type = EntityType.PLAYER,
 	 bukkit = Player.class,
 	 nms = "EntityPlayer",
 	 entity = EntityPlayer.class,
 	 extraPackages = {
-			 "com.mojang.authlib"
+			 "com.mojang.authlib",
+			 "org.bukkit",
+			 "org.bukkit.craftbukkit.{{version}}",
+			 "java.util"
 	 },
 	 constructors = {
 			 "public %1$s(MinecraftServer minecraftServer, WorldServer worldServer, GameProfile gameProfile, PlayerInteractManager playerInteractManager) {\n"
 					 + "  super(minecraftServer, worldServer, gameProfile, playerInteractManager);\n"
+					 + "  this.$npc = new %2$s(this);\n"
+					 + "}",
+			 "public %1$s(World world) {\n"
+					 + "  super(((CraftServer) Bukkit.getServer()).getServer(), (WorldServer) world, new GameProfile(UUID.randomUUID(), \"NPCLib\"), new PlayerInteractManager((WorldServer) world));\n"
 					 + "  this.$npc = new %2$s(this);\n"
 					 + "}"
 	 })
@@ -36,6 +43,8 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
 	@Override
 	protected void postInit(String pluginName, double x, double y, double z, float yaw, float pitch) throws Exception {
+		System.out.println("Player-postInit: pluginName = [" + pluginName + "], x = [" + x + "], y = [" + y + "], z = [" + z + "], yaw = [" + yaw + "], pitch = [" + pitch + "]");
+
 		if (this.pluginName != null) {
 			this.getPlugin().getLogger().warning("[NPCLib] Attempt to change the NPCs plugin from " + this.pluginName + " to " + pluginName);
 		} else {
