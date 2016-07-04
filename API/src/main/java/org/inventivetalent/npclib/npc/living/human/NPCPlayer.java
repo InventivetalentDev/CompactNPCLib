@@ -6,6 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
+import org.inventivetalent.nbt.CompoundTag;
 import org.inventivetalent.npclib.ClassBuilder;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.SuperSwitch;
@@ -69,6 +70,12 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	}
 
 	@Override
+	public void readFromNBT(CompoundTag compoundTag) {
+		super.readFromNBT(compoundTag);
+		spawn();
+	}
+
+	@Override
 	public void onDie(SuperSwitch superSwitch) {
 		System.out.println("onDie -> NPCPlayer");
 		super.onDie(superSwitch);
@@ -89,6 +96,8 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	}
 
 	protected void updatePlayerList(final Player player) {
+		System.out.println("updatePlayerList(" + player + ")");
+		System.out.println(getPlugin());
 		if (getPlugin() == null || !getPlugin().isEnabled()) { return; }
 		try {
 			System.out.println(this);
