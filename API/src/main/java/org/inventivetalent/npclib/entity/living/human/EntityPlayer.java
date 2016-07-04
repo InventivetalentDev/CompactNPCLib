@@ -8,9 +8,9 @@ public interface EntityPlayer extends NPCEntityHuman {
 
 	GameProfile getProfile();
 
-	@ExtraMethod("public void spawn(org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) {\n"
+	@ExtraMethod("public void spawnPlayer(org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason spawnReason) {\n"
 						 + "  this.world.players.add(this);\n"
 						 + "  this.world.entityList.add(this);\n"
 						 + "}")
-	void spawn(CreatureSpawnEvent.SpawnReason spawnReason);
+	void spawnPlayer(CreatureSpawnEvent.SpawnReason spawnReason);
 }

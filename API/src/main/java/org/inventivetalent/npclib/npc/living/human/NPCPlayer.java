@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
 import org.inventivetalent.nbt.CompoundTag;
@@ -12,6 +13,7 @@ import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.SuperSwitch;
 import org.inventivetalent.npclib.annotation.NPC;
 import org.inventivetalent.npclib.entity.living.human.EntityPlayer;
+import org.inventivetalent.npclib.event.NPCSpawnEvent;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.FieldResolver;
 
@@ -72,7 +74,13 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	@Override
 	public void readFromNBT(CompoundTag compoundTag) {
 		super.readFromNBT(compoundTag);
-		spawn();
+		spawnPlayer();
+	}
+
+	protected void spawnPlayer() {
+		NPCSpawnEvent event = new NPCSpawnEvent(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
+		Bukkit.getPluginManager().callEvent(event);
+		getNpcEntity().spawnPlayer(event.getSpawnReason());
 	}
 
 	@Override
