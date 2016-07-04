@@ -2,10 +2,8 @@ package org.inventivetalent.npclib.npc.living.human;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
 import org.inventivetalent.npclib.ClassBuilder;
@@ -37,11 +35,11 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	}
 
 	@Override
-	public void postInit(Plugin plugin, Location location) throws Exception {
+	protected void postInit(String pluginName, double x, double y, double z, float yaw, float pitch) throws Exception {
 		if (this.pluginName != null) {
-			this.getPlugin().getLogger().warning("[NPCLib] Attempt to change the NPCs plugin from " + this.pluginName + " to " + (plugin == null ? "null" : plugin.getName()));
+			this.getPlugin().getLogger().warning("[NPCLib] Attempt to change the NPCs plugin from " + this.pluginName + " to " + pluginName);
 		} else {
-			this.pluginName = plugin.getName();
+			this.pluginName = pluginName;
 		}
 
 		// Create fake PlayerConnection
@@ -53,7 +51,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 			updatePlayerList(player);
 		}
 
-		super.postInit(plugin, location);
+		super.postInit(pluginName, x, y, z, yaw, pitch);
 		//TODO: figure out a way to remove fake players from the player list without breaking everything
 	}
 

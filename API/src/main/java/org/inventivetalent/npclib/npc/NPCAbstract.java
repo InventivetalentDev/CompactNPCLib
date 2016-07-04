@@ -49,19 +49,21 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	public void postInit(Plugin plugin, Location location) throws Exception {
+		this.postInit(plugin.getName(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+	}
+
+	protected void postInit(String pluginName, double x, double y, double z, float yaw, float pitch) throws Exception {
 		if (this.pluginName != null) {
-			this.getPlugin().getLogger().warning("[NPCLib] Attempt to change the NPCs plugin from " + this.pluginName + " to " + (plugin == null ? "null" : plugin.getName()));
+			this.getPlugin().getLogger().warning("[NPCLib] Attempt to change the NPCs plugin from " + this.pluginName + " to " + pluginName);
 		} else {
-			this.pluginName = plugin.getName();
+			this.pluginName = pluginName;
 		}
 		//TODO: Pathfinder
 
 		//		Reflection.nmsClassResolver.resolve("Entity")
 		//				.getDeclaredMethod("setLocation", double.class, double.class, double.class, float.class, float.class)
 		//				.invoke(getNpcEntity(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-		if (location != null) {
-			getNpcEntity().setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-		}
+		getNpcEntity().setLocation(x, y, z, yaw, pitch);
 	}
 
 	public void spawn() {
