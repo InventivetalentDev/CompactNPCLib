@@ -9,7 +9,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 import org.inventivetalent.boundingbox.BoundingBox;
-import org.inventivetalent.nbt.CompoundTag;
+import org.inventivetalent.nbt.*;
 import org.inventivetalent.npclib.*;
 import org.inventivetalent.npclib.ai.AIAbstract;
 import org.inventivetalent.npclib.entity.NPCEntity;
@@ -187,7 +187,25 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	public void readFromNBT(CompoundTag compoundTag) {
+		if (compoundTag.has("npclib.plugin")) {
+			String pluginName = ((StringTag) compoundTag.get("npclib.plugin")).getValue();
+			if (this.pluginName != null) {
+				if (!this.pluginName.equals(pluginName)) {
+					getPlugin().getLogger().warning("[NPCLib] Tried to load plugin from NBT (" + pluginName + "), but it's already set to " + this.pluginName);
+					pluginName = null;
+				}
+			}
+			if (pluginName != null) {
+				ListTag<DoubleTag> posList = compoundTag.getList("Pos", DoubleTag.class);
+				ListTag<FloatTag> rotationList = compoundTag.getList("Rotation", FloatTag.class);
 
+				try {
+					this.postInit(pluginName, posList.get(0).getValue(), posList.get(1).getValue(), posList.get(2).getValue(), rotationList.get(0).getValue(), rotationList.get(1).getValue());
+				} catch (Exception e) {
+					throw new RuntimeException("Failed to postInit " + this.getNpcType() + " from NBT", e);
+				}
+			}
+		}
 	}
 
 	public Plugin getPlugin() {
