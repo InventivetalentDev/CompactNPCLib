@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.emptyToNull;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Data
 @EqualsAndHashCode
 @ToString
@@ -27,6 +27,7 @@ public class NPCInfo {
 	private final String[]                   extraPackages;
 	private final String[]                   extraFields;
 	private final String[]                   extraMethods;
+	private       Class                      npcClass;
 
 	public static NPCInfo of(NPC annotation) {
 		checkNotNull(annotation);
@@ -38,7 +39,9 @@ public class NPCInfo {
 		checkArgument(!Modifier.isAbstract(clazz.getModifiers()), "Cannot use @NPC on abstract class");
 		checkArgument(!clazz.isInterface(), "Cannot use @NPC on interface");
 		NPC annotation = (NPC) clazz.getAnnotation(NPC.class);
-		return of(checkNotNull(annotation, "Class has no @NPC annotation"));
+		NPCInfo info = of(checkNotNull(annotation, "Class has no @NPC annotation"));
+		info.npcClass = clazz;
+		return info;
 	}
 
 	public Class<?> getNMSClass() {
