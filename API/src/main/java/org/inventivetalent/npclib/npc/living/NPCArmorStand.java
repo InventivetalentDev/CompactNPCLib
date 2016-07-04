@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.EntityArmorStand;
 	 nms = "EntityArmorStand",
 	 entity = EntityArmorStand.class)
 public class NPCArmorStand extends NPCLivingAbstract<EntityArmorStand, ArmorStand> {
-	protected NPCArmorStand(EntityArmorStand npcEntity) {
+	public NPCArmorStand(EntityArmorStand npcEntity) {
 		super(npcEntity);
 	}
 }

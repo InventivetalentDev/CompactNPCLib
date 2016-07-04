@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.monster.Enti
 	 nms = "EntitySpider",
 	 entity = EntitySpider.class)
 public class NPCSpider extends NPCMonsterAbstract<EntitySpider, Spider> {
-	protected NPCSpider(EntitySpider npcEntity) {
+	public NPCSpider(EntitySpider npcEntity) {
 		super(npcEntity);
 	}
 }

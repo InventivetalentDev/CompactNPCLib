@@ -5,7 +5,7 @@ import org.inventivetalent.npclib.entity.living.insentient.water.NPCEntityWaterA
 import org.inventivetalent.npclib.npc.living.insentient.NPCInsentientAbstract;
 
 public abstract class NPCWaterAnimalAbstract<N extends NPCEntityWaterAnimal, B extends WaterMob> extends NPCInsentientAbstract<N, B> {
-	protected NPCWaterAnimalAbstract(N npcEntity) {
+	public NPCWaterAnimalAbstract(N npcEntity) {
 		super(npcEntity);
 	}
 }

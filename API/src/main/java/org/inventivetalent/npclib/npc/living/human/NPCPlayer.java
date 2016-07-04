@@ -27,11 +27,12 @@ import org.inventivetalent.reflection.resolver.FieldResolver;
 	 constructors = {
 			 "public %1$s(MinecraftServer minecraftServer, WorldServer worldServer, GameProfile gameProfile, PlayerInteractManager playerInteractManager) {\n"
 					 + "  super(minecraftServer, worldServer, gameProfile, playerInteractManager);\n"
+					 + "  this.$npc = new %2$s(this);\n"
 					 + "}"
 	 })
 public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
-	protected NPCPlayer(EntityPlayer npcEntity) {
+	public NPCPlayer(EntityPlayer npcEntity) {
 		super(npcEntity);
 	}
 

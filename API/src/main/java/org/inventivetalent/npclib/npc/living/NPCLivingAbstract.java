@@ -24,7 +24,7 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 
 	private PathfinderAbstract pathfinder;
 
-	protected NPCLivingAbstract(N npcEntity) {
+	public NPCLivingAbstract(N npcEntity) {
 		super(npcEntity);
 	}
 

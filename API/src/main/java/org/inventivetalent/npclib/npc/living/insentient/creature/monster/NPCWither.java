@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.monster.Enti
 	 nms = "EntityWither",
 	 entity = EntityWither.class)
 public class NPCWither extends NPCMonsterAbstract<EntityWither, Wither> {
-	protected NPCWither(EntityWither npcEntity) {
+	public NPCWither(EntityWither npcEntity) {
 		super(npcEntity);
 	}
 }

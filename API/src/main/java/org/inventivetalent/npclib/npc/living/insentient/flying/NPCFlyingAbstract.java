@@ -5,7 +5,7 @@ import org.inventivetalent.npclib.entity.living.insentient.flying.NPCEntityFlyin
 import org.inventivetalent.npclib.npc.living.insentient.NPCInsentientAbstract;
 
 public abstract class NPCFlyingAbstract<N extends NPCEntityFlying, B extends Flying> extends NPCInsentientAbstract<N, B> {
-	protected NPCFlyingAbstract(N npcEntity) {
+	public NPCFlyingAbstract(N npcEntity) {
 		super(npcEntity);
 	}
 }

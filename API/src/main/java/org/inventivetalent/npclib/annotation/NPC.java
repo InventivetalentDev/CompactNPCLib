@@ -26,6 +26,7 @@ public @interface NPC {
 	String[] constructors() default {
 			"public %1$s(World world){\n"
 					+ "  super(world);\n"
+					+ "  this.$npc = new %2$s(this);\n"
 					+ "}" };
 
 	String[] extraPackages() default {};

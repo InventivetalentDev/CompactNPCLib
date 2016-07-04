@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.golem.Entity
 	 nms = "EntitySnowman",
 	 entity = EntitySnowman.class)
 public class NPCSnowman extends NPCGolemAbstract<EntitySnowman, Snowman> {
-	protected NPCSnowman(EntitySnowman npcEntity) {
+	public NPCSnowman(EntitySnowman npcEntity) {
 		super(npcEntity);
 	}
 }

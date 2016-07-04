@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.EntityEnderDragon;
 	 nms = "EntityEnderDragon",
 	 entity = EntityEnderDragon.class)
 public class NPCEnderDragon extends NPCInsentientAbstract<EntityEnderDragon, EnderDragon> {
-	protected NPCEnderDragon(EntityEnderDragon npcEntity) {
+	public NPCEnderDragon(EntityEnderDragon npcEntity) {
 		super(npcEntity);
 	}
 }

@@ -7,7 +7,7 @@ import org.inventivetalent.npclib.npc.living.insentient.creature.ageable.animal.
 
 // *sigh* why doesn't Tameable extend Animals?!
 public abstract class NPCTameableAbstract<N extends NPCEntityTameable, B extends Tameable & Animals> extends NPCAnimalAbstract<N, B> {
-	protected NPCTameableAbstract(N npcEntity) {
+	public NPCTameableAbstract(N npcEntity) {
 		super(npcEntity);
 	}
 }

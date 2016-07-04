@@ -12,7 +12,7 @@ import java.util.Collection;
 
 public abstract class NPCInsentientAbstract<N extends NPCEntityInsentient, B extends LivingEntity> extends NPCLivingAbstract<N, B> {
 
-	protected NPCInsentientAbstract(N npcEntity) {
+	public NPCInsentientAbstract(N npcEntity) {
 		super(npcEntity);
 	}
 

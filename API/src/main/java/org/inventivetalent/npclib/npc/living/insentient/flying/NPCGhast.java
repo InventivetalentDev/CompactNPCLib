@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.flying.EntityGhast;
 	 nms = "EntityGhast",
 	 entity = EntityGhast.class)
 public class NPCGhast extends NPCFlyingAbstract<EntityGhast, Ghast> {
-	protected NPCGhast(EntityGhast npcEntity) {
+	public NPCGhast(EntityGhast npcEntity) {
 		super(npcEntity);
 	}
 }

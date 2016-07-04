@@ -12,7 +12,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.ageable.anim
 	 nms = "EntityMushroomCow",
 	 entity = EntityMushroomCow.class)
 public class NPCMushroomCow extends NPCCow {
-	protected NPCMushroomCow(EntityCow npcEntity) {
+	public NPCMushroomCow(EntityCow npcEntity) {
 		super(npcEntity);
 	}
 }

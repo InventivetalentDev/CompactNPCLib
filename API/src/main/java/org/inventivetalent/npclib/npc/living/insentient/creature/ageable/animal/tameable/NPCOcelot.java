@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.ageable.anim
 	 nms = "EntityOcelot",
 	 entity = EntityOcelot.class)
 public class NPCOcelot extends NPCTameableAbstract<EntityOcelot, Ocelot> {
-	protected NPCOcelot(EntityOcelot npcEntity) {
+	public NPCOcelot(EntityOcelot npcEntity) {
 		super(npcEntity);
 	}
 }

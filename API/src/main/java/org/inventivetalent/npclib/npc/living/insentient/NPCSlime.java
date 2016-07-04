@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.EntitySlime;
 	 nms = "EntitySlime",
 	 entity = EntitySlime.class)
 public class NPCSlime extends NPCInsentientAbstract<EntitySlime, Slime> {
-	protected NPCSlime(EntitySlime npcEntity) {
+	public NPCSlime(EntitySlime npcEntity) {
 		super(npcEntity);
 	}
 }

@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.monster.Enti
 	 nms = "EntityEnderman",
 	 entity = EntityEnderman.class)
 public class NPCEnderman extends NPCMonsterAbstract<EntityEnderman, Enderman> {
-	protected NPCEnderman(EntityEnderman npcEntity) {
+	public NPCEnderman(EntityEnderman npcEntity) {
 		super(npcEntity);
 	}
 }

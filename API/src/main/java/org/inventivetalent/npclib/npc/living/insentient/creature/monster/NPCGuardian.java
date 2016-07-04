@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.monster.Enti
 	 nms = "EntityGuardian",
 	 entity = EntityGuardian.class)
 public class NPCGuardian extends NPCMonsterAbstract<EntityGuardian, Guardian> {
-	protected NPCGuardian(EntityGuardian npcEntity) {
+	public NPCGuardian(EntityGuardian npcEntity) {
 		super(npcEntity);
 	}
 }

@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.ageable.anim
 	 nms = "EntitySheep",
 	 entity = EntitySheep.class)
 public class NPCSheep extends NPCAnimalAbstract<EntitySheep, Sheep> {
-	protected NPCSheep(EntitySheep npcEntity) {
+	public NPCSheep(EntitySheep npcEntity) {
 		super(npcEntity);
 	}
 }

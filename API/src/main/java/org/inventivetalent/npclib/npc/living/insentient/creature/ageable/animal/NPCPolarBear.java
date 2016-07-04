@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.ageable.anim
 	 nms = "EntityPolarBear",
 	 entity = EntityPolarBear.class)
 public class NPCPolarBear extends NPCAnimalAbstract<EntityPolarBear, PolarBear> {
-	protected NPCPolarBear(EntityPolarBear npcEntity) {
+	public NPCPolarBear(EntityPolarBear npcEntity) {
 		super(npcEntity);
 	}
 }

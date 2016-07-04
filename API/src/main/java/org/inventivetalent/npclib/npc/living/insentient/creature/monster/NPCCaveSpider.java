@@ -12,7 +12,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.monster.Enti
 	 nms = "EntityCaveSpider",
 	 entity = EntityCaveSpider.class)
 public class NPCCaveSpider extends NPCSpider {
-	protected NPCCaveSpider(EntitySpider npcEntity) {
+	public NPCCaveSpider(EntitySpider npcEntity) {
 		super(npcEntity);
 	}
 }

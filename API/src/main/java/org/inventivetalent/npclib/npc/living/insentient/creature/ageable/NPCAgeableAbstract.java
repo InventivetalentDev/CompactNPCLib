@@ -5,7 +5,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.ageable.NPCE
 import org.inventivetalent.npclib.npc.living.insentient.creature.NPCCreatureAbstract;
 
 public abstract class NPCAgeableAbstract<N extends NPCEntityAgeable, B extends Ageable> extends NPCCreatureAbstract<N, B> {
-	protected NPCAgeableAbstract(N npcEntity) {
+	public NPCAgeableAbstract(N npcEntity) {
 		super(npcEntity);
 	}
 }

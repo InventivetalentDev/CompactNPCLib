@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.ageable.Enti
 	 nms = "EntityVillager",
 	 entity = EntityVillager.class)
 public class NPCVillager extends NPCAgeableAbstract<EntityVillager, Villager> {
-	protected NPCVillager(EntityVillager npcEntity) {
+	public NPCVillager(EntityVillager npcEntity) {
 		super(npcEntity);
 	}
 }

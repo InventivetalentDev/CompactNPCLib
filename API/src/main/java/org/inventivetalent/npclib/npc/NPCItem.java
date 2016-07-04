@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.EntityItem;
 	 nms = "EntityItem",
 	 entity = EntityItem.class)
 public class NPCItem extends NPCAbstract<EntityItem, Item> {
-	protected NPCItem(EntityItem npcEntity) {
+	public NPCItem(EntityItem npcEntity) {
 		super(npcEntity);
 	}
 }

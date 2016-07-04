@@ -5,7 +5,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.NPCEntityCre
 import org.inventivetalent.npclib.npc.living.insentient.NPCInsentientAbstract;
 
 public abstract class NPCCreatureAbstract<T extends NPCEntityCreature, B extends Creature> extends NPCInsentientAbstract<T, B> {
-	protected NPCCreatureAbstract(T npcEntity) {
+	public NPCCreatureAbstract(T npcEntity) {
 		super(npcEntity);
 	}
 }

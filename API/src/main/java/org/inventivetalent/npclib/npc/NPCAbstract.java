@@ -37,12 +37,11 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	private final List<AIAbstract> aiList = new ArrayList<>();
 	protected Plugin plugin;
 
-	protected NPCAbstract(N npcEntity) {
+	// TODO: Initialize the NPC class from the generated entity class, so entities loaded by the servers work properly
+	public NPCAbstract(N npcEntity) {
 		this.npcEntity = npcEntity;
 		this.npcEntityFieldResolver = new FieldResolver(npcEntity.getClass());
 		this.npcEntityMethodResolver = new MethodResolver(npcEntity.getClass());
-
-		setNPCField("$npc", this);
 
 		this.npcEntity.setMethodWatcher(new AnnotatedMethodWatcher(this));
 

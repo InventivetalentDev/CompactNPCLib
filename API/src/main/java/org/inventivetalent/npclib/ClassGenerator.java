@@ -53,7 +53,7 @@ public class ClassGenerator {
 
 		// Constructor
 		for (String constructor : npcInfo.getConstructors()) {
-			generated.addConstructor(CtNewConstructor.make(String.format(constructor, npcInfo.getNPCClassName()), generated));
+			generated.addConstructor(CtNewConstructor.make(String.format(constructor, npcInfo.getNPCClassName(), npcInfo.getNpcClass().getName()), generated));
 		}
 
 		generated.addMethod(CtMethod.make("public boolean methodCalled(String name, ObjectContainer[] args) {\n"

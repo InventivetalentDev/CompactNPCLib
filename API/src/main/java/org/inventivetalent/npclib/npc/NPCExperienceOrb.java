@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.EntityExperienceOrb;
 	 nms = "EntityExperienceOrb",
 	 entity = EntityExperienceOrb.class)
 public class NPCExperienceOrb extends NPCAbstract<EntityExperienceOrb, ExperienceOrb> {
-	protected NPCExperienceOrb(EntityExperienceOrb npcEntity) {
+	public NPCExperienceOrb(EntityExperienceOrb npcEntity) {
 		super(npcEntity);
 	}
 }

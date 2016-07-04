@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.water.EntitySquid;
 	 nms = "EntitySquid",
 	 entity = EntitySquid.class)
 public class NPCSquid extends NPCWaterAnimalAbstract<EntitySquid, Squid> {
-	protected NPCSquid(EntitySquid npcEntity) {
+	public NPCSquid(EntitySquid npcEntity) {
 		super(npcEntity);
 	}
 }

@@ -12,7 +12,7 @@ import org.inventivetalent.npclib.entity.living.insentient.EntityZombie;
 	 entity = EntityZombie.class)
 public class NPCZombie extends NPCInsentientAbstract<EntityZombie, Zombie> {
 
-	protected NPCZombie(EntityZombie npcEntity) {
+	public NPCZombie(EntityZombie npcEntity) {
 		super(npcEntity);
 	}
 

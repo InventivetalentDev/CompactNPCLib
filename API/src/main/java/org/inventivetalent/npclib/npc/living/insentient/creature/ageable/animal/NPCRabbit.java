@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.ageable.anim
 	 nms = "EntityRabbit",
 	 entity = EntityRabbit.class)
 public class NPCRabbit extends NPCAnimalAbstract<EntityRabbit, Rabbit> {
-	protected NPCRabbit(EntityRabbit npcEntity) {
+	public NPCRabbit(EntityRabbit npcEntity) {
 		super(npcEntity);
 	}
 }

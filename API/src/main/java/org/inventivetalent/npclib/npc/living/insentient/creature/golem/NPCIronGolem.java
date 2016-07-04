@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.golem.Entity
 	 nms = "EntityIronGolem",
 	 entity = EntityIronGolem.class)
 public class NPCIronGolem extends NPCGolemAbstract<EntityIronGolem, IronGolem> {
-	protected NPCIronGolem(EntityIronGolem npcEntity) {
+	public NPCIronGolem(EntityIronGolem npcEntity) {
 		super(npcEntity);
 	}
 }

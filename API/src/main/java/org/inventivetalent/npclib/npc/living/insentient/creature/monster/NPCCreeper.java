@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.monster.Enti
 	 nms = "EntityCreeper",
 	 entity = EntityCreeper.class)
 public class NPCCreeper extends NPCMonsterAbstract<EntityCreeper, Creeper> {
-	protected NPCCreeper(EntityCreeper npcEntity) {
+	public NPCCreeper(EntityCreeper npcEntity) {
 		super(npcEntity);
 	}
 }

@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.ageable.anim
 	 nms = "EntityWolf",
 	 entity = EntityWolf.class)
 public class NPCWolf extends NPCTameableAbstract<EntityWolf, Wolf> {
-	protected NPCWolf(EntityWolf npcEntity) {
+	public NPCWolf(EntityWolf npcEntity) {
 		super(npcEntity);
 	}
 }

@@ -11,7 +11,7 @@ import org.inventivetalent.npclib.entity.living.insentient.creature.golem.Entity
 	 nms = "EntityShulker",
 	 entity = EntityShulker.class)
 public class NPCShulker extends NPCGolemAbstract<EntityShulker, Shulker> {
-	protected NPCShulker(EntityShulker npcEntity) {
+	public NPCShulker(EntityShulker npcEntity) {
 		super(npcEntity);
 	}
 }
