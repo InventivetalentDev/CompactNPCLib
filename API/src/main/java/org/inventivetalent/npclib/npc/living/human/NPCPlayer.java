@@ -64,6 +64,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		System.out.println("onDie -> NPCPlayer");
 		super.onDie(superSwitch);
 		if (!superSwitch.isCancelled()) {
+			if (getPlugin() == null || !getPlugin().isEnabled()) { return; }
 			// Remove players from the world manually
 			Bukkit.getScheduler().runTaskLater(getPlugin(), new Runnable() {
 				@Override
@@ -79,6 +80,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	}
 
 	protected void updatePlayerList(final Player player) {
+		if (getPlugin() == null || !getPlugin().isEnabled()) { return; }
 		try {
 			System.out.println(this);
 			System.out.println("Update to " + player);
