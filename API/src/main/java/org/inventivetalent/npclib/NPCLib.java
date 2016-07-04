@@ -55,8 +55,11 @@ public class NPCLib implements API {
 	@Override
 	public void load() {
 		Class[] classes = new Class[NPCType.values().length];
-		for (int i = 0; i < classes.length; i++) {
-			classes[i] = NPCType.values()[i].getNpcClass();
+		for (int i = 0; i < classes.length; ) {
+			if (NPCType.values()[i].isAvailable()) {
+				classes[i] = NPCType.values()[i].getNpcClass();
+				i++;
+			}
 		}
 		NPCRegistry.injectClasses(classes);
 	}
@@ -94,7 +97,7 @@ public class NPCLib implements API {
 			@PacketOptions(forcePlayer = true)
 			@Override
 			public void onReceive(ReceivedPacket receivedPacket) {
-				if(receivedPacket.hasPlayer()){
+				if (receivedPacket.hasPlayer()) {
 					if ("PacketPlayInUseEntity".equals(receivedPacket.getPacketName())) {
 						int a = (int) receivedPacket.getPacketValue(0);
 						Entity entity = Reflection.getEntityById(receivedPacket.getPlayer().getWorld(), a);
