@@ -35,7 +35,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	protected final MethodResolver entityMethodResolver = new MethodResolver(Reflection.nmsClassResolver.resolveSilent("Entity"));
 	private final N npcEntity;
 	private final List<AIAbstract> aiList = new ArrayList<>();
-	protected Plugin plugin;
+	protected String pluginName;
 
 	// TODO: Initialize the NPC class from the generated entity class, so entities loaded by the servers work properly
 	public NPCAbstract(N npcEntity) {
@@ -49,15 +49,19 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	public void postInit(Plugin plugin, Location location) throws Exception {
-		this.plugin = plugin;
+		if (this.pluginName != null) {
+			this.getPlugin().getLogger().warning("[NPCLib] Attempt to change the NPCs plugin from " + this.pluginName + " to " + (plugin == null ? "null" : plugin.getName()));
+		} else {
+			this.pluginName = plugin.getName();
+		}
 		//TODO: Pathfinder
 
 		//		Reflection.nmsClassResolver.resolve("Entity")
 		//				.getDeclaredMethod("setLocation", double.class, double.class, double.class, float.class, float.class)
 		//				.invoke(getNpcEntity(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-		getNpcEntity().setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-
-		spawn();
+		if (location != null) {
+			getNpcEntity().setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+		}
 	}
 
 	public void spawn() {
@@ -177,7 +181,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	public void writeToNBT(CompoundTag compoundTag) {
 		compoundTag.set("npclib.type", getNpcType().name());
-		compoundTag.set("npclib.plugin", getPlugin().getName());
+		compoundTag.set("npclib.plugin", this.pluginName);
 	}
 
 	public void readFromNBT(CompoundTag compoundTag) {
@@ -185,7 +189,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	public Plugin getPlugin() {
-		return plugin;
+		return Bukkit.getPluginManager().getPlugin(this.pluginName);
 	}
 
 	public N getNpcEntity() {

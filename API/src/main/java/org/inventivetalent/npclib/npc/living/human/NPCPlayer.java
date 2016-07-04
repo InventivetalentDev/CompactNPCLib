@@ -38,7 +38,11 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
 	@Override
 	public void postInit(Plugin plugin, Location location) throws Exception {
-		this.plugin = plugin;
+		if (this.pluginName != null) {
+			this.getPlugin().getLogger().warning("[NPCLib] Attempt to change the NPCs plugin from " + this.pluginName + " to " + (plugin == null ? "null" : plugin.getName()));
+		} else {
+			this.pluginName = plugin.getName();
+		}
 
 		// Create fake PlayerConnection
 		new FieldResolver(Reflection.nmsClassResolver.resolve("EntityPlayer")).resolve("playerConnection").set(getNpcEntity(), ClassBuilder.buildPlayerConnection(ClassBuilder.buildNetworkManager(false), getNpcEntity()));
