@@ -12,6 +12,7 @@ import org.inventivetalent.boundingbox.BoundingBox;
 import org.inventivetalent.nbt.*;
 import org.inventivetalent.npclib.*;
 import org.inventivetalent.npclib.ai.AIAbstract;
+import org.inventivetalent.npclib.annotation.NPCInfo;
 import org.inventivetalent.npclib.entity.NPCEntity;
 import org.inventivetalent.npclib.event.*;
 import org.inventivetalent.npclib.watcher.AnnotatedMethodWatcher;
@@ -183,6 +184,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	public void writeToNBT(CompoundTag compoundTag) {
 		compoundTag.set("npclib.type", getNpcType().name());
+		compoundTag.set("npclib.class", getNpcEntity().getNpcInfo().getNpcClass().getName());
 		compoundTag.set("npclib.plugin", this.pluginName);
 	}
 
@@ -196,6 +198,13 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 				}
 			}
 			if (pluginName != null) {
+				String className = compoundTag.getString("npclib.class");
+				try {
+					getNpcEntity().setNpcInfo(NPCInfo.of(Class.forName(className)));
+				} catch (ClassNotFoundException e) {
+					throw new RuntimeException("Could not find NPCClass " + className + " loaded from NBT", e);
+				}
+
 				ListTag<DoubleTag> posList = compoundTag.getList("Pos", DoubleTag.class);
 				ListTag<FloatTag> rotationList = compoundTag.getList("Rotation", FloatTag.class);
 
