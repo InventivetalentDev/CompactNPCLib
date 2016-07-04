@@ -35,7 +35,7 @@ public class ClassGenerator {
 		classPool.importPackage("org.inventivetalent.npclib.generated.entity");
 
 		for (String packge : npcInfo.getExtraPackages()) {
-			classPool.importPackage(packge);
+			classPool.importPackage(packge.replace("{{version}}", Minecraft.VERSION.name()));
 		}
 
 		generated.addField(CtField.make("public NPCAbstract $npc;", generated));
