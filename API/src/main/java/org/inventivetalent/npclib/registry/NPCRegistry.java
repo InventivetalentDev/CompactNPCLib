@@ -115,6 +115,7 @@ public class NPCRegistry {
 	 */
 	public static void injectClasses(Class<? extends NPCAbstract>... classes) {
 		for (Class<? extends NPCAbstract> clazz : classes) {
+			if (clazz == null) { continue; }
 			getOrGenerateClass(NPCInfo.of(clazz));
 		}
 	}
