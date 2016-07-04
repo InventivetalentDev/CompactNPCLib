@@ -54,6 +54,11 @@ public class NPCLib implements API {
 
 	@Override
 	public void load() {
+		Class[] classes = new Class[NPCType.values().length];
+		for (int i = 0; i < classes.length; i++) {
+			classes[i] = NPCType.values()[i].getNpcClass();
+		}
+		NPCRegistry.injectClasses(classes);
 	}
 
 	@Override

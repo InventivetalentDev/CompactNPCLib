@@ -19,12 +19,6 @@ public class NPCLibPlugin extends JavaPlugin implements Listener {
 	@Override
 	public void onLoad() {
 		APIManager.registerAPI(npcLibInstance, this);
-
-		Class[] classes = new Class[NPCType.values().length];
-		for (int i = 0; i < classes.length; i++) {
-			classes[i] = NPCType.values()[i].getNpcClass();
-		}
-		NPCRegistry.injectClasses(classes);
 	}
 
 	@Override
