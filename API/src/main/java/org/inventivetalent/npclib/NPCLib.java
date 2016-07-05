@@ -17,8 +17,13 @@ import org.inventivetalent.packetlistener.handler.PacketOptions;
 import org.inventivetalent.packetlistener.handler.ReceivedPacket;
 import org.inventivetalent.packetlistener.handler.SentPacket;
 import org.inventivetalent.reflection.minecraft.Minecraft;
+import org.mcstats.APIMetricsLite;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class NPCLib implements API {
@@ -115,9 +120,30 @@ public class NPCLib implements API {
 				}
 			}
 		});
+
+		String version = getVersion();
+		logger.info("Version is " + version);
+		try {
+			APIMetricsLite metrics = new APIMetricsLite(plugin, "CompactNPCLib", version);
+			if (metrics.start()) {
+				logger.info("Metrics started");
+			}
+		} catch (Exception e) {
+		}
 	}
 
 	@Override
 	public void disable(Plugin plugin) {
+	}
+
+	public static final String getVersion() {
+		try (InputStream in = NPCLib.class.getResourceAsStream("/npclib.properties")) {
+			Properties properties = new Properties();
+			properties.load(in);
+			return properties.getProperty("npclib.version");
+		} catch (IOException e) {
+			logger.log(Level.WARNING, "Failed to get API version from npclib.properties", e);
+			return "0.0.0";
+		}
 	}
 }

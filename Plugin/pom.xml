@@ -42,15 +42,6 @@
 
     <build>
         <finalName>NPCLib_v${project.version}</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>plugin.yml</include>
-                </includes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -83,6 +74,7 @@
                                     <include>org.inventivetalent:boundingboxapi**</include>
                                     <include>org.inventivetalent:apimanager**</include>
                                     <include>org.inventivetalent:nbt-lib**</include>
+                                    <inclide>org.inventivetalent:mcstats-apimanager**</inclide>
                                     <include>org.javassist:**</include>
                                 </includes>
                             </artifactSet>
