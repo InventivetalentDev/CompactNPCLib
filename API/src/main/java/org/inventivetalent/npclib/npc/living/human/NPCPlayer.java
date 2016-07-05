@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
+import org.inventivetalent.mcwrapper.auth.properties.PropertyWrapper;
 import org.inventivetalent.nbt.CompoundTag;
 import org.inventivetalent.npclib.ClassBuilder;
 import org.inventivetalent.npclib.Reflection;
@@ -103,6 +104,14 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		GameProfileWrapper profile = new GameProfileWrapper(getProfile().getId(), name);
 		profile.getProperties().putAll(getProfile().getProperties());
 		System.out.println(profile);
+		setProfile(profile);
+	}
+
+	@Override
+	public void setSkinTexture(String value, String signature) {
+		GameProfileWrapper profile = getProfile();
+		profile.getProperties().clear();
+		profile.getProperties().put("textures", new PropertyWrapper("textures", value, signature));
 		setProfile(profile);
 	}
 

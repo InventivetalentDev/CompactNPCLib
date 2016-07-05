@@ -61,7 +61,11 @@ public class SpawnCommands {
 		Location location = parseLocation(sender, x, y, z, worldName);
 		if (location == null) { return; }
 
-		plugin.getPluginNpcRegistry().spawnPlayerNPC(location, NPCPlayer.class, UUID.randomUUID(), name);
+		NPCPlayer npc = plugin.getPluginNpcRegistry().spawnPlayerNPC(location, NPCPlayer.class, UUID.randomUUID(), name);
+		//TODO: remove, inventivetalent's skin
+		npc.setSkinTexture(
+				"eyJ0aW1lc3RhbXAiOjE0NjM4NDExMzM4NTEsInByb2ZpbGVJZCI6ImIwZDRiMjhiYzFkNzQ4ODlhZjBlODY2MWNlZTk2YWFiIiwicHJvZmlsZU5hbWUiOiJJbnZlbnRpdmVHYW1lcyIsInNpZ25hdHVyZVJlcXVpcmVkIjp0cnVlLCJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDljMjU0NjFiZDgxMWM5NTg2ZDgyMThkOWZmNDUyYTFmNTZjNTA0OTI4MmRmYWIwMjBjNWZjZTMxYjQ0NzMifX19",
+				"hB7tRhUXvynDGt5zD7ONH65AXfpDZ0msg4VuIiFG4mbDA70f6vMo6YZ4roHQMNPXVZRNrRZzbejvmN+2qtDTKlovZlLNKFKyeRFOJjDA4mGZWMwneYQ62UmeA2aNfqog01gQGpz+VYWwtgx1cJaBmSKDsAK4MT9kfovdqAjk9oEXyx+DtatFEOZNiDN68gem8pP8R7WUP8YOFRqi/fLfVn7rH+OuZHxqczyri03TedkDTYnrIhZg5ksBtUK2ajQlZ9kcKv9SCPA82vzYnTRMW7+eOJ9ko9BlqktYm9Otj5KlqzjttLH9fjYHDtPyfPDDpLUhm6xN1zQrLpb2GRM+J3nvUlYCOURrg0ydxmyie0X/CGOJn+AxpYs2C54Kvl6rV2RG0K6VtbrEBjL2Wi+IZX9/66k+/EByyp3+geTu2E83paF0I1qH8og+x7g4ZYjBJQ4mAhHjBpvx6iNn80ofz8Yz8ZLaDWgdF50I6D1YcLoXkzRmVnu7ar/xzhsj2s2NLoY9mquBGs/uijU6sIJA1AN4j8eQB2XzWaW84bf13SUKJTQbpSi9VHZfIhz/HuguHCES52OkkDlYgC9no1P48jzDnws57dI/B6AnBJ/SDfV7CO7ILJ9egUEycOT8hkZvOzgharSnHQ8x05lxaaSkx1P8GDT621MPftkv9gM2+3s=");
 		sender.sendMessage("§aNPC spawned at §7" + location.getWorld().getName() + "," + location.getX() + "," + location.getY() + "," + location.getZ());
 	}
 
