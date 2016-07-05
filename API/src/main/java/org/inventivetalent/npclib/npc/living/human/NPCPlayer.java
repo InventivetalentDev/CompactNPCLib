@@ -54,6 +54,9 @@ import java.util.UUID;
 	 })
 public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
+	private String skinTextureValue;
+	private String skinTextureSignature;
+
 	public NPCPlayer(EntityPlayer npcEntity) {
 		super(npcEntity);
 	}
@@ -114,6 +117,9 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
 	@Override
 	public void setSkinTexture(String value, String signature) {
+		this.skinTextureValue = value;
+		this.skinTextureSignature = signature;
+
 		GameProfileWrapper profile = getProfile();
 		profile.getProperties().clear();
 		profile.getProperties().put("textures", new PropertyWrapper("textures", value, signature));
@@ -138,9 +144,32 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	}
 
 	@Override
+	public void writeToNBT(CompoundTag compoundTag) {
+		super.writeToNBT(compoundTag);
+		CompoundTag playerTag = compoundTag.getOrCreateCompound("npclib.player");
+		playerTag.set("name", getProfile().getName());
+
+		if(this.skinTextureValue!=null) {
+			CompoundTag skinTextureTag = playerTag.getOrCreateCompound("skinTexture");
+			skinTextureTag.set("value", this.skinTextureValue);
+			skinTextureTag.set("signature", this.skinTextureSignature);
+		}
+	}
+
+	@Override
 	public void readFromNBT(CompoundTag compoundTag) {
 		super.readFromNBT(compoundTag);
-		setName(compoundTag.getCompound("bukkit").getString("lastKnownName"));// TODO: might be more reliable to save the actual name when writing to NBT
+
+		CompoundTag playerTag = compoundTag.getCompound("npclib.player");
+		if(playerTag!=null) {
+			setName(playerTag.getString("name"));
+
+			CompoundTag skinTextureTag = playerTag.getCompound("skinTexture");
+			if (skinTextureTag != null) {
+				setSkinTexture(skinTextureTag.getString("value"), skinTextureTag.getString("signature"));
+			}
+		}
+
 		spawnPlayer();
 	}
 
