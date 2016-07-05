@@ -1,5 +1,7 @@
 package org.inventivetalent.npclib.npc.living.human;
 
+import com.google.common.base.Charsets;
+import com.mojang.authlib.GameProfile;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.EntityType;
@@ -16,6 +18,12 @@ import org.inventivetalent.npclib.entity.living.human.EntityPlayer;
 import org.inventivetalent.npclib.event.NPCSpawnEvent;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.FieldResolver;
+import org.inventivetalent.reflection.resolver.MethodResolver;
+import org.inventivetalent.reflection.resolver.ResolverQuery;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.UUID;
 
 @NPC(id = 1337,
 	 type = EntityType.PLAYER,
@@ -71,9 +79,37 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		return new GameProfileWrapper(getNpcEntity().getProfile());
 	}
 
+	protected void setProfile(GameProfileWrapper profile) {
+		try {
+			UUID uuid = profile.getId();
+			if (uuid == null) {
+				uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + profile.getName()).getBytes(Charsets.UTF_8));
+			}
+			Method method = new MethodResolver(Reflection.nmsClassResolver.resolve("Entity")).resolve(new ResolverQuery("a", UUID.class));
+			method.invoke(getNpcEntity(), uuid);
+
+			Field field = new FieldResolver(Reflection.nmsClassResolver.resolve("EntityHuman")).resolveByFirstType(GameProfile.class);
+			field.set(getNpcEntity(), profile.getHandle());
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void setName(String name) {
+		System.out.println(name);
+		if (name.length() > 16) {
+			throw new IllegalArgumentException("Maximum player name length is 16");
+		}
+		GameProfileWrapper profile = new GameProfileWrapper(getProfile().getId(), name);
+		profile.getProperties().putAll(getProfile().getProperties());
+		System.out.println(profile);
+		setProfile(profile);
+	}
+
 	@Override
 	public void readFromNBT(CompoundTag compoundTag) {
 		super.readFromNBT(compoundTag);
+		setName(compoundTag.getCompound("bukkit").getString("lastKnownName"));// TODO: might be more reliable to save the actual name when writing to NBT
 		spawnPlayer();
 	}
 
