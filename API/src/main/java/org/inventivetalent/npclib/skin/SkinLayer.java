@@ -1,4 +1,4 @@
-package org.inventivetalent.npclib;
+package org.inventivetalent.npclib.skin;
 
 public enum SkinLayer {
 
