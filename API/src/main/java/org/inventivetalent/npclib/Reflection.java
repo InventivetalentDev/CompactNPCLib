@@ -219,4 +219,13 @@ public class Reflection {
 		}
 	}
 
+	public static Object getDataWatcher(org.bukkit.entity.Entity ent) {
+		try {
+			return nmsClassResolver.resolve("Entity").getDeclaredMethod("getDataWatcher").invoke(Minecraft.getHandle(ent));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
