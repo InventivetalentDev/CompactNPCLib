@@ -99,6 +99,11 @@
             <artifactId>nbt-lib</artifactId>
             <version>${nbt.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.inventivetalent.nicknamer</groupId>
+            <artifactId>api</artifactId>
+            <version>${nicknamer.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.inventivetalent</groupId>

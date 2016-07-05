@@ -15,6 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
 import org.inventivetalent.mcwrapper.auth.properties.PropertyWrapper;
 import org.inventivetalent.nbt.CompoundTag;
+import org.inventivetalent.nicknamer.api.SkinLoader;
 import org.inventivetalent.npclib.ClassBuilder;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.SuperSwitch;
@@ -143,13 +144,28 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		}
 	}
 
+	public void setSkin(final String skinOwner) {
+		if (Bukkit.getPluginManager().isPluginEnabled("NickNamer")) {
+			if (getPlugin() != null && getPlugin().isEnabled()) {
+				Bukkit.getScheduler().runTaskAsynchronously(getPlugin(), new Runnable() {
+					@Override
+					public void run() {
+						GameProfileWrapper profile = SkinLoader.loadSkin(skinOwner);
+						PropertyWrapper property = profile.getProperties().values().iterator().next();
+						setSkinTexture(property.getValue(), property.getSignature());
+					}
+				});
+			}
+		}
+	}
+
 	@Override
 	public void writeToNBT(CompoundTag compoundTag) {
 		super.writeToNBT(compoundTag);
 		CompoundTag playerTag = compoundTag.getOrCreateCompound("npclib.player");
 		playerTag.set("name", getProfile().getName());
 
-		if(this.skinTextureValue!=null) {
+		if (this.skinTextureValue != null) {
 			CompoundTag skinTextureTag = playerTag.getOrCreateCompound("skinTexture");
 			skinTextureTag.set("value", this.skinTextureValue);
 			skinTextureTag.set("signature", this.skinTextureSignature);
@@ -161,7 +177,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		super.readFromNBT(compoundTag);
 
 		CompoundTag playerTag = compoundTag.getCompound("npclib.player");
-		if(playerTag!=null) {
+		if (playerTag != null) {
 			setName(playerTag.getString("name"));
 
 			CompoundTag skinTextureTag = playerTag.getCompound("skinTexture");
