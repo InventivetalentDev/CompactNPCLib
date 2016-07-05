@@ -94,6 +94,10 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		return getAbsoluteBoundingBox().translate(new Vector3DDouble(getBukkitEntity().getLocation()).multiply(-1));
 	}
 
+	public void setName(String name) {
+		getBukkitEntity().setCustomName(name);
+	}
+
 	// NPCInfo
 	public NPCType getNpcType() {
 		return NPCType.forEntityType(getNpcEntity().getNpcInfo().getType());
@@ -182,7 +186,8 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	public void writeToNBT(CompoundTag compoundTag) {
-		compoundTag.set("npclib.type", getNpcType().name());
+		NPCType npcType = getNpcType();
+		compoundTag.set("npclib.type", npcType.name());
 		compoundTag.set("npclib.class", getNpcEntity().getNpcInfo().getNpcClass().getName());
 		compoundTag.set("npclib.plugin", this.pluginName);
 	}
