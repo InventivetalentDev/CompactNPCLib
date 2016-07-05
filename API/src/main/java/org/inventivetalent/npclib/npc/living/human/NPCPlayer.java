@@ -182,4 +182,16 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		this.updatePlayerList(player);
 	}
 
+	public void updateNearby(double radius) {
+		double radiusSquared = radius * radius;
+		for (Player player : getBukkitEntity().getWorld().getPlayers()) {
+			if (player.getLocation().distanceSquared(getBukkitEntity().getLocation()) < radiusSquared) {
+				updateToPlayer(player);
+			}
+		}
+	}
+
+	public void updateNearby() {
+		updateNearby(32);
+	}
 }
