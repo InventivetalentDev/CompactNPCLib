@@ -1,7 +1,11 @@
 package org.inventivetalent.npclib.npc.living.human;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Predicate;
 import com.mojang.authlib.GameProfile;
+import net.minecraft.server.v1_10_R1.EntityHuman;
+import net.minecraft.server.v1_10_R1.PacketPlayOutEntityDestroy;
+import net.minecraft.server.v1_10_R1.PacketPlayOutNamedEntitySpawn;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.EntityType;
@@ -22,6 +26,7 @@ import org.inventivetalent.reflection.resolver.FieldResolver;
 import org.inventivetalent.reflection.resolver.MethodResolver;
 import org.inventivetalent.reflection.resolver.ResolverQuery;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.UUID;
@@ -113,6 +118,23 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		profile.getProperties().clear();
 		profile.getProperties().put("textures", new PropertyWrapper("textures", value, signature));
 		setProfile(profile);
+
+		updateNearby();
+		if (getPlugin() != null && getPlugin().isEnabled()) {
+			// Give it some time to load the profile
+			Bukkit.getScheduler().runTaskLater(getPlugin(), new Runnable() {
+				@Override
+				public void run() {
+					updateNearby(32, new Predicate<Player>() {
+						@Override
+						public boolean apply(@Nullable Player player) {
+							respawnTo(player);
+							return true;
+						}
+					});
+				}
+			}, 20);
+		}
 	}
 
 	@Override
@@ -182,13 +204,24 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		this.updatePlayerList(player);
 	}
 
-	public void updateNearby(double radius) {
+	public void respawnTo(Player player) {
+		sendPacket(player, new PacketPlayOutEntityDestroy(getBukkitEntity().getEntityId()));
+		sendPacket(player, new PacketPlayOutNamedEntitySpawn((EntityHuman) getNpcEntity()));
+	}
+
+	public void updateNearby(double radius, Predicate<Player> predicate) {
 		double radiusSquared = radius * radius;
 		for (Player player : getBukkitEntity().getWorld().getPlayers()) {
 			if (player.getLocation().distanceSquared(getBukkitEntity().getLocation()) < radiusSquared) {
-				updateToPlayer(player);
+				if (predicate == null || predicate.apply(player)) {
+					updateToPlayer(player);
+				}
 			}
 		}
+	}
+
+	public void updateNearby(double radius) {
+		updateNearby(radius, null);
 	}
 
 	public void updateNearby() {
