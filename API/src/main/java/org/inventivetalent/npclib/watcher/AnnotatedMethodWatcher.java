@@ -1,6 +1,7 @@
 package org.inventivetalent.npclib.watcher;
 
 import lombok.AllArgsConstructor;
+import org.inventivetalent.npclib.NPCLib;
 import org.inventivetalent.npclib.ObjectContainer;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.SuperSwitch;
@@ -47,7 +48,7 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 				for (String signature : signatures) {
 					MethodWrapper.MethodSignature methodSignature = MethodWrapper.MethodSignature.fromString(signature);
 					if (!watchedMethods.containsKey(methodSignature)) {
-						System.out.println("Watching method " + signature);
+						NPCLib.debug("@Watching method", methodSignature.getSignature(), "in", clazz.getName());
 						boolean hasSwitch = false;
 						if (method.getParameterTypes().length >= 1) {
 							if (SuperSwitch.class.isAssignableFrom(method.getParameterTypes()[method.getParameterTypes().length - 1])) {

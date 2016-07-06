@@ -30,8 +30,6 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 
 	@Watch("void die(DamageSource)")
 	public void onDie(ObjectContainer<Object> damageSource, SuperSwitch superSwitch) {
-		System.out.println("onDie -> NPCLivingAbstract");
-
 		String damageName = Reflection.getDamageSourceName(damageSource.value);
 		EntityDamageEvent.DamageCause cause = Reflection.damageSourceToCause(damageName);
 		NPCDeathEvent event = new NPCDeathEvent(this, damageName, cause);

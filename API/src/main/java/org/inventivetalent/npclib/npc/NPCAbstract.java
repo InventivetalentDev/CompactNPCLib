@@ -121,7 +121,6 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	@Watch("boolean damageEntity(DamageSource,float)")
 	public Boolean onDamage(ObjectContainer<Object> damageSource, ObjectContainer<Float> amount, SuperSwitch superSwitch) {
-		System.out.println("onDamage: damageSource = [" + damageSource + "], amount = [" + amount + "]");
 		String sourceName = Reflection.getDamageSourceName(damageSource.value);
 		EntityDamageEvent.DamageCause damageCause = Reflection.damageSourceToCause(sourceName);
 		Entity damager = Reflection.getEntityFromDamageSource(damageSource.value);
@@ -137,21 +136,18 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	@Watch("void die()")
 	public void onDie(SuperSwitch superSwitch) {
-		System.out.println("onDie -> NPCAbstract");
 		NPCDeathEvent event = new NPCDeathEvent(this, null, null);
 		Bukkit.getPluginManager().callEvent(event);
 		if (event.isCancelled()) {
 			superSwitch.setCancelled(true);
 		}
-		System.out.println(superSwitch);
 	}
 
 	//NBT
 
 	@Watch("* e(NBTTagCompound)")
 	public void onNBTWrite(final ObjectContainer<Object> nbtTagCompound) {
-		System.out.println("onNBTWrite ");
-		System.out.println(nbtTagCompound.value);
+		NPCLib.debug("Reading", this.getClass().getName(), "from NBT");
 
 		try {
 			CompoundTag compoundTag = new CompoundTag().fromNMS(nbtTagCompound.value);
@@ -170,8 +166,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	@Watch("void f(NBTTagCompound)")
 	public void onNBTRead(ObjectContainer<Object> nbtTagCompound) {
-		System.out.println("onNBTRead ");
-		System.out.println(nbtTagCompound.value);
+		NPCLib.debug("Writing", this.getClass().getName(), "to NBT");
 
 		try {
 			CompoundTag compoundTag = new CompoundTag().fromNMS(nbtTagCompound.value);

@@ -60,12 +60,10 @@ public abstract class PathfinderAbstract<N extends NPCAbstract> extends AIAbstra
 				((NPCEntityHuman) getNpc().getNpcEntity()).checkMovement(dx, 0, dz);
 			}
 			this.progress += this.speed;
-			System.out.println("progress: " + this.progress);
 		} else {
 			double bx = (currentPoint.getX() - getNpcVector().getX()) * d1;
 			double bz = (currentPoint.getZ() - getNpcVector().getZ()) * d1;
 
-			System.out.println("next index");
 			pathEntity.nextIndex();
 			if (!pathEntity.isFinished()) {
 				this.currentPoint = pathEntity.getVector(getNpc().getNpcEntity());

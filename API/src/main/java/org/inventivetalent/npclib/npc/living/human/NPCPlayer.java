@@ -66,8 +66,6 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
 	@Override
 	protected void postInit(String pluginName, double x, double y, double z, float yaw, float pitch) throws Exception {
-		System.out.println("Player-postInit: pluginName = [" + pluginName + "], x = [" + x + "], y = [" + y + "], z = [" + z + "], yaw = [" + yaw + "], pitch = [" + pitch + "]");
-
 		if (this.pluginName != null) {
 			this.getPlugin().getLogger().warning("[NPCLib] Attempt to change the NPCs plugin from " + this.pluginName + " to " + pluginName);
 		} else {
@@ -108,13 +106,11 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	}
 
 	public void setName(String name) {
-		System.out.println(name);
 		if (name.length() > 16) {
 			throw new IllegalArgumentException("Maximum player name length is 16");
 		}
 		GameProfileWrapper profile = new GameProfileWrapper(getProfile().getId(), name);
 		profile.getProperties().putAll(getProfile().getProperties());
-		System.out.println(profile);
 		setProfile(profile);
 	}
 
@@ -219,7 +215,6 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
 	@Override
 	public void onDie(SuperSwitch superSwitch) {
-		System.out.println("onDie -> NPCPlayer");
 		super.onDie(superSwitch);
 		removeOnDeath(superSwitch);
 	}
@@ -249,15 +244,8 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	}
 
 	protected void updatePlayerList(final Player player) {
-		System.out.println("updatePlayerList(" + player + ")");
-		System.out.println(getPlugin());
 		if (getPlugin() == null || !getPlugin().isEnabled()) { return; }
 		try {
-			System.out.println(this);
-			System.out.println("Update to " + player);
-			System.out.println(getBukkitEntity());
-			System.out.println(getBukkitEntity().getGameMode());
-			System.out.println(getNpcEntity());
 			sendPacket(player, ClassBuilder.buildPlayerInfoPacket(0, getNpcEntity().getProfile(), 0, getBukkitEntity().getGameMode().ordinal(), getBukkitEntity().getName()));
 			new BukkitRunnable() {
 

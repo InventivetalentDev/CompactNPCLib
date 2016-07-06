@@ -174,8 +174,6 @@ public class ClassBuilder {
 
 	public static Object buildPlayerConnection(Object networkManager, Object entity) throws Exception {
 		final Object playerConnection = generatedPlayerConnection.getDeclaredConstructor(Reflection.nmsClassResolver.resolve("MinecraftServer"), networkManager.getClass(), Reflection.nmsClassResolver.resolve("EntityPlayer")).newInstance(new MethodResolver(Bukkit.getServer().getClass()).resolve("getServer").invoke(Bukkit.getServer()), networkManager, entity);
-		System.out.println(playerConnection);
-		System.out.println(playerConnection.getClass());
 		NetworkManagerMethodResolver.resolve(new ResolverQuery("setPacketListener", PacketListener), new ResolverQuery("a", PacketListener)).invoke(networkManager, playerConnection);
 		return playerConnection;
 	}
