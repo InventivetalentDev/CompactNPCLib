@@ -211,6 +211,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
 	protected void removeOnDeath(SuperSwitch superSwitch) {
 		if (!superSwitch.isCancelled()) {
+			if (getBukkitEntity().isDead()) { return; }
 			if (getPlugin() == null || !getPlugin().isEnabled()) { return; }
 			// Remove players from the world manually
 			Bukkit.getScheduler().runTaskLater(getPlugin(), new Runnable() {
