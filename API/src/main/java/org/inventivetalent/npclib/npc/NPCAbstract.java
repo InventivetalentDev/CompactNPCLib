@@ -114,6 +114,12 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		tickAI();
 	}
 
+	public void setMotion(double x, double y, double z) {
+		getNpcEntity().setMotX(x);
+		getNpcEntity().setMotY(y);
+		getNpcEntity().setMotZ(z);
+	}
+
 	@Watch("void move(double,double,double)")
 	public void onMove(ObjectContainer<Double> x, ObjectContainer<Double> y, ObjectContainer<Double> z, SuperSwitch superSwitch) {
 		//TODO: NPCMoveEvent/NPCMotionEvent
