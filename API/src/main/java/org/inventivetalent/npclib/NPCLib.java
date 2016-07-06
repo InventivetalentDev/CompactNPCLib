@@ -59,6 +59,7 @@ public class NPCLib implements API {
 
 	@Override
 	public void load() {
+		long start = System.currentTimeMillis();
 		Class[] classes = new Class[NPCType.values().length];
 		for (int i = 0; i < classes.length; ) {
 			if (NPCType.values()[i].isAvailable()) {
@@ -67,6 +68,9 @@ public class NPCLib implements API {
 			}
 		}
 		NPCRegistry.injectClasses(classes);
+		long end = System.currentTimeMillis();
+		long diff=end-start;
+		logger.info("Generated & Injected available entity classes in " + (diff / 1000D) + "s");
 	}
 
 	@Override
