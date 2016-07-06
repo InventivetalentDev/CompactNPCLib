@@ -72,7 +72,7 @@ public interface NPCEntity {
 	double getMotX();
 
 	@ExtraMethod("public void setMotY(double motY) {\n"
-						 + "  this.mot> = motY;\n"
+						 + "  this.motY = motY;\n"
 						 + "}")
 	void setMotY(double motY);
 
