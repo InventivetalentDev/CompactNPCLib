@@ -1,5 +1,6 @@
 package org.inventivetalent.npclib;
 
+import com.google.common.base.Joiner;
 import com.mojang.authlib.GameProfile;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
@@ -69,7 +70,7 @@ public class NPCLib implements API {
 		}
 		NPCRegistry.injectClasses(classes);
 		long end = System.currentTimeMillis();
-		long diff=end-start;
+		long diff = end - start;
 		logger.info("Generated & Injected available entity classes in " + (diff / 1000D) + "s");
 	}
 
@@ -138,6 +139,10 @@ public class NPCLib implements API {
 
 	@Override
 	public void disable(Plugin plugin) {
+	}
+
+	public static void debug(String... message) {
+		logger.info("[DEBUG] " + Joiner.on(" ").join(message));
 	}
 
 	public static final String getVersion() {
