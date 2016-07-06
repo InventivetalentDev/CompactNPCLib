@@ -17,6 +17,7 @@ import org.inventivetalent.mcwrapper.auth.properties.PropertyWrapper;
 import org.inventivetalent.nbt.CompoundTag;
 import org.inventivetalent.nicknamer.api.SkinLoader;
 import org.inventivetalent.npclib.ClassBuilder;
+import org.inventivetalent.npclib.ObjectContainer;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.SuperSwitch;
 import org.inventivetalent.npclib.annotation.NPC;
@@ -199,6 +200,16 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	public void onDie(SuperSwitch superSwitch) {
 		System.out.println("onDie -> NPCPlayer");
 		super.onDie(superSwitch);
+		removeOnDeath(superSwitch);
+	}
+
+	@Override
+	public void onDie(ObjectContainer<Object> damageSource, SuperSwitch superSwitch) {
+		super.onDie(damageSource, superSwitch);
+		removeOnDeath(superSwitch);
+	}
+
+	protected void removeOnDeath(SuperSwitch superSwitch) {
 		if (!superSwitch.isCancelled()) {
 			if (getPlugin() == null || !getPlugin().isEnabled()) { return; }
 			// Remove players from the world manually
