@@ -1,10 +1,7 @@
 package org.inventivetalent.npclib;
 
 import org.bukkit.Bukkit;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.inventivetalent.apihelper.APIManager;
 import org.inventivetalent.npclib.command.SpawnCommands;
@@ -39,13 +36,6 @@ public class NPCLibPlugin extends JavaPlugin implements Listener {
 
 	public NPCRegistry getPluginNpcRegistry() {
 		return pluginNpcRegistry;
-	}
-
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void on(CreatureSpawnEvent event) {
-		System.out.println(event);
-		System.out.println(event.isCancelled());
-		event.setCancelled(false);
 	}
 
 }
