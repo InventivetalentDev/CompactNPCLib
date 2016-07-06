@@ -246,10 +246,12 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	}
 
 	public void updateToPlayer(final Player player) {
+		if (getBukkitEntity().isDead()) { return; }
 		this.updatePlayerList(player);
 	}
 
 	public void respawnTo(Player player) {
+		if (getBukkitEntity().isDead()) { return; }
 		sendPacket(player, new PacketPlayOutEntityDestroy(getBukkitEntity().getEntityId()));
 		sendPacket(player, new PacketPlayOutNamedEntitySpawn((EntityHuman) getNpcEntity()));
 	}
