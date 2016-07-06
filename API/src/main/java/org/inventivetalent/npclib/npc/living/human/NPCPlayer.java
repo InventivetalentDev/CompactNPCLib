@@ -56,8 +56,9 @@ import java.util.UUID;
 	 })
 public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
-	private String skinTextureValue;
-	private String skinTextureSignature;
+	private String  skinTextureValue;
+	private String  skinTextureSignature;
+	private boolean showInList;
 
 	public NPCPlayer(EntityPlayer npcEntity) {
 		super(npcEntity);
@@ -160,6 +161,14 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		}
 	}
 
+	public void setShowInList(boolean showInList) {
+		this.showInList = showInList;
+	}
+
+	public boolean isShownInList() {
+		return showInList;
+	}
+
 	@Override
 	public void writeToNBT(CompoundTag compoundTag) {
 		super.writeToNBT(compoundTag);
@@ -171,6 +180,10 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 			skinTextureTag.set("value", this.skinTextureValue);
 			skinTextureTag.set("signature", this.skinTextureSignature);
 		}
+
+		CompoundTag optionsTag = compoundTag.getOrCreateCompound("npclib.options");
+		CompoundTag playerOptions = optionsTag.getOrCreateCompound("player");
+		playerOptions.set("shownInList", isShownInList());
 	}
 
 	@Override
@@ -184,6 +197,14 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 			CompoundTag skinTextureTag = playerTag.getCompound("skinTexture");
 			if (skinTextureTag != null) {
 				setSkinTexture(skinTextureTag.getString("value"), skinTextureTag.getString("signature"));
+			}
+		}
+
+		CompoundTag optionsTag = compoundTag.getCompound("npclib.options");
+		if (optionsTag != null) {
+			CompoundTag playerOptions = optionsTag.getCompound("player");
+			if (playerOptions != null) {
+				setShowInList(playerOptions.getBoolean("shownInList"));
 			}
 		}
 
@@ -243,7 +264,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 				@Override
 				public void run() {
 					if (!player.isOnline()) { return; }
-					if (/*TODO!NPCPlayerEntityBase.this.isShownInList()  ||*/ true || getBukkitEntity().isDead()) {
+					if (!isShownInList() || getBukkitEntity().isDead()) {
 						try {
 							sendPacket(player, ClassBuilder.buildPlayerInfoPacket(4, getNpcEntity().getProfile(), 0, getBukkitEntity().getGameMode().ordinal(), getBukkitEntity().getName()));
 						} catch (Exception e) {
