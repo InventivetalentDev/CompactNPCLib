@@ -98,6 +98,10 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		getBukkitEntity().setCustomName(name);
 	}
 
+	public void setNameVisible(boolean visible) {
+		getBukkitEntity().setCustomNameVisible(visible);
+	}
+
 	// NPCInfo
 	public NPCType getNpcType() {
 		return NPCType.forEntityType(getNpcEntity().getNpcInfo().getType());
