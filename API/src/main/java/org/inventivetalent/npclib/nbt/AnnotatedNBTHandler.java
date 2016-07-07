@@ -78,7 +78,8 @@ public class AnnotatedNBTHandler {
 	public void onRead(CompoundTag compoundTag) {
 		for (NBTMember member : members) {
 			if (member.read) {
-				member.read(digTag(compoundTag, member.key, 0));
+				NBTTag tag = digTag(compoundTag, member.key, 0);
+				if (tag != null) { member.read(tag); }
 			}
 		}
 	}
