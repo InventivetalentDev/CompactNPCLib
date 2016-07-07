@@ -9,8 +9,8 @@ public class NBTField extends NBTMember {
 
 	private final Field field;
 
-	public NBTField(String[] key, int type, Object obj, boolean read, boolean write, Field field) {
-		super(key, type, obj, read, write);
+	public NBTField(String[] key, int type, boolean read, boolean write, Object obj, Field field) {
+		super(key, type, read, write, obj);
 		this.field = field;
 	}
 

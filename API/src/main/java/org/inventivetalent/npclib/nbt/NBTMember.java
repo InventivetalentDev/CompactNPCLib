@@ -2,39 +2,17 @@ package org.inventivetalent.npclib.nbt;
 
 import org.inventivetalent.nbt.NBTTag;
 
-public abstract class NBTMember {
+public abstract class NBTMember extends NBTInfo {
 
-	protected final String[] key;
-	protected final int      type;
-	protected final Object   obj;
-	protected final boolean  read;
-	protected final boolean  write;
+	protected final Object obj;
 
-	public NBTMember(String[] key, int type, Object obj, boolean read, boolean write) {
-		this.key = key;
-		this.type = type;
+	public NBTMember(String[] key, int type, boolean read, boolean write, Object obj) {
+		super(key, type, read, write);
 		this.obj = obj;
-		this.read = read;
-		this.write = write;
 	}
 
 	public abstract void read(NBTTag tag);
 
 	public abstract NBTTag write(NBTTag tag);
 
-	public String[] getKey() {
-		return key;
-	}
-
-	public int getType() {
-		return type;
-	}
-
-	public boolean isRead() {
-		return read;
-	}
-
-	public boolean isWrite() {
-		return write;
-	}
 }
