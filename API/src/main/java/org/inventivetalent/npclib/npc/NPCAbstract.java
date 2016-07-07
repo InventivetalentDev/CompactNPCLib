@@ -15,6 +15,7 @@ import org.inventivetalent.npclib.ai.AIAbstract;
 import org.inventivetalent.npclib.annotation.NPCInfo;
 import org.inventivetalent.npclib.entity.NPCEntity;
 import org.inventivetalent.npclib.event.*;
+import org.inventivetalent.npclib.nbt.AnnotatedNBTHandler;
 import org.inventivetalent.npclib.watcher.AnnotatedMethodWatcher;
 import org.inventivetalent.npclib.watcher.Watch;
 import org.inventivetalent.reflection.minecraft.Minecraft;
@@ -36,7 +37,8 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	protected final MethodResolver entityMethodResolver = new MethodResolver(Reflection.nmsClassResolver.resolveSilent("Entity"));
 	private final N npcEntity;
 	private final List<AIAbstract> aiList = new ArrayList<>();
-	protected String pluginName;
+	protected String              pluginName;
+	protected AnnotatedNBTHandler nbtHandler;
 
 	public NPCAbstract(N npcEntity) {
 		this.npcEntity = npcEntity;
@@ -44,7 +46,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		this.npcEntityMethodResolver = new MethodResolver(npcEntity.getClass());
 
 		this.npcEntity.setMethodWatcher(new AnnotatedMethodWatcher(this));
-
+		this.nbtHandler = new AnnotatedNBTHandler(this);
 		//		postInit();
 	}
 
@@ -191,6 +193,8 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	public void writeToNBT(CompoundTag compoundTag) {
+		this.nbtHandler.onWrite(compoundTag);
+
 		NPCType npcType = getNpcType();
 		compoundTag.set("npclib.type", npcType.name());
 		compoundTag.set("npclib.class", getNpcEntity().getNpcInfo().getNpcClass().getName());
@@ -198,6 +202,8 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	public void readFromNBT(CompoundTag compoundTag) {
+		this.nbtHandler.onRead(compoundTag);
+
 		if (compoundTag.has("npclib.plugin")) {
 			String pluginName = ((StringTag) compoundTag.get("npclib.plugin")).getValue();
 			if (this.pluginName != null) {
