@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 public class NPCLib implements API {
 
 	public static Logger logger = Logger.getLogger("NPCLib");
+	public static boolean debug;
 
 	public static NPCRegistry createRegistry(@NonNull Plugin plugin) {
 		//		return Reflection.newInstance("org.inventivetalent.npc.registry", "NPCRegistry", NPCRegistry.class, plugin);
@@ -59,7 +60,7 @@ public class NPCLib implements API {
 	}
 
 	public static void debug(Object... message) {
-		logger.info("[DEBUG] " + Joiner.on(" ").join(message));
+		if (debug) { logger.info("[DEBUG] " + Joiner.on(" ").join(message)); }
 	}
 
 	public static final String getVersion() {
