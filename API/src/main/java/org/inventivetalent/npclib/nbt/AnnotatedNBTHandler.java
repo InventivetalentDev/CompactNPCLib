@@ -6,6 +6,8 @@ import org.inventivetalent.nbt.TagID;
 import org.inventivetalent.npclib.NPCLib;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -44,13 +46,52 @@ public class AnnotatedNBTHandler {
 				boolean write = annotation.write();
 				boolean read = annotation.read();
 
-				NPCLib.debug("@NBT annotation on", field.getName(), "(", Arrays.toString(key), ") in", clazz.getName());
+				NPCLib.debug("@NBT annotation on Field", field.getName(), "(", Arrays.toString(key), ") in", clazz.getName());
 				members.add(new NBTField(key, type, read, write, this.toHandle, field));
+			}
+		}
+
+		for (Method method : clazz.getDeclaredMethods()) {
+			NBT annotation = method.getAnnotation(NBT.class);
+			if (annotation != null) {
+				method.setAccessible(true);
+
+				String[] key = annotation.value();
+				if (key == null || key.length == 0) { key = new String[] { method.getName() }; }
+				int type = annotation.type();
+				boolean write = annotation.write();
+				boolean read = annotation.read();
+
+				if (method.getParameterTypes().length == 0) {// Method that returns the value to write
+					NPCLib.debug("@NBT annotation on Method", method.getName(), "(", Arrays.toString(key), ") in", clazz.getName());
+					members.add(new NBTWriteMethod(key, type, write, this.toHandle, method));
+				} else {
+					NBTParameter[] nbtParameters = new NBTParameter[method.getParameters().length];
+					for (int i = 0; i < method.getParameters().length; i++) {
+						Parameter parameter = method.getParameters()[i];
+
+						NBT paramAnnotation = parameter.getAnnotation(NBT.class);
+						if (paramAnnotation == null) { throw new IllegalArgumentException("Missing @NBT parameter annotation for @NBT method " + method.getName()); }
+						String[] paramKey = paramAnnotation.value();
+						int paramType = paramAnnotation.type();
+						boolean paramRead = paramAnnotation.read();
+
+						// Merge the method key and param key
+						//						String[] fullKey = new String[key.length + paramKey.length];
+						//						System.arraycopy(key, 0, fullKey, 0, key.length);
+						//						System.arraycopy(paramKey, 0, fullKey, key.length, paramKey.length);
+
+						NPCLib.debug("@NBT annotation on Parameter ", parameter.getName(), "of method", method.getName(), "(", Arrays.toString(key), Arrays.toString(paramKey), ") in", clazz.getName());
+						nbtParameters[i] = new NBTParameter(/*fullKey*/paramKey, paramType, paramRead, false, method, parameter);
+					}
+					members.add(new NBTReadMethod(key, type, read, this.toHandle, method, nbtParameters));
+				}
 			}
 		}
 	}
 
-	NBTTag digTag(CompoundTag parent, String[] key, int index) {
+	static NBTTag digTag(CompoundTag parent, String[] key, int index) {
+		if (key.length == 0) { return parent; }
 		NBTTag tag = parent.get(key[index]);
 		if (tag == null) { return null; }
 		if (tag.getTypeId() != TagID.TAG_COMPOUND) {
@@ -59,10 +100,11 @@ public class AnnotatedNBTHandler {
 			}
 			return tag;
 		}
+		if (index == key.length - 1) { return tag; }// Return anything (even compound) if we're at the final index
 		return digTag((CompoundTag) tag, key, index + 1);
 	}
 
-	NBTTag buildTag(CompoundTag parent, int type, String[] key) {
+	static NBTTag buildTag(CompoundTag parent, int type, String[] key) {
 		try {
 			for (int i = 0; i < key.length - 1; i++) {
 				parent = parent.getOrCreateCompound(key[i]);
