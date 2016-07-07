@@ -45,7 +45,7 @@ public class AnnotatedNBTHandler {
 				boolean read = annotation.read();
 
 				NPCLib.debug("@NBT annotation on", field.getName(), "(", Arrays.toString(key), ") in", clazz.getName());
-				members.add(new NBTField(key, type, this.toHandle, read, write, field));
+				members.add(new NBTField(key, type, read, write, this.toHandle, field));
 			}
 		}
 	}
