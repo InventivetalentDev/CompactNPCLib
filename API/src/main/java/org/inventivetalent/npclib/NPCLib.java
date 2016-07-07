@@ -141,7 +141,7 @@ public class NPCLib implements API {
 	public void disable(Plugin plugin) {
 	}
 
-	public static void debug(String... message) {
+	public static void debug(Object... message) {
 		logger.info("[DEBUG] " + Joiner.on(" ").join(message));
 	}
 
@@ -155,4 +155,5 @@ public class NPCLib implements API {
 			return "0.0.0";
 		}
 	}
+
 }
