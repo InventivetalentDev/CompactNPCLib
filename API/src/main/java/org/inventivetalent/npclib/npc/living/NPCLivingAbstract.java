@@ -45,6 +45,16 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 		//TODO: NPCMoveEvent...
 	}
 
+	/**
+	 * Moves the entity forward (on the current heading)
+	 *
+	 * @param forward forward movement amount
+	 * @param strafe  strafe movement amount
+	 */
+	public void moveForward(float forward, float strafe) {
+		invokeEntityLivingMethod("g", float.class, float.class, strafe, forward);
+	}
+
 	public void setYaw(float yaw) {
 		yaw = clampYaw(yaw);
 		getNpcEntity().setYaw(yaw);
