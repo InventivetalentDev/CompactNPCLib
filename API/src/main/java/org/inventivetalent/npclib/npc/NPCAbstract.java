@@ -200,17 +200,15 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	public void writeToNBT(CompoundTag compoundTag) {
-		this.nbtHandler.onWrite(compoundTag);
-
 		NPCType npcType = getNpcType();
 		compoundTag.set("npclib.type", npcType.name());
 		compoundTag.set("npclib.class", getNpcEntity().getNpcInfo().getNpcClass().getName());
 		compoundTag.set("npclib.plugin", this.pluginName);
+
+		this.nbtHandler.onWrite(compoundTag);
 	}
 
 	public void readFromNBT(CompoundTag compoundTag) {
-		this.nbtHandler.onRead(compoundTag);
-
 		if (compoundTag.has("npclib.plugin")) {
 			String pluginName = ((StringTag) compoundTag.get("npclib.plugin")).getValue();
 			if (this.pluginName != null) {
@@ -237,6 +235,8 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 				}
 			}
 		}
+
+		this.nbtHandler.onRead(compoundTag);
 	}
 
 	public Plugin getPlugin() {
