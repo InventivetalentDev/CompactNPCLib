@@ -55,7 +55,6 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	protected void postInit(String pluginName, double x, double y, double z, float yaw, float pitch) throws Exception {
-		System.out.println("pluginName = [" + pluginName + "], x = [" + x + "], y = [" + y + "], z = [" + z + "], yaw = [" + yaw + "], pitch = [" + pitch + "]");
 		if (this.pluginName != null) {
 			this.getPlugin().getLogger().warning("[NPCLib] Attempt to change the NPCs plugin from " + this.pluginName + " to " + pluginName);
 		} else {

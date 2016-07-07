@@ -143,7 +143,6 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	public void setSkinTexture(@NBT(value = "value",
 									type = TagID.TAG_STRING) String value, @NBT(value = "signature",
 																				type = TagID.TAG_STRING) String signature) {
-		System.out.println("setSkinTexture: value = [" + value + "], signature = [" + signature + "]");
 		this.skinTextureValue = value;
 		this.skinTextureSignature = signature;
 
