@@ -161,8 +161,9 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	public void onNBTWrite(final ObjectContainer<Object> nbtTagCompound) {
 		NPCLib.debug("Reading", this.getClass().getName(), "from NBT");
 
+		CompoundTag compoundTag = null;
 		try {
-			CompoundTag compoundTag = new CompoundTag().fromNMS(nbtTagCompound.value);
+			compoundTag = new CompoundTag().fromNMS(nbtTagCompound.value);
 			writeToNBT(compoundTag);
 			NBTWriteEvent event = new NBTWriteEvent(this, nbtTagCompound.value, compoundTag);
 			Bukkit.getPluginManager().callEvent(event);
@@ -172,7 +173,9 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 			// Merging works fine apparently.
 			Reflection.mergeNBTCompound(nbtTagCompound.value, compoundTag.toNMS());
 		} catch (ReflectiveOperationException e) {
-			throw new RuntimeException("Failed to convert NBTWrite compound", e);
+			NPCLib.debug(nbtTagCompound.value);
+			NPCLib.debug(compoundTag);
+			throw new RuntimeException("Failed to convert NBTWrite compound for", e);
 		}
 	}
 
@@ -180,15 +183,18 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	public void onNBTRead(ObjectContainer<Object> nbtTagCompound) {
 		NPCLib.debug("Writing", this.getClass().getName(), "to NBT");
 
+		CompoundTag compoundTag = null;
 		try {
-			CompoundTag compoundTag = new CompoundTag().fromNMS(nbtTagCompound.value);
+			compoundTag = new CompoundTag().fromNMS(nbtTagCompound.value);
 			readFromNBT(compoundTag);
 			NBTReadEvent event = new NBTReadEvent(this, nbtTagCompound.value, compoundTag);
 			Bukkit.getPluginManager().callEvent(event);
 			// ^ See note above
 			Reflection.mergeNBTCompound(nbtTagCompound.value, compoundTag.toNMS());
 		} catch (ReflectiveOperationException e) {
-			throw new RuntimeException("Failed to convert NBTRead compound", e);
+			NPCLib.debug(nbtTagCompound.value);
+			NPCLib.debug(compoundTag);
+			throw new RuntimeException("Failed to convert NBTRead compound for " + nbtTagCompound.value, e);
 		}
 	}
 
