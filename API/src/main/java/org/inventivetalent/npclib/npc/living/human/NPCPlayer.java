@@ -58,7 +58,21 @@ import java.util.UUID;
 	 })
 public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
+	@NBT(value = {
+			"npclib.options",
+			"player",
+			"skinTexture",
+			"value" },
+		 type = TagID.TAG_STRING,
+		 read = false)
 	private String  skinTextureValue;
+	@NBT(value = {
+			"npclib.options",
+			"player",
+			"skinTexture",
+			"signature" },
+		 type = TagID.TAG_STRING,
+		 read = false)
 	private String  skinTextureSignature;
 	@NBT(value = {
 			"npclib.options",
@@ -121,8 +135,15 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		setProfile(profile);
 	}
 
+	@NBT({
+				 "npclib.options",
+				 "player",
+				 "skinTexture" })
 	@Override
-	public void setSkinTexture(String value, String signature) {
+	public void setSkinTexture(@NBT(value = "value",
+									type = TagID.TAG_STRING) String value, @NBT(value = "signature",
+																				type = TagID.TAG_STRING) String signature) {
+		System.out.println("setSkinTexture: value = [" + value + "], signature = [" + signature + "]");
 		this.skinTextureValue = value;
 		this.skinTextureSignature = signature;
 
@@ -178,11 +199,11 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		CompoundTag playerTag = compoundTag.getOrCreateCompound("npclib.player");
 		playerTag.set("name", getProfile().getName());
 
-		if (this.skinTextureValue != null) {
-			CompoundTag skinTextureTag = playerTag.getOrCreateCompound("skinTexture");
-			skinTextureTag.set("value", this.skinTextureValue);
-			skinTextureTag.set("signature", this.skinTextureSignature);
-		}
+		//		if (this.skinTextureValue != null) {
+		//			CompoundTag skinTextureTag = playerTag.getOrCreateCompound("skinTexture");
+		//			skinTextureTag.set("value", this.skinTextureValue);
+		//			skinTextureTag.set("signature", this.skinTextureSignature);
+		//		}
 
 		//		CompoundTag optionsTag = compoundTag.getOrCreateCompound("npclib.options");
 		//		CompoundTag playerOptions = optionsTag.getOrCreateCompound("player");
@@ -197,10 +218,10 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		if (playerTag != null) {
 			setName(playerTag.getString("name"));
 
-			CompoundTag skinTextureTag = playerTag.getCompound("skinTexture");
-			if (skinTextureTag != null) {
-				setSkinTexture(skinTextureTag.getString("value"), skinTextureTag.getString("signature"));
-			}
+			//			CompoundTag skinTextureTag = playerTag.getCompound("skinTexture");
+			//			if (skinTextureTag != null) {
+			//				setSkinTexture(skinTextureTag.getString("value"), skinTextureTag.getString("signature"));
+			//			}
 		}
 
 		//		CompoundTag optionsTag = compoundTag.getCompound("npclib.options");
