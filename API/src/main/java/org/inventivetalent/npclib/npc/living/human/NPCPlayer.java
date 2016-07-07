@@ -15,6 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
 import org.inventivetalent.mcwrapper.auth.properties.PropertyWrapper;
 import org.inventivetalent.nbt.CompoundTag;
+import org.inventivetalent.nbt.TagID;
 import org.inventivetalent.nicknamer.api.SkinLoader;
 import org.inventivetalent.npclib.ClassBuilder;
 import org.inventivetalent.npclib.ObjectContainer;
@@ -23,6 +24,7 @@ import org.inventivetalent.npclib.SuperSwitch;
 import org.inventivetalent.npclib.annotation.NPC;
 import org.inventivetalent.npclib.entity.living.human.EntityPlayer;
 import org.inventivetalent.npclib.event.NPCSpawnEvent;
+import org.inventivetalent.npclib.nbt.NBT;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.FieldResolver;
 import org.inventivetalent.reflection.resolver.MethodResolver;
@@ -58,6 +60,11 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
 	private String  skinTextureValue;
 	private String  skinTextureSignature;
+	@NBT(value = {
+			"npclib.options",
+			"player",
+			"showInList" },
+		 type = TagID.TAG_BYTE)
 	private boolean showInList;
 
 	public NPCPlayer(EntityPlayer npcEntity) {
@@ -177,9 +184,9 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 			skinTextureTag.set("signature", this.skinTextureSignature);
 		}
 
-		CompoundTag optionsTag = compoundTag.getOrCreateCompound("npclib.options");
-		CompoundTag playerOptions = optionsTag.getOrCreateCompound("player");
-		playerOptions.set("shownInList", isShownInList());
+		//		CompoundTag optionsTag = compoundTag.getOrCreateCompound("npclib.options");
+		//		CompoundTag playerOptions = optionsTag.getOrCreateCompound("player");
+		//		playerOptions.set("shownInList", isShownInList());
 	}
 
 	@Override
@@ -196,13 +203,13 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 			}
 		}
 
-		CompoundTag optionsTag = compoundTag.getCompound("npclib.options");
-		if (optionsTag != null) {
-			CompoundTag playerOptions = optionsTag.getCompound("player");
-			if (playerOptions != null) {
-				setShowInList(playerOptions.getBoolean("shownInList"));
-			}
-		}
+		//		CompoundTag optionsTag = compoundTag.getCompound("npclib.options");
+		//		if (optionsTag != null) {
+		//			CompoundTag playerOptions = optionsTag.getCompound("player");
+		//			if (playerOptions != null) {
+		//				setShowInList(playerOptions.getBoolean("shownInList"));
+		//			}
+		//		}
 
 		spawnPlayer();
 	}
