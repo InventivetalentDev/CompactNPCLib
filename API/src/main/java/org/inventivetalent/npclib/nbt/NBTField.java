@@ -1,6 +1,5 @@
 package org.inventivetalent.npclib.nbt;
 
-import org.inventivetalent.nbt.ByteTag;
 import org.inventivetalent.nbt.NBTTag;
 
 import java.lang.reflect.Field;
@@ -17,11 +16,7 @@ public class NBTField extends NBTMember {
 	@Override
 	public void read(NBTTag tag) {
 		try {
-			if (boolean.class.isAssignableFrom(field.getType())) {
-				field.setBoolean(this.obj, ((ByteTag) tag).getValue() == 1);
-			} else {
-				field.set(this.obj, tag.getValue());
-			}
+			field.set(this.obj, fromNbtValue(tag.getValue(), field.getType()));
 		} catch (IllegalAccessException e) {
 			throw new RuntimeException(e);
 		}
@@ -30,11 +25,7 @@ public class NBTField extends NBTMember {
 	@Override
 	public NBTTag write(NBTTag tag) {
 		try {
-			Object value = field.get(this.obj);
-			if (boolean.class.isAssignableFrom(field.getType())) {
-				value = (byte) ((boolean) value ? 1 : 0);
-			}
-			tag.setValue(value);
+			tag.setValue(toNbtValue(field.get(this.obj), field.getType()));
 			return tag;
 		} catch (ReflectiveOperationException e) {
 			throw new RuntimeException(e);
