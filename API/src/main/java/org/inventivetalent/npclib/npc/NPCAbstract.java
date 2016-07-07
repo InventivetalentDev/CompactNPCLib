@@ -55,6 +55,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	protected void postInit(String pluginName, double x, double y, double z, float yaw, float pitch) throws Exception {
+		System.out.println("pluginName = [" + pluginName + "], x = [" + x + "], y = [" + y + "], z = [" + z + "], yaw = [" + yaw + "], pitch = [" + pitch + "]");
 		if (this.pluginName != null) {
 			this.getPlugin().getLogger().warning("[NPCLib] Attempt to change the NPCs plugin from " + this.pluginName + " to " + pluginName);
 		} else {
@@ -159,7 +160,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	@Watch("* e(NBTTagCompound)")
 	public void onNBTWrite(final ObjectContainer<Object> nbtTagCompound) {
-		NPCLib.debug("Reading", this.getClass().getName(), "from NBT");
+		NPCLib.debug("Writing", this.getClass().getName(), "to NBT");
 
 		CompoundTag compoundTag = null;
 		try {
@@ -181,7 +182,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	@Watch("void f(NBTTagCompound)")
 	public void onNBTRead(ObjectContainer<Object> nbtTagCompound) {
-		NPCLib.debug("Writing", this.getClass().getName(), "to NBT");
+		NPCLib.debug("Reading", this.getClass().getName(), "from NBT");
 
 		CompoundTag compoundTag = null;
 		try {
