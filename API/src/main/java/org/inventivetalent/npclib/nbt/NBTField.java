@@ -25,7 +25,10 @@ public class NBTField extends NBTMember {
 	@Override
 	public NBTTag write(NBTTag tag) {
 		try {
-			tag.setValue(toNbtValue(field.get(this.obj), field.getType()));
+			Object value = toNbtValue(field.get(this.obj), field.getType());
+			if (value != null) {
+				tag.setValue(value);
+			}
 			return tag;
 		} catch (ReflectiveOperationException e) {
 			throw new RuntimeException(e);
