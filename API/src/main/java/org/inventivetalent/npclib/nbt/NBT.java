@@ -1,5 +1,7 @@
 package org.inventivetalent.npclib.nbt;
 
+import org.inventivetalent.nbt.TagID;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -8,7 +10,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({
 				ElementType.FIELD,
-				ElementType.METHOD })
+				ElementType.METHOD,
+				ElementType.PARAMETER })
 public @interface NBT {
 
 	/**
@@ -23,7 +26,7 @@ public @interface NBT {
 	 *
 	 * @return NBT type
 	 */
-	int type();
+	int type() default TagID.TAG_END;
 
 	/**
 	 * Whether to write this value to NBT
