@@ -11,12 +11,6 @@ public class ObjectContainer<T> {
 
 	public T value;
 
-	@Override
-	public String toString() {
-		if (value == null) { return "ObjectContainer[null]"; }
-		return value.toString();
-	}
-
 	public static ObjectContainer[] fromObjects(Object[] objects) {
 		ObjectContainer[] containers = new ObjectContainer[objects.length];
 		for (int i = 0; i < objects.length; i++)
@@ -29,6 +23,12 @@ public class ObjectContainer<T> {
 		for (int i = 0; i < containers.length; i++)
 			objects[i] = containers[i].value;
 		return objects;
+	}
+
+	@Override
+	public String toString() {
+		if (value == null) { return "ObjectContainer[null]"; }
+		return value.toString();
 	}
 
 }

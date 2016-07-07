@@ -34,8 +34,14 @@ import org.inventivetalent.npclib.npc.NPCAbstract;
 
 public class NBTWriteEvent extends NPCNBTEvent {
 
+	private static HandlerList handlerList = new HandlerList();
+
 	public NBTWriteEvent(NPCAbstract npc, Object nbtTagHandle, CompoundTag nbtTag) {
 		super(npc, nbtTagHandle, nbtTag);
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlerList;
 	}
 
 	@Override
@@ -43,14 +49,8 @@ public class NBTWriteEvent extends NPCNBTEvent {
 		return (CompoundTag) super.getNbtTag();
 	}
 
-	private static HandlerList handlerList = new HandlerList();
-
 	@Override
 	public HandlerList getHandlers() {
-		return handlerList;
-	}
-
-	public static HandlerList getHandlerList() {
 		return handlerList;
 	}
 }

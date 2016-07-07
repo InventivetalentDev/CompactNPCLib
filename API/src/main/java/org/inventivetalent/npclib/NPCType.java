@@ -101,8 +101,7 @@ public enum NPCType {
 
 	//	ENDER_CRYSTAL("ENDER_CRYSTAL",NPCEnderCrystal.class),
 
-	PLAYER("PLAYER", NPCPlayer.class),
-	;
+	PLAYER("PLAYER", NPCPlayer.class),;
 
 	private static final Map<EntityType, NPCType>                   entityTypeMap = Maps.newHashMap();
 	private static final Map<Class<? extends NPCAbstract>, NPCType> classMap      = Maps.newHashMap();
@@ -133,15 +132,6 @@ public enum NPCType {
 		} catch (NoSuchFieldError | IllegalArgumentException ignored) {
 			NPCLib.logger.warning("NPCType " + name() + " is not supported on this server version");
 		}
-	}
-
-	/**
-	 * Check if this NPC type is available for the current server version
-	 *
-	 * @return whether this type is available
-	 */
-	public boolean isAvailable() {
-		return this.entityType != null && this.npcClass != null;
 	}
 
 	public static NPCType forEntityType(EntityType entityType) {
@@ -179,6 +169,15 @@ public enum NPCType {
 		} catch (IllegalArgumentException e) {
 			return null;
 		}
+	}
+
+	/**
+	 * Check if this NPC type is available for the current server version
+	 *
+	 * @return whether this type is available
+	 */
+	public boolean isAvailable() {
+		return this.entityType != null && this.npcClass != null;
 	}
 
 }

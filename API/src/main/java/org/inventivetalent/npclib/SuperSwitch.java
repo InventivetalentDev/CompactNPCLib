@@ -12,6 +12,10 @@ public class SuperSwitch implements Cancellable {
 
 	private State state = State.PASS;
 
+	public static SuperSwitch newInstance() {
+		return new SuperSwitch();
+	}
+
 	@Override
 	public boolean isCancelled() {
 		return this.state == State.CANCEL;
@@ -28,10 +32,6 @@ public class SuperSwitch implements Cancellable {
 
 	public boolean isReplace() {
 		return this.state == State.REPLACE;
-	}
-
-	public static SuperSwitch newInstance() {
-		return new SuperSwitch();
 	}
 
 	public enum State {

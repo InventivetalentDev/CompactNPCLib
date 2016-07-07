@@ -12,6 +12,7 @@ import org.inventivetalent.npclib.npc.NPCAbstract;
  */
 public class NPCDeathEvent extends NPCEvent implements Cancellable {
 
+	private static HandlerList handlerList = new HandlerList();
 	private boolean                       cancelled;
 	private String                        damageSourceName;
 	private EntityDamageEvent.DamageCause damageCause;
@@ -20,6 +21,10 @@ public class NPCDeathEvent extends NPCEvent implements Cancellable {
 		super(npc);
 		this.damageSourceName = damageSourceName;
 		this.damageCause = damageCause;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlerList;
 	}
 
 	/**
@@ -59,14 +64,8 @@ public class NPCDeathEvent extends NPCEvent implements Cancellable {
 		cancelled = b;
 	}
 
-	private static HandlerList handlerList = new HandlerList();
-
 	@Override
 	public HandlerList getHandlers() {
-		return handlerList;
-	}
-
-	public static HandlerList getHandlerList() {
 		return handlerList;
 	}
 }

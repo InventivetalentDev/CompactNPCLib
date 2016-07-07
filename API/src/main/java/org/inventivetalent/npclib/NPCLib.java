@@ -58,6 +58,21 @@ public class NPCLib implements API {
 		return null;
 	}
 
+	public static void debug(Object... message) {
+		logger.info("[DEBUG] " + Joiner.on(" ").join(message));
+	}
+
+	public static final String getVersion() {
+		try (InputStream in = NPCLib.class.getResourceAsStream("/npclib.properties")) {
+			Properties properties = new Properties();
+			properties.load(in);
+			return properties.getProperty("npclib.version");
+		} catch (IOException e) {
+			logger.log(Level.WARNING, "Failed to get API version from npclib.properties", e);
+			return "0.0.0";
+		}
+	}
+
 	@Override
 	public void load() {
 		long start = System.currentTimeMillis();
@@ -139,21 +154,6 @@ public class NPCLib implements API {
 
 	@Override
 	public void disable(Plugin plugin) {
-	}
-
-	public static void debug(Object... message) {
-		logger.info("[DEBUG] " + Joiner.on(" ").join(message));
-	}
-
-	public static final String getVersion() {
-		try (InputStream in = NPCLib.class.getResourceAsStream("/npclib.properties")) {
-			Properties properties = new Properties();
-			properties.load(in);
-			return properties.getProperty("npclib.version");
-		} catch (IOException e) {
-			logger.log(Level.WARNING, "Failed to get API version from npclib.properties", e);
-			return "0.0.0";
-		}
 	}
 
 }

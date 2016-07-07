@@ -13,11 +13,16 @@ import javax.annotation.Nonnull;
  */
 public class NPCSpawnEvent extends NPCEvent {
 
+	private static HandlerList handlerList = new HandlerList();
 	private CreatureSpawnEvent.SpawnReason spawnReason;
 
 	public NPCSpawnEvent(NPCAbstract npc, CreatureSpawnEvent.SpawnReason spawnReason) {
 		super(npc);
 		this.spawnReason = spawnReason;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlerList;
 	}
 
 	/**
@@ -48,14 +53,8 @@ public class NPCSpawnEvent extends NPCEvent {
 		this.spawnReason = spawnReason;
 	}
 
-	private static HandlerList handlerList = new HandlerList();
-
 	@Override
 	public HandlerList getHandlers() {
-		return handlerList;
-	}
-
-	public static HandlerList getHandlerList() {
 		return handlerList;
 	}
 }

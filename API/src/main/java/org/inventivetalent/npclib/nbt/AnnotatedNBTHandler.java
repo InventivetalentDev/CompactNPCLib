@@ -34,6 +34,33 @@ public class AnnotatedNBTHandler {
 		}
 	}
 
+	static NBTTag digTag(CompoundTag parent, String[] key, int index) {
+		if (key.length == 0) { return parent; }
+		NBTTag tag = parent.get(key[index]);
+		if (tag == null) { return null; }
+		if (tag.getTypeId() != TagID.TAG_COMPOUND) {
+			if (index != key.length - 1) {
+				throw new IllegalStateException("Found non-compound tag before key end (index " + index + "/" + key.length + ")");
+			}
+			return tag;
+		}
+		if (index == key.length - 1) { return tag; }// Return anything (even compound) if we're at the final index
+		return digTag((CompoundTag) tag, key, index + 1);
+	}
+
+	static NBTTag buildTag(CompoundTag parent, int type, String[] key) {
+		try {
+			for (int i = 0; i < key.length - 1; i++) {
+				parent = parent.getOrCreateCompound(key[i]);
+			}
+			NBTTag tag = NBTTag.createType(type, key[key.length - 1]);
+			parent.set(key[key.length - 1], tag);
+			return tag;
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	void register(Class<?> clazz) {
 		for (Field field : clazz.getDeclaredFields()) {
 			NBT annotation = field.getAnnotation(NBT.class);
@@ -87,33 +114,6 @@ public class AnnotatedNBTHandler {
 					members.add(new NBTReadMethod(key, type, read, this.toHandle, method, nbtParameters));
 				}
 			}
-		}
-	}
-
-	static NBTTag digTag(CompoundTag parent, String[] key, int index) {
-		if (key.length == 0) { return parent; }
-		NBTTag tag = parent.get(key[index]);
-		if (tag == null) { return null; }
-		if (tag.getTypeId() != TagID.TAG_COMPOUND) {
-			if (index != key.length - 1) {
-				throw new IllegalStateException("Found non-compound tag before key end (index " + index + "/" + key.length + ")");
-			}
-			return tag;
-		}
-		if (index == key.length - 1) { return tag; }// Return anything (even compound) if we're at the final index
-		return digTag((CompoundTag) tag, key, index + 1);
-	}
-
-	static NBTTag buildTag(CompoundTag parent, int type, String[] key) {
-		try {
-			for (int i = 0; i < key.length - 1; i++) {
-				parent = parent.getOrCreateCompound(key[i]);
-			}
-			NBTTag tag = NBTTag.createType(type, key[key.length - 1]);
-			parent.set(key[key.length - 1], tag);
-			return tag;
-		} catch (ReflectiveOperationException e) {
-			throw new RuntimeException(e);
 		}
 	}
 

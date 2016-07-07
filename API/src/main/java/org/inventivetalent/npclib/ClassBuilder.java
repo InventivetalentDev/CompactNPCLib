@@ -18,8 +18,8 @@ public class ClassBuilder {
 	protected static Class<?> nmsPlayerInfoData;
 	protected static Class<?> nmsEnumPlayerInfoAction;
 	protected static Class<?> nmsEnumGamemode;
-	static Class<?> generatedChannel;
-	static Class<?> generatedPlayerConnection;
+	static           Class<?> generatedChannel;
+	static           Class<?> generatedPlayerConnection;
 	static Class<?> NetworkManager = Reflection.nmsClassResolver.resolveSilent("NetworkManager");
 
 	//	public static Object buildPacketPlayOutBed(int id, int x, int y, int z) {
@@ -127,9 +127,9 @@ public class ClassBuilder {
 	//		}
 	//		return null;
 	//	}
-	static FieldResolver  NetworkManagerFieldResolver  = new FieldResolver(NetworkManager);
-	static MethodResolver NetworkManagerMethodResolver = new MethodResolver(NetworkManager);
-	private static boolean initialized = false;
+	static         FieldResolver  NetworkManagerFieldResolver  = new FieldResolver(NetworkManager);
+	static         MethodResolver NetworkManagerMethodResolver = new MethodResolver(NetworkManager);
+	private static boolean        initialized                  = false;
 
 	static {
 		try {

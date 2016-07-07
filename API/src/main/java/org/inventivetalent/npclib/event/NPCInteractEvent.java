@@ -34,6 +34,7 @@ import org.inventivetalent.npclib.npc.NPCAbstract;
 
 public class NPCInteractEvent extends NPCEvent implements Cancellable {
 
+	private static HandlerList handlerList = new HandlerList();
 	private int     entityId;
 	private int     actionId;
 	private boolean cancelled;
@@ -42,6 +43,10 @@ public class NPCInteractEvent extends NPCEvent implements Cancellable {
 		super(npc);
 		this.entityId = entityId;
 		this.actionId = actionId;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlerList;
 	}
 
 	public int getEntityId() {
@@ -62,14 +67,8 @@ public class NPCInteractEvent extends NPCEvent implements Cancellable {
 		cancelled = b;
 	}
 
-	private static HandlerList handlerList = new HandlerList();
-
 	@Override
 	public HandlerList getHandlers() {
-		return handlerList;
-	}
-
-	public static HandlerList getHandlerList() {
 		return handlerList;
 	}
 }

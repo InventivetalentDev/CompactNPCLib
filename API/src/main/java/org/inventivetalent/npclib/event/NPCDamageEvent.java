@@ -41,8 +41,8 @@ import javax.annotation.Nullable;
  */
 public class NPCDamageEvent extends NPCEvent implements Cancellable {
 
+	private static HandlerList handlerList = new HandlerList();
 	private boolean cancelled;
-
 	private String                        damageSourceName;
 	private EntityDamageEvent.DamageCause damageCause;
 	private float                         amount;
@@ -55,6 +55,10 @@ public class NPCDamageEvent extends NPCEvent implements Cancellable {
 		this.damageCause = damageCause;
 		this.amount = amount;
 		this.damager = damager;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlerList;
 	}
 
 	/**
@@ -113,14 +117,8 @@ public class NPCDamageEvent extends NPCEvent implements Cancellable {
 		cancelled = b;
 	}
 
-	private static HandlerList handlerList = new HandlerList();
-
 	@Override
 	public HandlerList getHandlers() {
-		return handlerList;
-	}
-
-	public static HandlerList getHandlerList() {
 		return handlerList;
 	}
 }

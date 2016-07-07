@@ -38,6 +38,45 @@ public class NPCRegistry {
 	@Getter final Plugin plugin;
 
 	/**
+	 * Injects the specified NPC classes, so the entities can be loaded properly by the server
+	 *
+	 * @param classes classes to inject
+	 */
+	public static void injectClasses(Class<? extends NPCAbstract>... classes) {
+		for (Class<? extends NPCAbstract> clazz : classes) {
+			if (clazz == null) { continue; }
+			getOrGenerateClass(NPCInfo.of(clazz));
+		}
+	}
+
+	static Class<?> getOrGenerateClass(NPCInfo npcType) {
+		if (generatedClasses.containsKey(npcType)) {
+			return generatedClasses.get(npcType);
+		}
+		ClassPool classPool = ClassPool.getDefault();
+		try {
+			Class generated = ClassGenerator.generateEntityClass(classPool, npcType);
+			generatedClasses.put(npcType, generated);
+			if (npcType.getId() != -1) {
+				injectEntity(generated, npcType.getId(), npcType.getNPCClassName());
+			}// -1 -> special entity, don't inject
+			return generated;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	static void injectEntity(Class<?> clazz, int id, String name) {
+		Class EntityTypes = Reflection.nmsClassResolver.resolveSilent("EntityTypes");
+		FieldResolver fieldResolver = new FieldResolver(EntityTypes);
+
+		((Map) fieldResolver.resolveWrapper("c").get(null)).put(name, clazz);
+		((Map) fieldResolver.resolveWrapper("d").get(null)).put(clazz, name);
+		((Map) fieldResolver.resolveWrapper("f").get(null)).put(clazz, Integer.valueOf(id));
+		NPCLib.logger.info("Injected " + clazz.getSimpleName() + " as " + name + " with id " + id);
+	}
+
+	/**
 	 * Creates and spawns the specified NPC Entity
 	 *
 	 * @param location {@link Location} to spawn the entity at
@@ -108,18 +147,6 @@ public class NPCRegistry {
 		return spawnPlayerNPC(location, npcClass, new GameProfileWrapper(checkNotNull(uuid), name));
 	}
 
-	/**
-	 * Injects the specified NPC classes, so the entities can be loaded properly by the server
-	 *
-	 * @param classes classes to inject
-	 */
-	public static void injectClasses(Class<? extends NPCAbstract>... classes) {
-		for (Class<? extends NPCAbstract> clazz : classes) {
-			if (clazz == null) { continue; }
-			getOrGenerateClass(NPCInfo.of(clazz));
-		}
-	}
-
 	protected <T extends NPCEntity> T createEntity(Location location, NPCInfo npcInfo) {
 		if ("EntityPlayer".equals(npcInfo.getNms())) { throw new IllegalArgumentException("cannot construct EntityPlayer using #createEntity"); }
 
@@ -158,33 +185,6 @@ public class NPCRegistry {
 		npcAbstract.spawn();
 		//noinspection unchecked
 		return (T) npcAbstract;
-	}
-
-	static Class<?> getOrGenerateClass(NPCInfo npcType) {
-		if (generatedClasses.containsKey(npcType)) {
-			return generatedClasses.get(npcType);
-		}
-		ClassPool classPool = ClassPool.getDefault();
-		try {
-			Class generated = ClassGenerator.generateEntityClass(classPool, npcType);
-			generatedClasses.put(npcType, generated);
-			if (npcType.getId() != -1) {
-				injectEntity(generated, npcType.getId(), npcType.getNPCClassName());
-			}// -1 -> special entity, don't inject
-			return generated;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	static void injectEntity(Class<?> clazz, int id, String name) {
-		Class EntityTypes = Reflection.nmsClassResolver.resolveSilent("EntityTypes");
-		FieldResolver fieldResolver = new FieldResolver(EntityTypes);
-
-		((Map) fieldResolver.resolveWrapper("c").get(null)).put(name, clazz);
-		((Map) fieldResolver.resolveWrapper("d").get(null)).put(clazz, name);
-		((Map) fieldResolver.resolveWrapper("f").get(null)).put(clazz, Integer.valueOf(id));
-		NPCLib.logger.info("Injected " + clazz.getSimpleName() + " as " + name + " with id " + id);
 	}
 
 }
