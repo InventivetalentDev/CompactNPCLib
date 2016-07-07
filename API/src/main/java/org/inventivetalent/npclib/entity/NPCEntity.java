@@ -59,4 +59,36 @@ public interface NPCEntity {
 						 + "}")
 	void setPitch(float pitch);
 
+	// mot? accessors
+
+	@ExtraMethod("public void setMotX(double motX) {\n"
+						 + "  this.motX = motX;\n"
+						 + "}")
+	void setMotX(double motX);
+
+	@ExtraMethod("public double getMotX() {"
+						 + "  return this.motX;\n"
+						 + "}")
+	double getMotX();
+
+	@ExtraMethod("public void setMotY(double motY) {\n"
+						 + "  this.motY = motY;\n"
+						 + "}")
+	void setMotY(double motY);
+
+	@ExtraMethod("public double getMotY() {"
+						 + "  return this.motY;\n"
+						 + "}")
+	double getMotY();
+
+	@ExtraMethod("public void setMotZ(double motZ) {\n"
+						 + "  this.motZ = motZ;\n"
+						 + "}")
+	void setMotZ(double motZ);
+
+	@ExtraMethod("public double getMotZ() {"
+						 + "  return this.motZ;\n"
+						 + "}")
+	double getMotZ();
+
 }
