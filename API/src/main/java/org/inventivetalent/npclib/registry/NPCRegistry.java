@@ -44,8 +44,8 @@ public class NPCRegistry {
 	 *
 	 * @param classes classes to inject
 	 */
-	public static void injectClasses(Class<? extends NPCAbstract>... classes) {
-		for (Class<? extends NPCAbstract> clazz : classes) {
+	public static void injectClasses(Class... classes) {
+		for (Class clazz : classes) {
 			if (clazz == null) { continue; }
 			getOrGenerateClass(NPCInfo.of(clazz));
 		}
