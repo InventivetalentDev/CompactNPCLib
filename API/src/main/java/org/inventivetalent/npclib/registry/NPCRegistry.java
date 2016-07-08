@@ -30,7 +30,7 @@ import java.util.*;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
-public class NPCRegistry {
+public class NPCRegistry implements Iterable<NPCAbstract> {
 
 	static final Map<NPCInfo, Class> generatedClasses = new HashMap<>();
 
@@ -195,4 +195,8 @@ public class NPCRegistry {
 		return (T) npcAbstract;
 	}
 
+	@Override
+	public Iterator<NPCAbstract> iterator() {
+		return npcMap.values().iterator();
+	}
 }
