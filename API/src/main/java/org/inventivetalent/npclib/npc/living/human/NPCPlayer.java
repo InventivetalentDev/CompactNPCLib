@@ -23,6 +23,7 @@ import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.SuperSwitch;
 import org.inventivetalent.npclib.annotation.NPC;
 import org.inventivetalent.npclib.entity.living.human.EntityPlayer;
+import org.inventivetalent.npclib.event.NPCDeathEvent;
 import org.inventivetalent.npclib.event.NPCSpawnEvent;
 import org.inventivetalent.npclib.nbt.NBT;
 import org.inventivetalent.reflection.minecraft.Minecraft;
@@ -238,6 +239,15 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		NPCSpawnEvent event = new NPCSpawnEvent(this, CreatureSpawnEvent.SpawnReason.CUSTOM);
 		Bukkit.getPluginManager().callEvent(event);
 		getNpcEntity().spawnPlayer(event.getSpawnReason());
+	}
+
+	@Override
+	public void despawn() {
+		NPCDeathEvent event = new NPCDeathEvent(this, null, null);
+		Bukkit.getPluginManager().callEvent(event);
+		if (event.isCancelled()) { return; }
+		getBukkitEntity().remove();
+		removeOnDeath(new SuperSwitch(SuperSwitch.State.PASS)/*Dummy*/);
 	}
 
 	@Override

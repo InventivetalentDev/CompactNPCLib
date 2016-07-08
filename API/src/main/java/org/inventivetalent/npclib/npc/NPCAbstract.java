@@ -74,6 +74,13 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		getNpcEntity().spawn(event.getSpawnReason());
 	}
 
+	public void despawn() {
+		NPCDeathEvent event = new NPCDeathEvent(this, null, null);
+		Bukkit.getPluginManager().callEvent(event);
+		if (event.isCancelled()) { return; }
+		getBukkitEntity().remove();
+	}
+
 	public <A extends NPCAbstract<N, B>> boolean registerAI(AIAbstract<A> aiAbstract) {
 		return aiList.add(aiAbstract);
 	}
