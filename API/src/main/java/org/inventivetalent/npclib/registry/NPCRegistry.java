@@ -147,6 +147,18 @@ public class NPCRegistry implements Iterable<NPCAbstract> {
 		return spawnPlayerNPC(location, npcClass, new GameProfileWrapper(checkNotNull(uuid), name));
 	}
 
+	public <T extends NPCAbstract> T removeNpc(T npc) {
+		npcMap.remove(checkNotNull(npc).getUniqueId());
+		npc.despawn();
+		return npc;
+	}
+
+	public NPCAbstract removeNpc(UUID uuid) {
+		NPCAbstract npc = npcMap.remove(checkNotNull(uuid));
+		if (npc != null) { npc.despawn(); }
+		return npc;
+	}
+
 	public Collection<NPCAbstract> getNpcs() {
 		return new ArrayList<>(npcMap.values());
 	}
