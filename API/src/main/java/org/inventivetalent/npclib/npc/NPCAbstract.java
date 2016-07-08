@@ -135,7 +135,19 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	@Watch("void move(double,double,double)")
 	public void onMove(ObjectContainer<Double> x, ObjectContainer<Double> y, ObjectContainer<Double> z, SuperSwitch superSwitch) {
-		//TODO: NPCMoveEvent/NPCMotionEvent
+	}
+
+	@Watch("void g(double,double,double)")
+	public void onMotion(ObjectContainer<Double> x, ObjectContainer<Double> y, ObjectContainer<Double> z, SuperSwitch superSwitch) {
+		NPCVelocityEvent event = new NPCVelocityEvent(this, x.value, y.value, z.value);
+		Bukkit.getPluginManager().callEvent(event);
+		if (event.isCancelled()) {
+			superSwitch.setCancelled(true);
+			return;
+		}
+		x.value = event.getX();
+		y.value = event.getY();
+		z.value = event.getZ();
 	}
 
 	@Watch("boolean damageEntity(DamageSource,float)")
