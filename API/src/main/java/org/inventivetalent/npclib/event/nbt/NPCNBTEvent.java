@@ -1,6 +1,7 @@
-package org.inventivetalent.npclib.event;
+package org.inventivetalent.npclib.event.nbt;
 
 import org.inventivetalent.nbt.NBTTag;
+import org.inventivetalent.npclib.event.NPCEvent;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 
 public abstract class NPCNBTEvent extends NPCEvent {

@@ -15,6 +15,8 @@ import org.inventivetalent.npclib.ai.AIAbstract;
 import org.inventivetalent.npclib.annotation.NPCInfo;
 import org.inventivetalent.npclib.entity.NPCEntity;
 import org.inventivetalent.npclib.event.*;
+import org.inventivetalent.npclib.event.nbt.NBTReadEvent;
+import org.inventivetalent.npclib.event.nbt.NBTWriteEvent;
 import org.inventivetalent.npclib.nbt.AnnotatedNBTHandler;
 import org.inventivetalent.npclib.watcher.AnnotatedMethodWatcher;
 import org.inventivetalent.npclib.watcher.Watch;

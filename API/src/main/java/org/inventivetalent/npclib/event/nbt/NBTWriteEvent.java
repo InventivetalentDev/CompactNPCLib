@@ -26,17 +26,17 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib.event;
+package org.inventivetalent.npclib.event.nbt;
 
 import org.bukkit.event.HandlerList;
 import org.inventivetalent.nbt.CompoundTag;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 
-public class NBTReadEvent extends NPCNBTEvent {
+public class NBTWriteEvent extends NPCNBTEvent {
 
 	private static HandlerList handlerList = new HandlerList();
 
-	public NBTReadEvent(NPCAbstract npc, Object nbtTagHandle, CompoundTag nbtTag) {
+	public NBTWriteEvent(NPCAbstract npc, Object nbtTagHandle, CompoundTag nbtTag) {
 		super(npc, nbtTagHandle, nbtTag);
 	}
 
