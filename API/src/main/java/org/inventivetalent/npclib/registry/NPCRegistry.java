@@ -1,6 +1,7 @@
 package org.inventivetalent.npclib.registry;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
 import javassist.ClassPool;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -36,6 +37,7 @@ public class NPCRegistry {
 	static final Map<NPCInfo, Class> generatedClasses = new HashMap<>();
 
 	@Getter final Plugin plugin;
+	private final Map<UUID, NPCAbstract> npcMap = Maps.newHashMap();
 
 	/**
 	 * Injects the specified NPC classes, so the entities can be loaded properly by the server
@@ -182,6 +184,10 @@ public class NPCRegistry {
 		NPCAbstract npcAbstract = entity.getNPC();
 		entity.setNpcInfo(npcInfo);
 		npcAbstract.postInit(this.plugin, location);
+
+		// Register NPC
+		npcMap.put(npcAbstract.getUniqueId(), npcAbstract);
+
 		npcAbstract.spawn();
 		//noinspection unchecked
 		return (T) npcAbstract;
