@@ -22,3 +22,9 @@ Please check the [Wiki](https://github.com/InventivetalentDev/CompactNPCLib/wiki
   <version>VERSION</version>
 </dependency>
 ```
+
+## Contributing
+Please open a new pull request for any feature you think this API could need. 
+Especially for methods you think should be directly available in the NPC classes, without having to call `#getBukkitEntiy` first.  
+
+Please also create pull requests for entities currently not available/added in new Minecraft versions. Refer to the [**Creating custom NPC classes**](https://github.com/InventivetalentDev/CompactNPCLib/wiki/Creating-custom-NPC-classes) Wiki if you need help.
