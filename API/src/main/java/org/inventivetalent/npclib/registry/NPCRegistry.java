@@ -25,9 +25,7 @@ import org.inventivetalent.reflection.resolver.FieldResolver;
 import org.inventivetalent.reflection.resolver.MethodResolver;
 
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -147,6 +145,10 @@ public class NPCRegistry {
 			throw new IllegalArgumentException("UUID and Name cannot both be empty");
 		}
 		return spawnPlayerNPC(location, npcClass, new GameProfileWrapper(checkNotNull(uuid), name));
+	}
+
+	public Collection<NPCAbstract> getNpcs() {
+		return new ArrayList<>(npcMap.values());
 	}
 
 	protected <T extends NPCEntity> T createEntity(Location location, NPCInfo npcInfo) {
