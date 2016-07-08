@@ -70,6 +70,7 @@ public class AnnotatedNBTHandler {
 				String[] key = annotation.value();
 				if (key == null || key.length == 0) { key = new String[] { field.getName() }; }
 				int type = annotation.type();
+				if (type == -1) { type = TagID.forValueClass(field.getType()); }
 				boolean write = annotation.write();
 				boolean read = annotation.read();
 
@@ -90,6 +91,7 @@ public class AnnotatedNBTHandler {
 				boolean read = annotation.read();
 
 				if (method.getParameterTypes().length == 0) {// Method that returns the value to write
+					if (type == -1) { type = TagID.forValueClass(method.getReturnType()); }
 					NPCLib.debug("@NBT annotation on Method", method.getName(), "(", Arrays.toString(key), ") in", clazz.getName());
 					members.add(new NBTWriteMethod(key, type, write, this.toHandle, method));
 				} else {
@@ -101,6 +103,7 @@ public class AnnotatedNBTHandler {
 						if (paramAnnotation == null) { throw new IllegalArgumentException("Missing @NBT parameter annotation for @NBT method " + method.getName()); }
 						String[] paramKey = paramAnnotation.value();
 						int paramType = paramAnnotation.type();
+						if (paramType == -1) { type = TagID.forValueClass(parameter.getType()); }
 						boolean paramRead = paramAnnotation.read();
 
 						// Merge the method key and param key
