@@ -150,6 +150,18 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		z.value = event.getZ();
 	}
 
+	@Watch("void collide(Entity)")
+	public void onCollide(ObjectContainer<Object> entity) {
+		Entity bukkitEntity;
+		try {
+			bukkitEntity = Minecraft.getBukkitEntity(entity);
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
+		NPCCollisionEvent event = new NPCCollisionEvent(this, bukkitEntity);
+		Bukkit.getPluginManager().callEvent(event);
+	}
+
 	@Watch("boolean damageEntity(DamageSource,float)")
 	public Boolean onDamage(ObjectContainer<Object> damageSource, ObjectContainer<Float> amount, SuperSwitch superSwitch) {
 		String sourceName = Reflection.getDamageSourceName(damageSource.value);
