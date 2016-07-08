@@ -30,6 +30,7 @@ import org.inventivetalent.vectors.d3.Vector3DDouble;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
@@ -68,6 +69,10 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		//				.getDeclaredMethod("setLocation", double.class, double.class, double.class, float.class, float.class)
 		//				.invoke(getNpcEntity(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
 		getNpcEntity().setLocation(x, y, z, yaw, pitch);
+	}
+
+	public UUID getUniqueId() {
+		return getBukkitEntity().getUniqueId();
 	}
 
 	public void spawn() {
