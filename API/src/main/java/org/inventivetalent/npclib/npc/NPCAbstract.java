@@ -18,6 +18,7 @@ import org.inventivetalent.npclib.event.*;
 import org.inventivetalent.npclib.event.nbt.NBTReadEvent;
 import org.inventivetalent.npclib.event.nbt.NBTWriteEvent;
 import org.inventivetalent.npclib.nbt.AnnotatedNBTHandler;
+import org.inventivetalent.npclib.nbt.NBT;
 import org.inventivetalent.npclib.watcher.AnnotatedMethodWatcher;
 import org.inventivetalent.npclib.watcher.Watch;
 import org.inventivetalent.reflection.minecraft.Minecraft;
@@ -42,6 +43,10 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	private final List<AIAbstract> aiList = new ArrayList<>();
 	protected String              pluginName;
 	protected AnnotatedNBTHandler nbtHandler;
+
+	@NBT(value = { "npclib.pluginData" },
+		 type = TagID.TAG_COMPOUND)
+	private CompoundTag nbtData = new CompoundTag();
 
 	public NPCAbstract(N npcEntity) {
 		this.npcEntity = npcEntity;
@@ -69,6 +74,10 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		//				.getDeclaredMethod("setLocation", double.class, double.class, double.class, float.class, float.class)
 		//				.invoke(getNpcEntity(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
 		getNpcEntity().setLocation(x, y, z, yaw, pitch);
+	}
+
+	public CompoundTag getNbtData() {
+		return nbtData;
 	}
 
 	public UUID getUniqueId() {
