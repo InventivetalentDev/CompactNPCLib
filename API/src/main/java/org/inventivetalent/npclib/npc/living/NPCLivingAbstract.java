@@ -8,6 +8,7 @@ import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.SuperSwitch;
 import org.inventivetalent.npclib.entity.living.NPCEntityLiving;
 import org.inventivetalent.npclib.event.NPCDeathEvent;
+import org.inventivetalent.npclib.event.path.NPCPathFinishEvent;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.npclib.path.AStarPathfinder;
 import org.inventivetalent.npclib.path.PathfinderAbstract;
@@ -97,8 +98,9 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 		if (this.pathfinder != null) {
 			this.pathfinder.tick();
 			if (this.pathfinder.isFinished()) {
-				//TODO: PathFinishEvent
 				this.pathfinder = null;
+
+				Bukkit.getPluginManager().callEvent(new NPCPathFinishEvent(this));
 			}
 		}
 	}
