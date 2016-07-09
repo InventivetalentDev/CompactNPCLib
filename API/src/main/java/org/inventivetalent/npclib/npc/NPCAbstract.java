@@ -19,6 +19,7 @@ import org.inventivetalent.npclib.entity.NPCEntity;
 import org.inventivetalent.npclib.event.*;
 import org.inventivetalent.npclib.event.nbt.NBTReadEvent;
 import org.inventivetalent.npclib.event.nbt.NBTWriteEvent;
+import org.inventivetalent.npclib.registry.NPCRegistry;
 import org.inventivetalent.npclib.watcher.AnnotatedMethodWatcher;
 import org.inventivetalent.npclib.watcher.Watch;
 import org.inventivetalent.reflection.minecraft.Minecraft;
@@ -69,6 +70,8 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 			this.pluginName = pluginName;
 		}
 		//TODO: Pathfinder
+
+		NPCRegistry.getRegistry(getPlugin()).registerNpc(this);
 
 		//		Reflection.nmsClassResolver.resolve("Entity")
 		//				.getDeclaredMethod("setLocation", double.class, double.class, double.class, float.class, float.class)
@@ -170,7 +173,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	public void onCollide(ObjectContainer<Object> entity) {
 		Entity bukkitEntity;
 		try {
-			bukkitEntity = Minecraft.getBukkitEntity(entity);
+			bukkitEntity = Minecraft.getBukkitEntity(entity.value);
 		} catch (ReflectiveOperationException e) {
 			throw new RuntimeException(e);
 		}
