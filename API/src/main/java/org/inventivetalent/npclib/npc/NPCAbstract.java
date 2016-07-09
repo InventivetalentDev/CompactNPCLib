@@ -1,5 +1,6 @@
 package org.inventivetalent.npclib.npc;
 
+import com.google.common.base.Predicate;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -286,6 +287,32 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		}
 
 		this.nbtHandler.onRead(compoundTag);
+	}
+
+
+	public void updateToPlayer(final Player player) {
+	}
+
+	public void respawnTo(Player player) {
+	}
+
+	public void updateNearby(double radius, Predicate<Player> predicate) {
+		double radiusSquared = radius * radius;
+		for (Player player : getBukkitEntity().getWorld().getPlayers()) {
+			if (player.getLocation().distanceSquared(getBukkitEntity().getLocation()) < radiusSquared) {
+				if (predicate == null || predicate.apply(player)) {
+					updateToPlayer(player);
+				}
+			}
+		}
+	}
+
+	public void updateNearby(double radius) {
+		updateNearby(radius, null);
+	}
+
+	public void updateNearby() {
+		updateNearby(32);
 	}
 
 	public Plugin getPlugin() {
