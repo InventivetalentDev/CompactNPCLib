@@ -87,7 +87,7 @@ public abstract class NPCHumanAbstract<N extends NPCEntityHuman, B extends Human
 		if (getBukkitEntity().isDead()) { return; }
 		super.respawnTo(player);
 		try {
-			sendPacket(player, Reflection.nmsClassResolver.resolve("PacketPlayOutEntityDestroy").getConstructor(int.class).newInstance(getBukkitEntity().getEntityId()));
+			sendPacket(player, Reflection.nmsClassResolver.resolve("PacketPlayOutEntityDestroy").getConstructor(int[].class).newInstance(new int[] { getBukkitEntity().getEntityId() }));
 			sendPacket(player, Reflection.nmsClassResolver.resolve("PacketPlayOutNamedEntitySpawn").getConstructor(Reflection.nmsClassResolver.resolve("EntityHuman")).newInstance(getNpcEntity()));
 		} catch (ReflectiveOperationException e) {
 			throw new RuntimeException(e);
