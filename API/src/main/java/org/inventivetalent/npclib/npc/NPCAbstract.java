@@ -361,4 +361,8 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return getClass().getName() + "(Id:" + getUniqueId() + ",Name:\"" + getBukkitEntity().getName() + "\",Plugin:" + pluginName + ")@" + hashCode();
+	}
 }
