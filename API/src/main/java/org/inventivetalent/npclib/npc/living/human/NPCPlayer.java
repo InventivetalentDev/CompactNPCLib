@@ -198,6 +198,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		super.writeToNBT(compoundTag);
 		CompoundTag playerTag = compoundTag.getOrCreateCompound("npclib.player");
 		playerTag.set("name", getProfile().getName());
+		playerTag.set("uuid", getProfile().getId().toString());
 
 		//		if (this.skinTextureValue != null) {
 		//			CompoundTag skinTextureTag = playerTag.getOrCreateCompound("skinTexture");
@@ -216,7 +217,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
 		CompoundTag playerTag = compoundTag.getCompound("npclib.player");
 		if (playerTag != null) {
-			setName(playerTag.getString("name"));
+			setProfile(new GameProfileWrapper(UUID.fromString(playerTag.getString("uuid")), playerTag.getString("name")));
 
 			//			CompoundTag skinTextureTag = playerTag.getCompound("skinTexture");
 			//			if (skinTextureTag != null) {
