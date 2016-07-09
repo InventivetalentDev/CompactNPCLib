@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
@@ -226,7 +227,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		} catch (ReflectiveOperationException e) {
 			NPCLib.debug(nbtTagCompound.value);
 			NPCLib.debug(compoundTag);
-			throw new RuntimeException("Failed to convert NBTWrite compound for", e);
+			NPCLib.logger.log(Level.SEVERE, "Exception in NBTWrite", e);
 		}
 	}
 
@@ -245,7 +246,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		} catch (ReflectiveOperationException e) {
 			NPCLib.debug(nbtTagCompound.value);
 			NPCLib.debug(compoundTag);
-			throw new RuntimeException("Failed to convert NBTRead compound for " + nbtTagCompound.value, e);
+			NPCLib.logger.log(Level.SEVERE, "Exception in NBTRead", e);
 		}
 	}
 
@@ -288,7 +289,6 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 		this.nbtHandler.onRead(compoundTag);
 	}
-
 
 	public void updateToPlayer(final Player player) {
 	}
