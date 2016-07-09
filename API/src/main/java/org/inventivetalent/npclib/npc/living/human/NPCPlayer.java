@@ -172,6 +172,11 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		refreshScoreboard();
 	}
 
+	@Override
+	public boolean isNameVisible() {
+		return !this.nameHidden;
+	}
+
 	@NBT({
 				 "npclib.options",
 				 "player",

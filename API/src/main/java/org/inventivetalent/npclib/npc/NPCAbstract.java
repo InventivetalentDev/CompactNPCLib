@@ -132,6 +132,10 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		getBukkitEntity().setCustomNameVisible(visible);
 	}
 
+	public boolean isNameVisible() {
+		return getBukkitEntity().isCustomNameVisible();
+	}
+
 	// NPCInfo
 	public NPCType getNpcType() {
 		return NPCType.forEntityType(getNpcEntity().getNpcInfo().getType());
