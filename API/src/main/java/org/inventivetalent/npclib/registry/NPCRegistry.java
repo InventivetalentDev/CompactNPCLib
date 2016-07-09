@@ -173,6 +173,11 @@ public class NPCRegistry implements Iterable<NPCAbstract> {
 		return spawnPlayerNPC(location, npcClass, new GameProfileWrapper(checkNotNull(uuid), name));
 	}
 
+	public void registerNpc(NPCAbstract npc) {
+		NPCLib.debug("Registered", npc, "with", plugin.getName());
+		npcMap.put(npc.getUniqueId(), npc);
+	}
+
 	public <T extends NPCAbstract> T removeNpc(T npc) {
 		npcMap.remove(checkNotNull(npc).getUniqueId());
 		npc.despawn();
@@ -224,10 +229,6 @@ public class NPCRegistry implements Iterable<NPCAbstract> {
 		NPCAbstract npcAbstract = entity.getNPC();
 		entity.setNpcInfo(npcInfo);
 		npcAbstract.postInit(this.plugin, location);
-
-		// Register NPC
-		npcMap.put(npcAbstract.getUniqueId(), npcAbstract);
-
 		npcAbstract.spawn();
 		//noinspection unchecked
 		return (T) npcAbstract;
