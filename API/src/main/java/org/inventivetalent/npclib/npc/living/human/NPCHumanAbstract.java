@@ -16,13 +16,8 @@ public abstract class NPCHumanAbstract<N extends NPCEntityHuman, B extends Human
 
 	@Override
 	public void setSkinLayers(SkinLayer... visibleLayers) {
-		int i = 0;
-		for (SkinLayer l : visibleLayers) {
-			i |= l.getShifted();
-		}
-
 		try {
-			DataWatcher.setValue(Reflection.getDataWatcher(getBukkitEntity()), 10, DataWatcher.V1_9.ValueType.ENTITY_HUMAN_SKIN_LAYERS, (byte) i);
+			DataWatcher.setValue(Reflection.getDataWatcher(getBukkitEntity()), 10, DataWatcher.V1_9.ValueType.ENTITY_HUMAN_SKIN_LAYERS, (byte) SkinLayer.getValue(visibleLayers));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
