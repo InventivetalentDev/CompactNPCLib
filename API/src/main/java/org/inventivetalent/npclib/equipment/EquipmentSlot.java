@@ -26,8 +26,9 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.npclib;
+package org.inventivetalent.npclib.equipment;
 
+import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 
 public enum EquipmentSlot {
