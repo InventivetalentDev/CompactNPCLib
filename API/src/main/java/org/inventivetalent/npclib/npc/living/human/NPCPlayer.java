@@ -2,6 +2,7 @@ package org.inventivetalent.npclib.npc.living.human;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Predicate;
+import com.google.common.base.Strings;
 import com.mojang.authlib.GameProfile;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -85,6 +86,18 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 				 "player",
 				 "nameHidden" })
 	private boolean nameHidden;
+	@NBT({
+				 "npclib.options",
+				 "player",
+				 "scoreboard",
+				 "prefix" })
+	private String  scoreboardPrefix;
+	@NBT({
+				 "npclib.options",
+				 "player",
+				 "scoreboard",
+				 "suffix" })
+	private String  scoreboardSuffix;
 
 	public NPCPlayer(EntityPlayer npcEntity) {
 		super(npcEntity);
@@ -123,15 +136,20 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	}
 
 	public void refreshScoreboard() {
-		for (String entry : getScoreboardTeam().getEntries()) {
-			getScoreboardTeam().removeEntry(entry);
+		Team team = getScoreboardTeam();
+
+		for (String entry : team.getEntries()) {
+			team.removeEntry(entry);
 		}
-		getScoreboardTeam().addEntry(getBukkitEntity().getName());
+		team.addEntry(getBukkitEntity().getName());
+
+		team.setPrefix(Strings.nullToEmpty(scoreboardPrefix));
+		team.setSuffix(Strings.nullToEmpty(scoreboardSuffix));
 
 		if (nameHidden) {
-			getScoreboardTeam().setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+			team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
 		} else {
-			getScoreboardTeam().setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
+			team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
 		}
 	}
 
@@ -163,6 +181,22 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		GameProfileWrapper profile = new GameProfileWrapper(getProfile().getId(), name);
 		profile.getProperties().putAll(getProfile().getProperties());
 		setProfile(profile);
+	}
+
+	public void setNamePrefix(String prefix) {
+		if (prefix.length() > 32) {
+			throw new IllegalArgumentException("Maximum prefix length is 32");
+		}
+		this.scoreboardPrefix = prefix;
+		refreshScoreboard();
+	}
+
+	public void setNameSuffix(String suffix) {
+		if (suffix.length() > 32) {
+			throw new IllegalArgumentException("Maximum suffix length is 32");
+		}
+		this.scoreboardSuffix = suffix;
+		refreshScoreboard();
 	}
 
 	@Override
