@@ -34,6 +34,7 @@ import org.inventivetalent.reflection.resolver.ResolverQuery;
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.UUID;
 
 @NPC(id = 1337,
@@ -252,7 +253,9 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 					@Override
 					public void run() {
 						GameProfileWrapper profile = SkinLoader.loadSkin(skinOwner);
-						PropertyWrapper property = profile.getProperties().values().iterator().next();
+						Collection<PropertyWrapper> values = profile.getProperties().values();
+						if (values.isEmpty()) { return; }
+						PropertyWrapper property = values.iterator().next();
 						setSkinTexture(property.getValue(), property.getSignature());
 					}
 				});
