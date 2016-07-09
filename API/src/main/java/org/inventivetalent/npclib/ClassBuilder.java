@@ -22,61 +22,69 @@ public class ClassBuilder {
 	static           Class<?> generatedPlayerConnection;
 	static Class<?> NetworkManager = Reflection.nmsClassResolver.resolveSilent("NetworkManager");
 
-	//	public static Object buildPacketPlayOutBed(int id, int x, int y, int z) {
-	//		try {
-	//			Object bedPacket = NMSClass.nmsPacketPlayOutBed.newInstance();
-	//			AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("a")).set(bedPacket, id);
-	//			if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_8_R1)) {
-	//				AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("b")).set(bedPacket, x);
-	//				AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("c")).set(bedPacket, y);
-	//				AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("d")).set(bedPacket, z);
-	//			} else {
-	//				AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutBed.getDeclaredField("b")).set(bedPacket, Reflection.getNMSClass("BlockPosition").getConstructor(int.class, int.class, int.class).newInstance(x, y, z));
-	//			}
-	//			return bedPacket;
-	//		} catch (Exception e) {
-	//			e.printStackTrace();
-	//		}
-	//		return null;
-	//	}
-	//
-	//	public static Object buildPacketPlayOutAnimation(int entID, int animID) {
-	//		try {
-	//			Object animationPacket = NMSClass.nmsPacketPlayOutAnimation.newInstance();
-	//			AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutAnimation.getDeclaredField("a")).set(animationPacket, entID);
-	//			AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutAnimation.getDeclaredField("b")).set(animationPacket, animID);
-	//
-	//			return animationPacket;
-	//		} catch (Exception e) {
-	//			e.printStackTrace();
-	//		}
-	//		return null;
-	//	}
-	//
-	//	public static Object buildPacketPlayOutEntityTeleport(int id, double x, double y, double z, float yaw, float pitch, boolean onGround, boolean heightCorrection) {
-	//		try {
-	//			Object teleportPacket;
-	//			if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_8_R1)) {
-	//				teleportPacket = NMSClass.nmsPacketPlayOutEntityTeleport.getConstructor(int.class, int.class, int.class, int.class, byte.class, byte.class, boolean.class, boolean.class).newInstance(id, MathUtil.floor(x * 32.0D), MathUtil.floor(y * 32.0D), MathUtil.floor(z * 32.0D), (byte) (int) (yaw * 256F / 360F), (byte) (int) (pitch * 256F / 360F), onGround, heightCorrection);
-	//			} else if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_9_R1)) {
-	//				teleportPacket = NMSClass.nmsPacketPlayOutEntityTeleport.getConstructor(int.class, int.class, int.class, int.class, byte.class, byte.class, boolean.class).newInstance(id, MathUtil.floor(x * 32.0D), MathUtil.floor(y * 32.0D), MathUtil.floor(z * 32.0D), (byte) (int) (yaw * 256F / 360F), (byte) (int) (pitch * 256F / 360F), onGround);
-	//			} else {
-	//				teleportPacket = NMSClass.nmsPacketPlayOutEntityTeleport.newInstance();
-	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("a")).set(teleportPacket, id);
-	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("b")).set(teleportPacket, x);
-	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("c")).set(teleportPacket, y);
-	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("d")).set(teleportPacket, z);
-	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("e")).set(teleportPacket, (byte) (int) (yaw * 256F / 360F));
-	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("f")).set(teleportPacket, (byte) (int) (pitch * 256F / 360F));
-	//				org.inventivetalent.reflection.util.AccessUtil.setAccessible(NMSClass.nmsPacketPlayOutEntityTeleport.getDeclaredField("g")).set(teleportPacket, onGround);
-	//			}
-	//
-	//			return teleportPacket;
-	//		} catch (Exception e) {
-	//			e.printStackTrace();
-	//		}
-	//		return null;
-	//	}
+	public static Object buildPacketPlayOutBed(int id, int x, int y, int z) {
+		try {
+			Class packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutBed");
+			Object bedPacket = packetClass.newInstance();
+			AccessUtil.setAccessible(packetClass.getDeclaredField("a")).set(bedPacket, id);
+			if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_8_R1)) {
+				AccessUtil.setAccessible(packetClass.getDeclaredField("b")).set(bedPacket, x);
+				AccessUtil.setAccessible(packetClass.getDeclaredField("c")).set(bedPacket, y);
+				AccessUtil.setAccessible(packetClass.getDeclaredField("d")).set(bedPacket, z);
+			} else {
+				AccessUtil.setAccessible(packetClass.getDeclaredField("b")).set(bedPacket, Reflection.nmsClassResolver.resolve("BlockPosition").getConstructor(int.class, int.class, int.class).newInstance(x, y, z));
+			}
+			return bedPacket;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static Object buildPacketPlayOutAnimation(int entID, int animID) {
+		try {
+			Class packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutAnimation");
+			Object animationPacket = packetClass.newInstance();
+			AccessUtil.setAccessible(packetClass.getDeclaredField("a")).set(animationPacket, entID);
+			AccessUtil.setAccessible(packetClass.getDeclaredField("b")).set(animationPacket, animID);
+
+			return animationPacket;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static Object buildPacketPlayOutEntityTeleport(int id, double x, double y, double z, float yaw, float pitch, boolean onGround, boolean heightCorrection) {
+		try {
+			Class packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutEntityTeleport");
+			Object teleportPacket;
+			if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_8_R1)) {
+				teleportPacket = packetClass.getConstructor(int.class, int.class, int.class, int.class, byte.class, byte.class, boolean.class, boolean.class)
+						.newInstance(id, floor(x * 32.0D), floor(y * 32.0D), floor(z * 32.0D), (byte) (int) (yaw * 256F / 360F), (byte) (int) (pitch * 256F / 360F), onGround, heightCorrection);
+			} else if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_9_R1)) {
+				teleportPacket = packetClass.getConstructor(int.class, int.class, int.class, int.class, byte.class, byte.class, boolean.class)
+						.newInstance(id, floor(x * 32.0D), floor(y * 32.0D), floor(z * 32.0D), (byte) (int) (yaw * 256F / 360F), (byte) (int) (pitch * 256F / 360F), onGround);
+			} else {
+				teleportPacket = packetClass.newInstance();
+				AccessUtil.setAccessible(packetClass.getDeclaredField("a")).set(teleportPacket, id);
+				AccessUtil.setAccessible(packetClass.getDeclaredField("b")).set(teleportPacket, x);
+				AccessUtil.setAccessible(packetClass.getDeclaredField("c")).set(teleportPacket, y);
+				AccessUtil.setAccessible(packetClass.getDeclaredField("d")).set(teleportPacket, z);
+				AccessUtil.setAccessible(packetClass.getDeclaredField("e")).set(teleportPacket, (byte) (int) (yaw * 256F / 360F));
+				AccessUtil.setAccessible(packetClass.getDeclaredField("f")).set(teleportPacket, (byte) (int) (pitch * 256F / 360F));
+				AccessUtil.setAccessible(packetClass.getDeclaredField("g")).set(teleportPacket, onGround);
+			}
+
+			return teleportPacket;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static int floor(double d1) {
+		int i = (int) d1;
+		return d1 >= i ? i : i - 1;
+	}
+
 	static Class<?> PacketListener = Reflection.nmsClassResolver.resolveSilent("PacketListener");
 	//
 	//	public static Object buildWatchableObject(int type, int index, Object value) throws Exception {
