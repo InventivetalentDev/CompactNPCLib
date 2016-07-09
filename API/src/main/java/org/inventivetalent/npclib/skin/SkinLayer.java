@@ -1,5 +1,9 @@
 package org.inventivetalent.npclib.skin;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public enum SkinLayer {
 
 	CAPE(0),
@@ -33,6 +37,34 @@ public enum SkinLayer {
 
 	public int getShifted() {
 		return this.shifted;
+	}
+
+	public boolean isActive(int value) {
+		return (value & getShifted()) == getShifted();
+	}
+
+	public static int getValue(Iterable<SkinLayer> active) {
+		int i = 0;
+		for (SkinLayer layer : active) {
+			i |= layer.getShifted();
+		}
+		return i;
+	}
+
+	public static int getValue(SkinLayer[] active) {
+		int i = 0;
+		for (SkinLayer layer : active) {
+			i |= layer.getShifted();
+		}
+		return i;
+	}
+
+	public static Collection<SkinLayer> getLayers(int value) {
+		List<SkinLayer> layers = new ArrayList<>();
+		for (SkinLayer layer : values()) {
+			if (layer.isActive(value)) { layers.add(layer); }
+		}
+		return layers;
 	}
 
 }
