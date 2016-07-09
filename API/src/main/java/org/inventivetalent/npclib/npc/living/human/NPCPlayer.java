@@ -113,7 +113,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	}
 
 	protected Team getScoreboardTeam() {
-		String name = "NPC_" + getBukkitEntity().getUniqueId().toString().substring(0, 12);
+		String name = getBukkitEntity().getUniqueId().toString().replace("-", "").substring(0, 16);
 		Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 		Team team = scoreboard.getTeam(name);
 		if (team == null) {
