@@ -69,7 +69,7 @@ public class SpawnCommands {
 		if (!"none".equals(skin)) {
 			npc.setSkin(skin);
 		}
-		npc.setSkinLayers(SkinLayer.HAT);
+		npc.setSkinLayers(SkinLayer.ALL);
 		sender.sendMessage("§aNPC spawned at §7" + location.getWorld().getName() + "," + location.getX() + "," + location.getY() + "," + location.getZ());
 	}
 
