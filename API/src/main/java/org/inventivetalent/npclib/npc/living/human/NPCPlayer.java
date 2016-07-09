@@ -297,7 +297,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 						}
 					}
 				}
-			}.runTaskLater(getPlugin(), 10);
+			}.runTaskLater(getPlugin(), 20);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
