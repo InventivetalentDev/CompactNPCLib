@@ -10,10 +10,19 @@ public enum SkinLayer {
 	RIGHT_PANTS_LEG(5),
 	HAT(6);
 
+	public static final SkinLayer[] ALL = new SkinLayer[] {
+			CAPE,
+			JACKET,
+			LEFT_SLEEVE,
+			RIGHT_SLEEVE,
+			LEFT_PANTS_LEG,
+			RIGHT_PANTS_LEG,
+			HAT };
+
 	private final int id;
 	private final int shifted;
 
-	private SkinLayer(int id) {
+	SkinLayer(int id) {
 		this.id = id;
 		this.shifted = 1 << id;
 	}
