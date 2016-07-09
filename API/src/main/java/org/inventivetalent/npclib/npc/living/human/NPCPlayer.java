@@ -3,9 +3,6 @@ package org.inventivetalent.npclib.npc.living.human;
 import com.google.common.base.Charsets;
 import com.google.common.base.Predicate;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.server.v1_10_R1.EntityHuman;
-import net.minecraft.server.v1_10_R1.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_10_R1.PacketPlayOutNamedEntitySpawn;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.EntityType;
@@ -303,15 +300,11 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		}
 	}
 
+	@Override
 	public void updateToPlayer(final Player player) {
 		if (getBukkitEntity().isDead()) { return; }
+		super.updateToPlayer(player);
 		this.updatePlayerList(player);
-	}
-
-	public void respawnTo(Player player) {
-		if (getBukkitEntity().isDead()) { return; }
-		sendPacket(player, new PacketPlayOutEntityDestroy(getBukkitEntity().getEntityId()));
-		sendPacket(player, new PacketPlayOutNamedEntitySpawn((EntityHuman) getNpcEntity()));
 	}
 
 	public void updateNearby(double radius, Predicate<Player> predicate) {
