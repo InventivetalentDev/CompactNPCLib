@@ -9,6 +9,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
 import org.inventivetalent.mcwrapper.auth.properties.PropertyWrapper;
 import org.inventivetalent.nbt.CompoundTag;
@@ -78,6 +80,11 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 			"showInList" },
 		 type = TagID.TAG_BYTE)
 	private boolean showInList;
+	@NBT({
+				 "npclib.options",
+				 "player",
+				 "nameHidden" })
+	private boolean nameHidden;
 
 	public NPCPlayer(EntityPlayer npcEntity) {
 		super(npcEntity);
@@ -102,6 +109,30 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
 		super.postInit(pluginName, x, y, z, yaw, pitch);
 		//TODO: figure out a way to remove fake players from the player list without breaking everything
+
+	}
+
+	protected Team getScoreboardTeam() {
+		String name = "NPC_" + getBukkitEntity().getUniqueId().toString().substring(0, 12);
+		Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+		Team team = scoreboard.getTeam(name);
+		if (team == null) {
+			team = scoreboard.registerNewTeam(name);
+		}
+		return team;
+	}
+
+	public void refreshScoreboard() {
+		for (String entry : getScoreboardTeam().getEntries()) {
+			getScoreboardTeam().removeEntry(entry);
+		}
+		getScoreboardTeam().addEntry(getBukkitEntity().getName());
+
+		if (nameHidden) {
+			getScoreboardTeam().setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+		} else {
+			getScoreboardTeam().setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
+		}
 	}
 
 	public GameProfileWrapper getProfile() {
@@ -122,6 +153,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		} catch (ReflectiveOperationException e) {
 			throw new RuntimeException(e);
 		}
+		refreshScoreboard();
 	}
 
 	public void setName(String name) {
@@ -131,6 +163,13 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		GameProfileWrapper profile = new GameProfileWrapper(getProfile().getId(), name);
 		profile.getProperties().putAll(getProfile().getProperties());
 		setProfile(profile);
+	}
+
+	@Override
+	public void setNameVisible(boolean visible) {
+		super.setNameVisible(visible);
+		this.nameHidden = !visible;
+		refreshScoreboard();
 	}
 
 	@NBT({
