@@ -213,8 +213,6 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 
 	@Override
 	public void readFromNBT(CompoundTag compoundTag) {
-		super.readFromNBT(compoundTag);
-
 		CompoundTag playerTag = compoundTag.getCompound("npclib.player");
 		if (playerTag != null) {
 			setProfile(new GameProfileWrapper(UUID.fromString(playerTag.getString("uuid")), playerTag.getString("name")));
@@ -224,6 +222,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 			//				setSkinTexture(skinTextureTag.getString("value"), skinTextureTag.getString("signature"));
 			//			}
 		}
+		super.readFromNBT(compoundTag);
 
 		//		CompoundTag optionsTag = compoundTag.getCompound("npclib.options");
 		//		if (optionsTag != null) {
