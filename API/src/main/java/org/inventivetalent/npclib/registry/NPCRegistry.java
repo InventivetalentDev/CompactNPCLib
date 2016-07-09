@@ -3,9 +3,6 @@ package org.inventivetalent.npclib.registry;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import javassist.ClassPool;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
@@ -29,13 +26,38 @@ import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 public class NPCRegistry implements Iterable<NPCAbstract> {
 
 	static final Map<NPCInfo, Class> generatedClasses = new HashMap<>();
 
-	@Getter final Plugin plugin;
+	private static final Map<String, NPCRegistry> registryMap = new HashMap<>();
+
+	private final Plugin plugin;
 	private final Map<UUID, NPCAbstract> npcMap = Maps.newHashMap();
+
+	public NPCRegistry(Plugin plugin) {
+		this.plugin = plugin;
+		if (registryMap.containsKey(plugin.getName())) {
+			throw new IllegalArgumentException("Registry for '" + plugin.getName() + "' already exists");
+		}
+		registryMap.put(plugin.getName(), this);
+	}
+
+	public void destroy(boolean removeNpcs) {
+		if (!registryMap.containsKey(plugin.getName())) {
+			throw new IllegalStateException("Already destroyed");
+		}
+		if (removeNpcs) {
+			for (UUID uuid : npcMap.keySet()) {
+				removeNpc(uuid);
+			}
+		}
+		registryMap.remove(plugin.getName());
+	}
+
+	public void destroy() {
+		destroy(true);
+	}
 
 	/**
 	 * Injects the specified NPC classes, so the entities can be loaded properly by the server
