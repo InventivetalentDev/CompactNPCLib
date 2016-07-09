@@ -220,6 +220,10 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		}
 	}
 
+	public String getFullName() {
+		return Strings.nullToEmpty(this.scoreboardPrefix) + getProfile().getName() + Strings.nullToEmpty(this.scoreboardSuffix);
+	}
+
 	String optionalSubstring(String string, int start, int end) {
 		return StringUtils.substring(string, start, end);
 	}
