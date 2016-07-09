@@ -24,4 +24,9 @@ public class SkinLayerTest {
 		assertTrue(layers.contains(SkinLayer.RIGHT_PANTS_LEG));
 	}
 
+	@Test
+	public void allTest() {
+		assertEquals(127, SkinLayer.getValue(SkinLayer.ALL));
+	}
+
 }
