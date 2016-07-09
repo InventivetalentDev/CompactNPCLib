@@ -59,6 +59,10 @@ public class NPCRegistry implements Iterable<NPCAbstract> {
 		destroy(true);
 	}
 
+	public static NPCRegistry getRegistry(Plugin plugin) {
+		return registryMap.get(plugin.getName());
+	}
+
 	/**
 	 * Injects the specified NPC classes, so the entities can be loaded properly by the server
 	 *
