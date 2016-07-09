@@ -11,16 +11,18 @@ Please check the [Wiki](https://github.com/InventivetalentDev/CompactNPCLib/wiki
 ## Maven
 ```xml
 <repositories>
-	<repository>
-		<id>inventive-repo</id>
-		<url>https://repo.inventivetalent.org/content/groups/public/</url>
-	</repository>
+    <repository>
+        <id>inventive-repo</id>
+        <url>https://repo.inventivetalent.org/content/groups/public/</url>
+    </repository>
 </repositories>
-<dependency>
-  <groupId>org.inventivetalent.npc-lib</groupId>
-  <artifactId>api</artifactId>
-  <version>VERSION</version>
-</dependency>
+<dependencies>
+    <dependency>
+        <groupId>org.inventivetalent.npc-lib</groupId>
+        <artifactId>api</artifactId>
+        <version>VERSION</version>
+    </dependency>
+</dependencies>
 ```
 
 ## Contributing
