@@ -271,7 +271,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 				@Override
 				public void run() {
 					try {
-						Reflection.nmsClassResolver.resolve("World").getDeclaredMethod("removeEntity").invoke(Minecraft.getHandle(getBukkitEntity().getWorld()), getNpcEntity());
+						Reflection.nmsClassResolver.resolve("World").getDeclaredMethod("removeEntity", Reflection.nmsClassResolver.resolve("Entity")).invoke(Minecraft.getHandle(getBukkitEntity().getWorld()), getNpcEntity());
 					} catch (Exception e) {
 						throw new RuntimeException(e);
 					}
