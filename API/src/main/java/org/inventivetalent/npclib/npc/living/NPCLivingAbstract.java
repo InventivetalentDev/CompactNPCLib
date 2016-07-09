@@ -1,8 +1,12 @@
 package org.inventivetalent.npclib.npc.living;
 
+import com.google.common.base.Predicate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
+import org.inventivetalent.npclib.EquipmentSlot;
 import org.inventivetalent.npclib.ObjectContainer;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.SuperSwitch;
@@ -13,10 +17,14 @@ import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.npclib.path.AStarPathfinder;
 import org.inventivetalent.npclib.path.PathfinderAbstract;
 import org.inventivetalent.npclib.watcher.Watch;
+import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.FieldResolver;
 import org.inventivetalent.reflection.resolver.MethodResolver;
 import org.inventivetalent.reflection.resolver.ResolverQuery;
 import org.inventivetalent.vectors.d3.Vector3DDouble;
+
+import javax.annotation.Nullable;
+import java.lang.reflect.Constructor;
 
 public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends LivingEntity> extends NPCAbstract<N, B> {
 
@@ -116,6 +124,48 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 		try {
 			entityLivingMethodResolver.resolve(new ResolverQuery("g", float.class, float.class)).invoke(getNpcEntity(), strafeMotion, forwardMotion);
 		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void refreshEquipment() {
+		if (Minecraft.VERSION.newerThan(Minecraft.Version.v1_9_R1)) {
+			refreshSlot(EquipmentSlot.MAIN_HAND, getBukkitEntity().getEquipment().getItemInMainHand());
+			refreshSlot(EquipmentSlot.OFF_HAND, getBukkitEntity().getEquipment().getItemInOffHand());
+		} else {
+			refreshSlot(EquipmentSlot.HAND, getBukkitEntity().getEquipment().getItemInHand());
+		}
+		refreshSlot(EquipmentSlot.HEAD, getBukkitEntity().getEquipment().getHelmet());
+		refreshSlot(EquipmentSlot.CHEST, getBukkitEntity().getEquipment().getChestplate());
+		refreshSlot(EquipmentSlot.LEGS, getBukkitEntity().getEquipment().getLeggings());
+		refreshSlot(EquipmentSlot.FEET, getBukkitEntity().getEquipment().getBoots());
+	}
+
+	protected void refreshSlot(EquipmentSlot slot, ItemStack itemStack) {
+		try {
+			Object nmsItemStack = Reflection.obcClassResolver.resolve("inventory.CraftItemStack").getMethod("asNMSCopy", ItemStack.class).invoke(null, itemStack);
+			Object nmsSlot = slot.toNMS();
+			if (nmsSlot == null) { return; }
+
+			Class packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutEntityEquipment");
+			Class itemClass = Reflection.nmsClassResolver.resolve("ItemStack");
+			Constructor constructor;
+			if (Minecraft.VERSION.newerThan(Minecraft.Version.v1_9_R1)) {
+				constructor = packetClass.getConstructor(int.class, Reflection.nmsClassResolver.resolve("EnumItemSlot"), itemClass);
+			} else if (Minecraft.VERSION.newerThan(Minecraft.Version.v1_8_R1)) {
+				constructor = packetClass.getConstructor(int.class, int.class, itemClass);
+			} else {
+				return;
+			}
+			final Object packet = constructor.newInstance(getBukkitEntity().getEntityId(), nmsSlot, nmsItemStack);
+			updateNearby(32, new Predicate<Player>() {
+				@Override
+				public boolean apply(@Nullable Player player) {
+					sendPacket(player, packet);
+					return false;
+				}
+			});
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
