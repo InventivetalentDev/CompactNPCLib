@@ -81,8 +81,8 @@ public class NPCLib implements API {
 		for (int i = 0; i < classes.length; ) {
 			if (NPCType.values()[i].isAvailable()) {
 				classes[i] = NPCType.values()[i].getNpcClass();
-				i++;
 			}
+			i++;
 		}
 		NPCRegistry.injectClasses(classes);
 		long end = System.currentTimeMillis();
