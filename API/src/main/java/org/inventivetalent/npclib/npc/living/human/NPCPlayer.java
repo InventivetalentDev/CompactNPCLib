@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
 import com.mojang.authlib.GameProfile;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.EntityType;
@@ -198,6 +199,29 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		}
 		this.scoreboardSuffix = suffix;
 		refreshScoreboard();
+	}
+
+	public void setFullName(String fullName) {
+		if (fullName.length() > 48) {
+			throw new IllegalArgumentException("Maximum full name length is 48 (16 + 16 + 16)");
+		}
+		if (fullName.length() < 16) {// Name is short enough to work without prefix/suffix
+			this.scoreboardPrefix = null;
+			this.scoreboardSuffix = null;
+			setName(fullName);
+		} else if (fullName.length() < 32) {// Only needs prefix
+			this.scoreboardSuffix = null;
+			this.scoreboardPrefix = optionalSubstring(fullName, 0, 16);
+			setName(optionalSubstring(fullName, 16, 32));
+		} else {
+			this.scoreboardPrefix = optionalSubstring(fullName, 0, 16);
+			this.scoreboardSuffix = optionalSubstring(fullName, 32, 48);
+			setName(optionalSubstring(fullName, 16, 32));
+		}
+	}
+
+	String optionalSubstring(String string, int start, int end) {
+		return StringUtils.substring(string, start, end);
 	}
 
 	@Override
