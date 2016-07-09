@@ -185,16 +185,16 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	}
 
 	public void setNamePrefix(String prefix) {
-		if (prefix.length() > 32) {
-			throw new IllegalArgumentException("Maximum prefix length is 32");
+		if (prefix.length() > 16) {
+			throw new IllegalArgumentException("Maximum prefix length is 16");
 		}
 		this.scoreboardPrefix = prefix;
 		refreshScoreboard();
 	}
 
 	public void setNameSuffix(String suffix) {
-		if (suffix.length() > 32) {
-			throw new IllegalArgumentException("Maximum suffix length is 32");
+		if (suffix.length() > 16) {
+			throw new IllegalArgumentException("Maximum suffix length is 16");
 		}
 		this.scoreboardSuffix = suffix;
 		refreshScoreboard();
