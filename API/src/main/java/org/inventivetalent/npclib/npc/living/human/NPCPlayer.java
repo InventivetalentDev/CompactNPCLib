@@ -11,6 +11,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.NameTagVisibility;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 import org.inventivetalent.mcwrapper.auth.GameProfileWrapper;
@@ -149,9 +150,11 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		team.setSuffix(Strings.nullToEmpty(scoreboardSuffix));
 
 		if (nameHidden) {
-			team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+//			team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+			team.setNameTagVisibility(NameTagVisibility.NEVER);
 		} else {
-			team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
+//			team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
+			team.setNameTagVisibility(NameTagVisibility.ALWAYS);
 		}
 	}
 
