@@ -165,8 +165,10 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 			if (uuid == null) {
 				uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + profile.getName()).getBytes(Charsets.UTF_8));
 			}
-			Method method = new MethodResolver(Reflection.nmsClassResolver.resolve("Entity")).resolve(new ResolverQuery("a", UUID.class));
-			method.invoke(getNpcEntity(), uuid);
+			if (Minecraft.VERSION.newerThan(Minecraft.Version.v1_9_R1)) {
+				Method method = new MethodResolver(Reflection.nmsClassResolver.resolve("Entity")).resolve(new ResolverQuery("a", UUID.class));
+				method.invoke(getNpcEntity(), uuid);
+			}
 
 			Field field = new FieldResolver(Reflection.nmsClassResolver.resolve("EntityHuman")).resolveByFirstType(GameProfile.class);
 			field.set(getNpcEntity(), profile.getHandle());
