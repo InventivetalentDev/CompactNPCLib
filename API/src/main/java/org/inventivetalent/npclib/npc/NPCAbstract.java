@@ -15,6 +15,7 @@ import org.inventivetalent.nbt.annotation.AnnotatedNBTHandler;
 import org.inventivetalent.nbt.annotation.NBT;
 import org.inventivetalent.npclib.*;
 import org.inventivetalent.npclib.ai.AIAbstract;
+import org.inventivetalent.npclib.animation.Animation;
 import org.inventivetalent.npclib.annotation.NPCInfo;
 import org.inventivetalent.npclib.entity.NPCEntity;
 import org.inventivetalent.npclib.event.*;
@@ -144,6 +145,19 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	public boolean isPersistent() {
 		return persistent;
+	}
+
+	public void playAnimation(Animation animation, Player player) {
+		switch (animation.getType()) {
+			case ANIMATION:
+				sendPacket(player, ClassBuilder.buildPacketPlayOutAnimation(getBukkitEntity().getEntityId(), animation.getId()));
+				break;
+			case  STATUS:
+				sendPacket(player, ClassBuilder.buildPacketPlayOutEntityStatus(getBukkitEntity().getEntityId(),(byte) animation.getId()));
+				break;
+			default:
+				throw new IllegalArgumentException("invalid animation type");
+		}
 	}
 
 	// NPCInfo
