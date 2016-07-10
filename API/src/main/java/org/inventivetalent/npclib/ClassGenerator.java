@@ -158,10 +158,13 @@ public class ClassGenerator {
 			generated.addMethod(override);
 		}
 
-		try {
-			generated.writeFile("generated");
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (NPCLib.debug) {
+			NPCLib.debug("Writing class", generated.getName(), "to /generated/");
+			try {
+				generated.writeFile("generated");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return generated.toClass(NPCEntity.class.getClassLoader(), NPCEntity.class.getProtectionDomain());
 	}
