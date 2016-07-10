@@ -51,6 +51,8 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		 type = TagID.TAG_COMPOUND)
 	private CompoundTag nbtData = new CompoundTag();
 
+	private boolean persistent = true;
+
 	public NPCAbstract(N npcEntity) {
 		this.npcEntity = npcEntity;
 		this.npcEntityFieldResolver = new FieldResolver(npcEntity.getClass());
@@ -134,6 +136,14 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	public boolean isNameVisible() {
 		return getBukkitEntity().isCustomNameVisible();
+	}
+
+	public void setPersistent(boolean persistent) {
+		this.persistent = persistent;
+	}
+
+	public boolean isPersistent() {
+		return persistent;
 	}
 
 	// NPCInfo
@@ -255,6 +265,10 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	public void writeToNBT(CompoundTag compoundTag) {
+		if (!isPersistent()) {
+			compoundTag.set("id", "non-persistent-npc");// Change the ID, so the server doesn't load it with the world
+		}
+
 		NPCType npcType = getNpcType();
 		compoundTag.set("npclib.type", npcType.name());
 		compoundTag.set("npclib.class", getNpcEntity().getNpcInfo().getNpcClass().getName());
