@@ -53,6 +53,19 @@ public class ClassBuilder {
 		}
 	}
 
+	public static Object buildPacketPlayOutEntityStatus(int entityId, byte animationId) {
+		try {
+			Class packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutEntityStatus");
+			Object animationPacket = packetClass.newInstance();
+			AccessUtil.setAccessible(packetClass.getDeclaredField("a")).set(animationPacket, entityId);
+			AccessUtil.setAccessible(packetClass.getDeclaredField("b")).set(animationPacket, animationId);
+
+			return animationPacket;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	public static Object buildPacketPlayOutEntityTeleport(int id, double x, double y, double z, float yaw, float pitch, boolean onGround, boolean heightCorrection) {
 		try {
 			Class packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutEntityTeleport");
