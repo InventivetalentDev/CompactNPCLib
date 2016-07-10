@@ -20,6 +20,14 @@ public class NPCLibPlugin extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable() {
+		if (!Bukkit.getPluginManager().isPluginEnabled("PacketListenerAPI")) {
+			getLogger().severe("Please install PacketListenerAPI: http://www.spigotmc.org/resources/2930/");
+			throw new RuntimeException("PacketListenerAPI not installed");
+		}
+		if (!Bukkit.getPluginManager().isPluginEnabled("NickNamer")) {
+			getLogger().warning("Please install NickNamer for proper skin support: http://www.spigotmc.org/resources/5341/");
+		}
+
 		saveDefaultConfig();
 
 		NPCLib.logger = getLogger();
