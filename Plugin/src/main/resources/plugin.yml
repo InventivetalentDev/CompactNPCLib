@@ -4,4 +4,5 @@ author: inventivetalent
 version: ${project.version}
 
 load: STARTUP
-softdepend: [PacketListenerApi, NickNamer]
+depend: [PacketListenerApi]
+softdepend: [NickNamer]
