@@ -75,6 +75,7 @@
                                     <include>org.inventivetalent:apimanager**</include>
                                     <include>org.inventivetalent:nbt-lib**</include>
                                     <inclide>org.inventivetalent:mcstats-apimanager**</inclide>
+                                    <include>org.inventivetalent:eventcallbacks**</include>
                                     <include>org.javassist:**</include>
                                 </includes>
                             </artifactSet>
@@ -104,7 +105,11 @@
             <optional>true</optional>
         </dependency>
 
-
+        <dependency>
+            <groupId>org.inventivetalent</groupId>
+            <artifactId>eventcallbacks</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>

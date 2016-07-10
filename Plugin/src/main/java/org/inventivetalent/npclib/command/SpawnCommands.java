@@ -6,8 +6,14 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.inventivetalent.eventcallbacks.EventCallbacks;
+import org.inventivetalent.eventcallbacks.PlayerEventCallback;
+import org.inventivetalent.npclib.NPCLib;
 import org.inventivetalent.npclib.NPCLibPlugin;
 import org.inventivetalent.npclib.NPCType;
+import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.npclib.npc.living.human.NPCPlayer;
 import org.inventivetalent.npclib.skin.SkinLayer;
 import org.inventivetalent.pluginannotations.command.*;
@@ -17,10 +23,12 @@ import java.util.UUID;
 
 public class SpawnCommands {
 
-	private NPCLibPlugin plugin;
+	private NPCLibPlugin   plugin;
+	private EventCallbacks eventCallbacks;
 
 	public SpawnCommands(NPCLibPlugin plugin) {
 		this.plugin = plugin;
+		this.eventCallbacks = EventCallbacks.of(plugin);
 	}
 
 	@Command(name = "spawnNpc",
@@ -71,6 +79,52 @@ public class SpawnCommands {
 		}
 		npc.setSkinLayers(SkinLayer.ALL);
 		sender.sendMessage("§aNPC spawned at §7" + location.getWorld().getName() + "," + location.getX() + "," + location.getY() + "," + location.getZ());
+	}
+
+	@Command(name = "removeNpc",
+			 aliases = {},
+			 usage = "",
+			 description = "Remove a previously created NPC by right-clicking it",
+			 fallbackPrefix = "npclib",
+			 errorHandler = FeedbackErrorHandler.class)
+	@Permission("npclib.command.removenpc")
+	public void removeNpc(final Player player) {
+		int nearbyCount = 0;
+		for (Entity entity : player.getNearbyEntities(8, 4, 8)) {
+			if (NPCLib.isNPC(entity)) { nearbyCount++; }
+		}
+		if (nearbyCount == 0) {
+			player.sendMessage("§cNo NPCs found nearby. Please stand closer and try again.");
+			return;
+		}
+		eventCallbacks.listenFor(PlayerInteractEntityEvent.class, new PlayerEventCallback<PlayerInteractEntityEvent>(player) {
+			@Override
+			public void callPlayer(PlayerInteractEntityEvent event) {
+				if (event.isCancelled()) { return; }
+				if (event.getPlayer().isSneaking()) {// Cancelled
+					player.sendMessage("§aCancelled");
+					return;
+				}
+				Entity entity = event.getRightClicked();
+				NPCAbstract npc = NPCLib.getNPC(entity);
+				if (npc == null) {
+					player.sendMessage("§cThat's not an NPC");
+					return;
+				}
+				NPCAbstract removed = plugin.getPluginNpcRegistry().removeNpc(entity.getUniqueId());
+				if (removed != null) {
+					player.sendMessage("§aNPC removed");
+				} else {
+					player.sendMessage("§cCould not remove NPC, it was probably spawned by another plugin");
+				}
+			}
+		});
+		Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+			@Override
+			public void run() {
+				player.sendMessage("§ePlease §7right-click §athe NPC to remove it, or §7hold shift & right-click §eto cancel.");
+			}
+		}, 10);
 	}
 
 	@Completion(name = "spawnNpc")
