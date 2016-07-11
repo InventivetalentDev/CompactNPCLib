@@ -33,15 +33,15 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>org.inventivetalent.npc-lib</groupId>
-        <version>parent</version>
+        <version>${npclib.version}</version>
+        <relativePath>..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>plugin</artifactId>
-    <version>${npclib.version}</version>
 
     <build>
-        <finalName>NPCLib_v${project.version}</finalName>
+        <finalName>NPCLib_v${npclib.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

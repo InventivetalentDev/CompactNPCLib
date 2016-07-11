@@ -35,7 +35,7 @@
     <groupId>org.inventivetalent.npc-lib</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <version>parent</version>
+    <version>${npclib.version}</version>
 
     <modules>
         <module>API</module>
@@ -43,10 +43,10 @@
     </modules>
 
     <properties>
-        <npclib.version>2.1.0</npclib.version>
+        <npclib.version>2.1.1-SNAPSHOT</npclib.version>
 
         <packetlistener.version>3.4.3</packetlistener.version>
-        <reflection.version>1.10.3-SNAPSHOT</reflection.version>
+        <reflection.version>1.10.4-SNAPSHOT</reflection.version>
         <annotations.version>1.4.3</annotations.version>
         <wrappers.version>1.0.1</wrappers.version>
         <vectors.version>1.0.0</vectors.version>

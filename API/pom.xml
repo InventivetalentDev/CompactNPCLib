@@ -33,12 +33,12 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>org.inventivetalent.npc-lib</groupId>
-        <version>parent</version>
+        <version>${npclib.version}</version>
+        <relativePath>..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>api</artifactId>
-    <version>${npclib.version}</version>
 
     <dependencies>
         <dependency>
