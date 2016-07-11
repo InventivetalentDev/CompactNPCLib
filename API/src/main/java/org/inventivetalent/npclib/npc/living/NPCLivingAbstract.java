@@ -6,11 +6,11 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import org.inventivetalent.npclib.equipment.EquipmentSlot;
 import org.inventivetalent.npclib.ObjectContainer;
 import org.inventivetalent.npclib.Reflection;
 import org.inventivetalent.npclib.SuperSwitch;
 import org.inventivetalent.npclib.entity.living.NPCEntityLiving;
+import org.inventivetalent.npclib.equipment.EquipmentSlot;
 import org.inventivetalent.npclib.event.NPCDeathEvent;
 import org.inventivetalent.npclib.event.path.NPCPathFinishEvent;
 import org.inventivetalent.npclib.npc.NPCAbstract;
@@ -66,8 +66,17 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 
 	public void setYaw(float yaw) {
 		yaw = clampYaw(yaw);
-		getNpcEntity().setYaw(yaw);
+		setBodyYaw(yaw);
+		setHeadYaw(yaw);
+	}
+
+	public void setBodyYaw(float yaw) {
 		entityLivingFieldResolver.resolveWrapper("aO").set(getNpcEntity(), yaw);
+		getNpcEntity().setYaw(yaw);
+	}
+
+	public void setHeadYaw(float yaw) {
+		entityLivingFieldResolver.resolveWrapper("aQ").set(getNpcEntity(), yaw);
 	}
 
 	public void setPitch(float pitch) {
