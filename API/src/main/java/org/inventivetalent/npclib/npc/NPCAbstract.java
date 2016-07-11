@@ -131,6 +131,10 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		getBukkitEntity().setCustomName(name);
 	}
 
+	public String getName() {
+		return getBukkitEntity().getCustomName();
+	}
+
 	public void setNameVisible(boolean visible) {
 		getBukkitEntity().setCustomNameVisible(visible);
 	}
@@ -152,8 +156,8 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 			case ANIMATION:
 				sendPacket(player, ClassBuilder.buildPacketPlayOutAnimation(getBukkitEntity().getEntityId(), animation.getId()));
 				break;
-			case  STATUS:
-				sendPacket(player, ClassBuilder.buildPacketPlayOutEntityStatus(getBukkitEntity().getEntityId(),(byte) animation.getId()));
+			case STATUS:
+				sendPacket(player, ClassBuilder.buildPacketPlayOutEntityStatus(getBukkitEntity().getEntityId(), (byte) animation.getId()));
 				break;
 			default:
 				throw new IllegalArgumentException("invalid animation type");

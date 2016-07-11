@@ -150,10 +150,10 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		team.setSuffix(Strings.nullToEmpty(scoreboardSuffix));
 
 		if (nameHidden) {
-//			team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
+			//			team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
 			team.setNameTagVisibility(NameTagVisibility.NEVER);
 		} else {
-//			team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
+			//			team.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.ALWAYS);
 			team.setNameTagVisibility(NameTagVisibility.ALWAYS);
 		}
 	}
@@ -188,6 +188,11 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		GameProfileWrapper profile = new GameProfileWrapper(getProfile().getId(), name);
 		profile.getProperties().putAll(getProfile().getProperties());
 		setProfile(profile);
+	}
+
+	@Override
+	public String getName() {
+		return getProfile().getName();
 	}
 
 	public void setNamePrefix(String prefix) {
@@ -226,7 +231,7 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 	}
 
 	public String getFullName() {
-		return Strings.nullToEmpty(this.scoreboardPrefix) + getProfile().getName() + Strings.nullToEmpty(this.scoreboardSuffix);
+		return Strings.nullToEmpty(this.scoreboardPrefix) + getName() + Strings.nullToEmpty(this.scoreboardSuffix);
 	}
 
 	String optionalSubstring(String string, int start, int end) {
