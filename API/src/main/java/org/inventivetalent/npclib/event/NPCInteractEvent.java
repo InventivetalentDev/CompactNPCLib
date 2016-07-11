@@ -28,6 +28,7 @@
 
 package org.inventivetalent.npclib.event;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.inventivetalent.npclib.npc.NPCAbstract;
@@ -37,12 +38,14 @@ public class NPCInteractEvent extends NPCEvent implements Cancellable {
 	private static HandlerList handlerList = new HandlerList();
 	private int     entityId;
 	private int     actionId;
+	private Player  player;
 	private boolean cancelled;
 
-	public NPCInteractEvent(NPCAbstract npc, int entityId, int actionId) {
+	public NPCInteractEvent(NPCAbstract npc, int entityId, int actionId, Player player) {
 		super(npc);
 		this.entityId = entityId;
 		this.actionId = actionId;
+		this.player = player;
 	}
 
 	public static HandlerList getHandlerList() {
@@ -55,6 +58,10 @@ public class NPCInteractEvent extends NPCEvent implements Cancellable {
 
 	public int getActionId() {
 		return actionId;
+	}
+
+	public Player getPlayer() {
+		return player;
 	}
 
 	@Override

@@ -132,7 +132,7 @@ public class NPCLib implements API {
 						}
 						Enum action = (Enum) receivedPacket.getPacketValue(1);
 
-						NPCInteractEvent event = new NPCInteractEvent(NPCLib.getNPC(entity), a, action == null ? -1 : action.ordinal());
+						NPCInteractEvent event = new NPCInteractEvent(NPCLib.getNPC(entity), a, action == null ? -1 : action.ordinal(), receivedPacket.getPlayer());
 						Bukkit.getPluginManager().callEvent(event);
 						if (event.isCancelled()) {
 							receivedPacket.setCancelled(true);
