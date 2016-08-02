@@ -61,7 +61,11 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 	 * @param strafe  strafe movement amount
 	 */
 	public void moveForward(float forward, float strafe) {
-		invokeEntityLivingMethod("g", float.class, float.class, strafe, forward);
+		invokeEntityLivingMethod("g", new Class[] {
+				float.class,
+				float.class }, new Object[] {
+				strafe,
+				forward });
 	}
 
 	public void setYaw(float yaw) {
