@@ -53,7 +53,12 @@ public class NPCInfo {
 	}
 
 	public String getNPCClassName() {
-		return "NPC" + nms;
+		String className = npcClass.getName();
+		if (className.startsWith("org.inventivetalent.npclib.npc")) {// Internal NPCs
+			return "NPC" + nms;
+		} else {
+			return className + "_NPC";
+		}
 	}
 
 }
