@@ -76,6 +76,7 @@
                                     <include>org.inventivetalent:nbt-lib**</include>
                                     <inclide>org.inventivetalent:mcstats-apimanager**</inclide>
                                     <include>org.inventivetalent:eventcallbacks**</include>
+                                    <include>org.inventivetalent.spiget-update:bukkit**</include>
                                     <include>org.javassist:**</include>
                                 </includes>
                             </artifactSet>
@@ -109,6 +110,12 @@
             <groupId>org.inventivetalent</groupId>
             <artifactId>eventcallbacks</artifactId>
             <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.inventivetalent.spiget-update</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.3.0</version>
         </dependency>
     </dependencies>
 
