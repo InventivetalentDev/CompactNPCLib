@@ -57,7 +57,7 @@ public class NPCInfo {
 		if (className.startsWith("org.inventivetalent.npclib.npc")) {// Internal NPCs
 			return "NPC" + nms;
 		} else {
-			return className + "_NPC";
+			return className.replace(".", "_") + "_NPC";
 		}
 	}
 
