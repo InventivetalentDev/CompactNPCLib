@@ -28,6 +28,7 @@ import org.inventivetalent.npclib.annotation.NPC;
 import org.inventivetalent.npclib.entity.living.human.EntityPlayer;
 import org.inventivetalent.npclib.event.NPCDeathEvent;
 import org.inventivetalent.npclib.event.NPCSpawnEvent;
+import org.inventivetalent.npclib.event.NPCVelocityEvent;
 import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.FieldResolver;
 import org.inventivetalent.reflection.resolver.MethodResolver;
@@ -364,6 +365,37 @@ public class NPCPlayer extends NPCHumanAbstract<EntityPlayer, Player> {
 		if (event.isCancelled()) { return; }
 		getBukkitEntity().remove();
 		removeOnDeath(new SuperSwitch(SuperSwitch.State.PASS)/*Dummy*/);
+	}
+
+	@Override
+	public void onBaseTick(SuperSwitch superSwitch) {
+		super.onBaseTick(superSwitch);
+
+		// Manual player motion
+		double motX = getNpcEntity().getMotX();
+		double motY = getNpcEntity().getMotY();
+		double motZ = getNpcEntity().getMotZ();
+		motY -= 0.1;// Gravity, TODO: custom
+		if (getBukkitEntity().isOnGround()) {
+			motY = Math.max(0, motY);
+		}
+
+		NPCVelocityEvent event = new NPCVelocityEvent(this, motX, motY, motZ);
+		if (!event.isCancelled()) {
+			motX = event.getX();
+			motY = event.getY();
+			motZ = event.getZ();
+
+			getNpcEntity().move(motX, motY, motZ);
+
+			motX *= 0.800000011920929;
+			motY *= 0.800000011920929;
+			motZ *= 0.800000011920929;
+
+			getNpcEntity().setMotX(motX);
+			getNpcEntity().setMotY(motY);
+			getNpcEntity().setMotZ(motZ);
+		}
 	}
 
 	@Override
