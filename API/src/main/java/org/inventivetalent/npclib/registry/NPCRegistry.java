@@ -48,7 +48,8 @@ public class NPCRegistry implements Iterable<NPCAbstract> {
 			throw new IllegalStateException("Already destroyed");
 		}
 		if (removeNpcs) {
-			for (UUID uuid : npcMap.keySet()) {
+			Set<UUID> uuids = new HashSet<>(npcMap.keySet());
+			for (UUID uuid : uuids) {
 				removeNpc(uuid);
 			}
 		}
