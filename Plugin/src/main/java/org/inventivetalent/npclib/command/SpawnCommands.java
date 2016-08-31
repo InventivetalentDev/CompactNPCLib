@@ -33,20 +33,20 @@ public class SpawnCommands {
 
 	@Command(name = "spawnNpc",
 			 aliases = {},
-			 usage = "<Type> [x] [y] [z] [world]",
+			 usage = "<Type> [x] [y] [z] [pitch] [yaw] [world]",
 			 description = "Spawn an NPC at your location or the specified coordinates",
 			 min = 1,
 			 max = 5,
 			 fallbackPrefix = "npclib",
 			 errorHandler = FeedbackErrorHandler.class)
 	@Permission("npclib.command.spawn")
-	public void spawnNPC(CommandSender sender, String typeString, @OptionalArg Double x, @OptionalArg Double y, @OptionalArg Double z, @OptionalArg String worldName) {
+	public void spawnNPC(CommandSender sender, String typeString, @OptionalArg Double x, @OptionalArg Double y, @OptionalArg Double z, @OptionalArg Double pitch, @OptionalArg Double yaw, @OptionalArg String worldName) {
 		NPCType npcType = NPCType.fromString(typeString);
 		if (npcType == null) {
 			sender.sendMessage("§cCould not find type for '" + typeString + "'");
 			return;
 		}
-		Location location = parseLocation(sender, x, y, z, worldName);
+		Location location = parseLocation(sender, x, y, z, pitch, yaw, worldName);
 		if (location == null) { return; }
 
 		plugin.getPluginNpcRegistry().spawnNPC(location, npcType);
