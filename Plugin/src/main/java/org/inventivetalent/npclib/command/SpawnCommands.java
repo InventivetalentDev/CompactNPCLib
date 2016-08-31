@@ -67,7 +67,7 @@ public class SpawnCommands {
 			sender.sendMessage("§cName is too long (" + name.length() + ">16)");
 			return;
 		}
-		Location location = parseLocation(sender, x, y, z, pitch, yaw worldName);
+		Location location = parseLocation(sender, x, y, z, pitch, yaw, worldName);
 		if (location == null) { return; }
 
 		NPCPlayer npc = plugin.getPluginNpcRegistry().spawnPlayerNPC(location, NPCPlayer.class, UUID.randomUUID(), name);
