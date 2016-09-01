@@ -36,7 +36,7 @@ public class SpawnCommands {
 			 usage = "<Type> [x] [y] [z] [pitch] [yaw] [world]",
 			 description = "Spawn an NPC at your location or the specified coordinates",
 			 min = 1,
-			 max = 5,
+			 max = 7,
 			 fallbackPrefix = "npclib",
 			 errorHandler = FeedbackErrorHandler.class)
 	@Permission("npclib.command.spawn")
@@ -58,7 +58,7 @@ public class SpawnCommands {
 			 usage = "<Name> [skin] [x] [y] [z] [pitch] [yaw] [world]",
 			 description = "Spawn a Player NPC at your location or the specified coordinates",
 			 min = 1,
-			 max = 6,
+			 max = 8,
 			 fallbackPrefix = "npclib",
 			 errorHandler = FeedbackErrorHandler.class)
 	@Permission("npclib.command.spawnplayer")
