@@ -158,8 +158,8 @@ public class SpawnCommands {
 			if (x != null) { location.setX(x); }
 			if (y != null) { location.setY(y); }
 			if (z != null) { location.setZ(z); }
-			if (pitch != null) { location.setPitch(pitch); }
-			if (yaw != null) { locaton.setYaw(yaw); }
+			if (pitch != null) { location.setPitch(pitch.floatValue()); }
+			if (yaw != null) { location.setYaw(yaw.floatValue()); }
 			
 			if (worldName != null) {
 				World world = Bukkit.getWorld(worldName);
@@ -179,7 +179,7 @@ public class SpawnCommands {
 				sender.sendMessage("§cWorld '" + worldName + "' does not exist");
 				return null;
 			}
-			location = new Location(world, x, y, z, pitch, yaw);
+			location = new Location(world, x, y, z, pitch.floatValue(), yaw.floatValue());
 		}
 		return location;
 	}

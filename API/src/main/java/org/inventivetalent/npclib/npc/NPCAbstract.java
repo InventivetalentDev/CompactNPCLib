@@ -44,7 +44,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	protected final FieldResolver  entityFieldResolver  = new FieldResolver(Reflection.nmsClassResolver.resolveSilent("Entity"));
 	protected final MethodResolver entityMethodResolver = new MethodResolver(Reflection.nmsClassResolver.resolveSilent("Entity"));
 	private final N npcEntity;
-	private final List<AIAbstract> aiList = new ArrayList<>();
+	private final List<AIAbstract<?>> aiList = new ArrayList<>();
 	protected String              pluginName;
 	protected AnnotatedNBTHandler nbtHandler;
 
@@ -110,8 +110,8 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 	}
 
 	public void tickAI() {
-		for (Iterator<AIAbstract> iterator = aiList.iterator(); iterator.hasNext(); ) {
-			AIAbstract next = iterator.next();
+		for (Iterator<AIAbstract<?>> iterator = aiList.iterator(); iterator.hasNext(); ) {
+			AIAbstract<?> next = iterator.next();
 			next.tick();
 			if (next.isFinished()) {
 				iterator.remove();
@@ -371,7 +371,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		npcEntityFieldResolver.resolveWrapper(field).set(this.npcEntity, value);
 	}
 
-	public Object invokeNPCMethod(String method, Class[] types, Object[] args) {
+	public Object invokeNPCMethod(String method, Class<?>[] types, Object[] args) {
 		return npcEntityMethodResolver.resolveWrapper(new ResolverQuery(method, types)).invoke(this.npcEntity, args);
 	}
 
@@ -387,7 +387,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 		entityFieldResolver.resolveWrapper(field).set(this.npcEntity, value);
 	}
 
-	public Object invokeEntityMethod(String method, Class[] types, Object[] args) {
+	public Object invokeEntityMethod(String method, Class<?>[] types, Object[] args) {
 		return entityMethodResolver.resolveWrapper(new ResolverQuery(method, types)).invoke(this.npcEntity, args);
 	}
 
