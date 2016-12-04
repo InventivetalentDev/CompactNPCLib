@@ -25,11 +25,14 @@ import org.inventivetalent.vectors.d3.Vector3DDouble;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends LivingEntity> extends NPCAbstract<N, B> {
 
-	protected FieldResolver  entityLivingFieldResolver  = new FieldResolver(Reflection.nmsClassResolver.resolveSilent("EntityLiving"));
-	protected MethodResolver entityLivingMethodResolver = new MethodResolver(Reflection.nmsClassResolver.resolveSilent("EntityLiving"));
+	// The static code gets run once, saves resources.
+	protected static FieldResolver  entityLivingFieldResolver  = new FieldResolver(Reflection.nmsClassResolver.resolveSilent("EntityLiving"));
+	protected static MethodResolver entityLivingMethodResolver = new MethodResolver(Reflection.nmsClassResolver.resolveSilent("EntityLiving"));
 
 	private PathfinderAbstract pathfinder;
 
@@ -75,12 +78,26 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 	}
 
 	public void setBodyYaw(float yaw) {
-		entityLivingFieldResolver.resolveWrapper("aO").set(getNpcEntity(), yaw);
 		getNpcEntity().setYaw(yaw);
+
+		if(Minecraft.VERSION.newerThan(Minecraft.Version.v1_9_R1)) {
+			// The method is relatively consistent between versions.
+			invokeEntityLivingMethod("i", new Class[] {float.class}, new Object[] {yaw});
+		} else {
+			// 1.8. The field is consistent between all 1.8 versions, however on 1.8.0 it is shared with the head value.
+			entityLivingFieldResolver.resolveWrapper("aI").set(getNpcEntity(), yaw);
+		}
 	}
 
 	public void setHeadYaw(float yaw) {
-		entityLivingFieldResolver.resolveWrapper("aQ").set(getNpcEntity(), yaw);
+		// Find it below getHeadRotation() in NMS class EntityLiving if it changes.
+        if(Minecraft.VERSION.newerThan(Minecraft.Version.v1_9_R1)) {
+            // The method is relatively consistent between versions.
+            invokeEntityLivingMethod("h", new Class[] {float.class}, new Object[] {yaw});
+        } else {
+            // 1.8
+            invokeEntityLivingMethod("f", new Class[] {float.class}, new Object[] {yaw});
+        }
 	}
 
 	public void setPitch(float pitch) {
