@@ -26,14 +26,14 @@ import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class NPCRegistry implements Iterable<NPCAbstract> {
+public class NPCRegistry implements Iterable<NPCAbstract<?, ?>> {
 
-	static final Map<NPCInfo, Class> generatedClasses = new HashMap<>();
+	static final Map<NPCInfo, Class<?>> generatedClasses = new HashMap<>();
 
 	private static final Map<String, NPCRegistry> registryMap = new HashMap<>();
 
 	private final Plugin plugin;
-	private final Map<UUID, NPCAbstract> npcMap = Maps.newHashMap();
+	private final Map<UUID, NPCAbstract<?, ?>> npcMap = Maps.newHashMap();
 
 	public NPCRegistry(Plugin plugin) {
 		this.plugin = plugin;
@@ -67,11 +67,14 @@ public class NPCRegistry implements Iterable<NPCAbstract> {
 	/**
 	 * Injects the specified NPC classes, so the entities can be loaded properly by the server
 	 *
-	 * @param classes classes to inject
+	 * @param classes
+	 *            classes to inject
 	 */
-	public static void injectClasses(Class... classes) {
-		for (Class clazz : classes) {
-			if (clazz == null) { continue; }
+	public static void injectClasses(Class<?>... classes) {
+		for (Class<?> clazz : classes) {
+			if (clazz == null) {
+				continue;
+			}
 			getOrGenerateClass(NPCInfo.of(clazz));
 		}
 	}
@@ -82,7 +85,7 @@ public class NPCRegistry implements Iterable<NPCAbstract> {
 		}
 		ClassPool classPool = ClassPool.getDefault();
 		try {
-			Class generated = ClassGenerator.generateEntityClass(classPool, npcType);
+			Class<?> generated = ClassGenerator.generateEntityClass(classPool, npcType);
 			generatedClasses.put(npcType, generated);
 			if (npcType.getId() != -1) {
 				injectEntity(generated, npcType.getId(), npcType.getNPCClassName());
@@ -94,7 +97,7 @@ public class NPCRegistry implements Iterable<NPCAbstract> {
 	}
 
 	static void injectEntity(Class<?> clazz, int id, String name) {
-		Class EntityTypes = Reflection.nmsClassResolver.resolveSilent("EntityTypes");
+		Class<?> EntityTypes = Reflection.nmsClassResolver.resolveSilent("EntityTypes");
 		FieldResolver fieldResolver = new FieldResolver(EntityTypes);
 
 		((Map) fieldResolver.resolveWrapper("c").get(null)).put(name, clazz);
@@ -106,12 +109,15 @@ public class NPCRegistry implements Iterable<NPCAbstract> {
 	/**
 	 * Creates and spawns the specified NPC Entity
 	 *
-	 * @param location {@link Location} to spawn the entity at
-	 * @param npcClass NPC-Class to spawn
-	 * @param <T>      a NPC class extending {@link NPCAbstract}
+	 * @param location
+	 *            {@link Location} to spawn the entity at
+	 * @param npcClass
+	 *            NPC-Class to spawn
+	 * @param <T>
+	 *            a NPC class extending {@link NPCAbstract}
 	 * @return the spawned NPC Entity
 	 */
-	public <T extends NPCAbstract> T spawnNPC(Location location, Class<T> npcClass) {
+	public <T extends NPCAbstract<?, ?>> T spawnNPC(Location location, Class<T> npcClass) {
 		checkNotNull(location);
 		checkNotNull(npcClass);
 		try {
@@ -126,25 +132,32 @@ public class NPCRegistry implements Iterable<NPCAbstract> {
 	/**
 	 * Creates and spawns the specified NPC Type
 	 *
-	 * @param location {@link Location} to spawn the entity at
-	 * @param npcType  type of the NPC
+	 * @param location
+	 *            {@link Location} to spawn the entity at
+	 * @param npcType
+	 *            type of the NPC
 	 * @return the spawned NPC Entity
 	 */
 
-	public NPCAbstract spawnNPC(Location location, NPCType npcType) {
+	public NPCAbstract<?, ?> spawnNPC(Location location, NPCType npcType) {
 		return spawnNPC(location, checkNotNull(npcType).getNpcClass());
 	}
 
 	/**
 	 * Creates and spawns a player NPC entity
 	 *
-	 * @param location    {@link Location} to spawn the entity at
-	 * @param npcClass    NPC-Class to spawn
-	 * @param gameProfile {@link GameProfileWrapper} to use for the player
-	 * @param <T>         a NPC class extending {@link NPCHumanAbstract}
+	 * @param location
+	 *            {@link Location} to spawn the entity at
+	 * @param npcClass
+	 *            NPC-Class to spawn
+	 * @param gameProfile
+	 *            {@link GameProfileWrapper} to use for the player
+	 * @param <T>
+	 *            a NPC class extending {@link NPCHumanAbstract}
 	 * @return the spawned NPC entity
 	 */
-	public <T extends NPCHumanAbstract> T spawnPlayerNPC(Location location, Class<T> npcClass, GameProfileWrapper gameProfile) {
+	public <T extends NPCHumanAbstract<?, ?>> T spawnPlayerNPC(Location location, Class<T> npcClass,
+			GameProfileWrapper gameProfile) {
 		checkNotNull(location);
 		checkNotNull(npcClass);
 		checkNotNull(gameProfile);
@@ -160,50 +173,59 @@ public class NPCRegistry implements Iterable<NPCAbstract> {
 	/**
 	 * Creates and spawns a player NPC entity
 	 *
-	 * @param location {@link Location} to spawn the entity at
-	 * @param npcClass NPC-Class to spawn
-	 * @param uuid     {@link UUID} of the player
-	 * @param name     Name of the player
-	 * @param <T>      a NPC class extending {@link NPCHumanAbstract}
+	 * @param location
+	 *            {@link Location} to spawn the entity at
+	 * @param npcClass
+	 *            NPC-Class to spawn
+	 * @param uuid
+	 *            {@link UUID} of the player
+	 * @param name
+	 *            Name of the player
+	 * @param <T>
+	 *            a NPC class extending {@link NPCHumanAbstract}
 	 * @return the spawned NPC entity
 	 */
-	public <T extends NPCHumanAbstract> T spawnPlayerNPC(Location location, Class<T> npcClass, UUID uuid, String name) {
+	public <T extends NPCHumanAbstract<?, ?>> T spawnPlayerNPC(Location location, Class<T> npcClass, UUID uuid, String name) {
 		if (uuid == null && Strings.isNullOrEmpty(name)) {
 			throw new IllegalArgumentException("UUID and Name cannot both be empty");
 		}
 		return spawnPlayerNPC(location, npcClass, new GameProfileWrapper(checkNotNull(uuid), name));
 	}
 
-	public void registerNpc(NPCAbstract npc) {
+	public void registerNpc(NPCAbstract<?, ?> npc) {
 		NPCLib.debug("Registered", npc, "with", plugin.getName());
 		npcMap.put(npc.getUniqueId(), npc);
 	}
 
-	public <T extends NPCAbstract> T removeNpc(T npc) {
+	public <T extends NPCAbstract<?, ?>> T removeNpc(T npc) {
 		npcMap.remove(checkNotNull(npc).getUniqueId());
 		npc.despawn();
 		return npc;
 	}
 
-	public NPCAbstract removeNpc(UUID uuid) {
-		NPCAbstract npc = npcMap.remove(checkNotNull(uuid));
-		if (npc != null) { npc.despawn(); }
+	public NPCAbstract<?, ?> removeNpc(UUID uuid) {
+		NPCAbstract<?, ?> npc = npcMap.remove(checkNotNull(uuid));
+		if (npc != null) {
+			npc.despawn();
+		}
 		return npc;
 	}
 
-	public Collection<NPCAbstract> getNpcs() {
+	public Collection<NPCAbstract<?, ?>> getNpcs() {
 		return new ArrayList<>(npcMap.values());
 	}
 
 	protected <T extends NPCEntity> T createEntity(Location location, NPCInfo npcInfo) {
-		if ("EntityPlayer".equals(npcInfo.getNms())) { throw new IllegalArgumentException("cannot construct EntityPlayer using #createEntity"); }
+		if ("EntityPlayer".equals(npcInfo.getNms())) {
+			throw new IllegalArgumentException("cannot construct EntityPlayer using #createEntity");
+		}
 
-		Class clazz = getOrGenerateClass(npcInfo);
+		Class<?> clazz = getOrGenerateClass(npcInfo);
 
 		try {
-			//noinspection unchecked
-			Constructor constructor = clazz.getConstructor(Reflection.nmsClassResolver.resolve("World"));
-			//noinspection unchecked
+			// noinspection unchecked
+			Constructor<?> constructor = clazz.getConstructor(Reflection.nmsClassResolver.resolve("World"));
+			// noinspection unchecked
 			return (T) constructor.newInstance(Minecraft.getHandle(location.getWorld()));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -211,32 +233,41 @@ public class NPCRegistry implements Iterable<NPCAbstract> {
 	}
 
 	protected EntityPlayer createPlayerEntity(Location location, NPCInfo npcInfo, GameProfileWrapper gameProfile) {
-		Class clazz = getOrGenerateClass(npcInfo);
+		Class<?> clazz = getOrGenerateClass(npcInfo);
 		try {
-			Object minecraftServer = new MethodResolver(Bukkit.getServer().getClass()).resolveWrapper("getServer").invoke(Bukkit.getServer());
+			Object minecraftServer = new MethodResolver(Bukkit.getServer().getClass()).resolveWrapper("getServer")
+					.invoke(Bukkit.getServer());
 			Object worldServer = Minecraft.getHandle(location.getWorld());
-			Object interactManager = new ConstructorResolver(Reflection.nmsClassResolver.resolve("PlayerInteractManager")).resolve(new Class[] { Reflection.nmsClassResolver.resolve("World") }).newInstance(worldServer);
+			Object interactManager = new ConstructorResolver(
+					Reflection.nmsClassResolver.resolve("PlayerInteractManager"))
+							.resolve(new Class[] { Reflection.nmsClassResolver.resolve("World") })
+							.newInstance(worldServer);
 
-			//noinspection unchecked
-			Constructor constructor = clazz.getConstructor(Reflection.nmsClassResolver.resolve("MinecraftServer"), Reflection.nmsClassResolver.resolve("WorldServer"), gameProfile.getHandle().getClass(), Reflection.nmsClassResolver.resolve("PlayerInteractManager"));
-			return (EntityPlayer) constructor.newInstance(minecraftServer, worldServer, gameProfile.getHandle(), interactManager);
+			// noinspection unchecked
+			Constructor<?> constructor = clazz.getConstructor(Reflection.nmsClassResolver.resolve("MinecraftServer"),
+					Reflection.nmsClassResolver.resolve("WorldServer"), gameProfile.getHandle().getClass(),
+					Reflection.nmsClassResolver.resolve("PlayerInteractManager"));
+			return (EntityPlayer) constructor.newInstance(minecraftServer, worldServer, gameProfile.getHandle(),
+					interactManager);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected <T extends NPCAbstract> T wrapAndInitEntity(NPCEntity entity, Location location, NPCInfo npcInfo, Class<T> npcClass) throws Exception {
-		//		NPCAbstract npcAbstract = (NPCAbstract) new ConstructorResolver(npcClass).resolveFirstConstructorSilent().newInstance(entity);
-		NPCAbstract npcAbstract = entity.getNPC();
+	protected <T extends NPCAbstract<?, ?>> T wrapAndInitEntity(NPCEntity entity, Location location, NPCInfo npcInfo,
+			Class<T> npcClass) throws Exception {
+		// NPCAbstract npcAbstract = (NPCAbstract) new
+		// ConstructorResolver(npcClass).resolveFirstConstructorSilent().newInstance(entity);
+		NPCAbstract<?, ?> npcAbstract = entity.getNPC();
 		entity.setNpcInfo(npcInfo);
 		npcAbstract.postInit(this.plugin, location);
 		npcAbstract.spawn();
-		//noinspection unchecked
+		// noinspection unchecked
 		return (T) npcAbstract;
 	}
 
 	@Override
-	public Iterator<NPCAbstract> iterator() {
+	public Iterator<NPCAbstract<?, ?>> iterator() {
 		return npcMap.values().iterator();
 	}
 }

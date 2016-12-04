@@ -34,7 +34,7 @@ import org.inventivetalent.npclib.npc.NPCAbstract;
 
 public class NPCPathFinishEvent extends NPCEvent {
 
-	public NPCPathFinishEvent(NPCAbstract npc) {
+	public NPCPathFinishEvent(NPCAbstract<?, ?> npc) {
 		super(npc);
 	}
 

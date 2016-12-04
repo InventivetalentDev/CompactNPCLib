@@ -36,7 +36,7 @@ public class NBTReadEvent extends NPCNBTEvent {
 
 	private static HandlerList handlerList = new HandlerList();
 
-	public NBTReadEvent(NPCAbstract npc, Object nbtTagHandle, CompoundTag nbtTag) {
+	public NBTReadEvent(NPCAbstract<?, ?> npc, Object nbtTagHandle, CompoundTag nbtTag) {
 		super(npc, nbtTagHandle, nbtTag);
 	}
 

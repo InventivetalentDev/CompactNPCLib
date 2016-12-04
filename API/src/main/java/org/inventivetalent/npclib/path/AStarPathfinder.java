@@ -7,7 +7,7 @@ import org.inventivetalent.vectors.d3.Vector3DInt;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AStarPathfinder<N extends NPCAbstract> extends PathfinderAbstract<N> {
+public class AStarPathfinder<N extends NPCAbstract<?, ?>> extends PathfinderAbstract<N> {
 
 	private final Vector3DInt intTarget;
 	private final int         maxIterations;

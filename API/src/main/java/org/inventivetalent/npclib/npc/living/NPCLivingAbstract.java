@@ -176,9 +176,9 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 			Object nmsSlot = slot.toNMS();
 			if (nmsSlot == null) { return; }
 
-			Class packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutEntityEquipment");
-			Class itemClass = Reflection.nmsClassResolver.resolve("ItemStack");
-			Constructor constructor;
+			Class<?> packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutEntityEquipment");
+			Class<?> itemClass = Reflection.nmsClassResolver.resolve("ItemStack");
+			Constructor<?> constructor;
 			if (Minecraft.VERSION.newerThan(Minecraft.Version.v1_9_R1)) {
 				constructor = packetClass.getConstructor(int.class, Reflection.nmsClassResolver.resolve("EnumItemSlot"), itemClass);
 			} else if (Minecraft.VERSION.newerThan(Minecraft.Version.v1_8_R1)) {
@@ -207,7 +207,7 @@ public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends Liv
 		entityLivingFieldResolver.resolveWrapper(field).set(getNpcEntity(), value);
 	}
 
-	public Object invokeEntityLivingMethod(String method, Class[] types, Object[] args) {
+	public Object invokeEntityLivingMethod(String method, Class<?>[] types, Object[] args) {
 		return entityLivingMethodResolver.resolveWrapper(new ResolverQuery(method, types)).invoke(getNpcEntity(), args);
 	}
 

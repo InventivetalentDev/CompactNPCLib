@@ -106,12 +106,12 @@ public class SpawnCommands {
 					return;
 				}
 				Entity entity = event.getRightClicked();
-				NPCAbstract npc = NPCLib.getNPC(entity);
+				NPCAbstract<?, ?> npc = NPCLib.getNPC(entity);
 				if (npc == null) {
 					player.sendMessage("§cThat's not an NPC");
 					return;
 				}
-				NPCAbstract removed = plugin.getPluginNpcRegistry().removeNpc(entity.getUniqueId());
+				NPCAbstract<?, ?> removed = plugin.getPluginNpcRegistry().removeNpc(entity.getUniqueId());
 				if (removed != null) {
 					player.sendMessage("§aNPC removed");
 				} else {

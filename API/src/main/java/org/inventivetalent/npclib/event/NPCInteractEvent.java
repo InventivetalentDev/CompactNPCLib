@@ -41,7 +41,7 @@ public class NPCInteractEvent extends NPCEvent implements Cancellable {
 	private Player  player;
 	private boolean cancelled;
 
-	public NPCInteractEvent(NPCAbstract npc, int entityId, int actionId, Player player) {
+	public NPCInteractEvent(NPCAbstract<?, ?> npc, int entityId, int actionId, Player player) {
 		super(npc);
 		this.entityId = entityId;
 		this.actionId = actionId;

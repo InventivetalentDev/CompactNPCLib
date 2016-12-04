@@ -8,7 +8,7 @@ import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.npclib.npc.living.human.NPCHumanAbstract;
 import org.inventivetalent.vectors.d3.Vector3DDouble;
 
-public abstract class PathfinderAbstract<N extends NPCAbstract> extends AIAbstract<N> {
+public abstract class PathfinderAbstract<N extends NPCAbstract<?, ?>> extends AIAbstract<N> {
 
 	protected final Vector3DDouble target;
 	protected final double         speed;
