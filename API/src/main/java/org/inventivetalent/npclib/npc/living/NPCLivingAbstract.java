@@ -24,9 +24,8 @@ import org.inventivetalent.reflection.resolver.ResolverQuery;
 import org.inventivetalent.vectors.d3.Vector3DDouble;
 
 import javax.annotation.Nullable;
+
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 public abstract class NPCLivingAbstract<N extends NPCEntityLiving, B extends LivingEntity> extends NPCAbstract<N, B> {
 
