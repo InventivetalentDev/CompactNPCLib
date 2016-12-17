@@ -10,9 +10,9 @@ import org.inventivetalent.npclib.npc.NPCAbstract;
  */
 public abstract class NPCEvent extends Event {
 
-	private final NPCAbstract npc;
+	private final NPCAbstract<?, ?> npc;
 
-	public NPCEvent(NPCAbstract npc) {
+	public NPCEvent(NPCAbstract<?, ?> npc) {
 		this.npc = npc;
 	}
 
@@ -21,7 +21,7 @@ public abstract class NPCEvent extends Event {
 	 *
 	 * @return the NPC
 	 */
-	public NPCAbstract getNpc() {
+	public NPCAbstract<?, ?> getNpc() {
 		return npc;
 	}
 

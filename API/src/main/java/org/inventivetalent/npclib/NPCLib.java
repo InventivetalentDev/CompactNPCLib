@@ -46,7 +46,7 @@ public class NPCLib implements API {
 		}
 	}
 
-	public static NPCAbstract getNPC(Entity entity) {
+	public static NPCAbstract<?, ?> getNPC(Entity entity) {
 		if (entity == null) { return null; }
 		try {
 			Object handle = Minecraft.getHandle(entity);
@@ -77,7 +77,7 @@ public class NPCLib implements API {
 	@Override
 	public void load() {
 		long start = System.currentTimeMillis();
-		Class[] classes = new Class[NPCType.values().length];
+		Class<?>[] classes = new Class[NPCType.values().length];
 		for (int i = 0; i < classes.length; ) {
 			if (NPCType.values()[i].isAvailable()) {
 				classes[i] = NPCType.values()[i].getNpcClass();
@@ -111,7 +111,7 @@ public class NPCLib implements API {
 							}
 						}
 						if (npcPlayer != null) {
-							NPCAbstract npcAbstract = NPCLib.getNPC(npcPlayer);
+							NPCAbstract<?, ?> npcAbstract = NPCLib.getNPC(npcPlayer);
 							if (npcAbstract != null && npcAbstract instanceof NPCPlayer) {
 								((NPCPlayer) npcAbstract).updateToPlayer(player);
 							}
@@ -130,7 +130,7 @@ public class NPCLib implements API {
 						if (entity == null || !NPCLib.isNPC(entity)) {
 							return;
 						}
-						Enum action = (Enum) receivedPacket.getPacketValue(1);
+						Enum<?> action = (Enum<?>) receivedPacket.getPacketValue(1);
 
 						NPCInteractEvent event = new NPCInteractEvent(NPCLib.getNPC(entity), a, action == null ? -1 : action.ordinal(), receivedPacket.getPlayer());
 						Bukkit.getPluginManager().callEvent(event);

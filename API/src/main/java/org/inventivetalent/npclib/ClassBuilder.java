@@ -24,7 +24,7 @@ public class ClassBuilder {
 
 	public static Object buildPacketPlayOutBed(int id, int x, int y, int z) {
 		try {
-			Class packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutBed");
+			Class<?> packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutBed");
 			Object bedPacket = packetClass.newInstance();
 			AccessUtil.setAccessible(packetClass.getDeclaredField("a")).set(bedPacket, id);
 			if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_8_R1)) {
@@ -42,7 +42,7 @@ public class ClassBuilder {
 
 	public static Object buildPacketPlayOutAnimation(int entID, int animID) {
 		try {
-			Class packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutAnimation");
+			Class<?> packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutAnimation");
 			Object animationPacket = packetClass.newInstance();
 			AccessUtil.setAccessible(packetClass.getDeclaredField("a")).set(animationPacket, entID);
 			AccessUtil.setAccessible(packetClass.getDeclaredField("b")).set(animationPacket, animID);
@@ -55,7 +55,7 @@ public class ClassBuilder {
 
 	public static Object buildPacketPlayOutEntityStatus(int entityId, byte animationId) {
 		try {
-			Class packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutEntityStatus");
+			Class<?> packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutEntityStatus");
 			Object animationPacket = packetClass.newInstance();
 			AccessUtil.setAccessible(packetClass.getDeclaredField("a")).set(animationPacket, entityId);
 			AccessUtil.setAccessible(packetClass.getDeclaredField("b")).set(animationPacket, animationId);
@@ -68,7 +68,7 @@ public class ClassBuilder {
 
 	public static Object buildPacketPlayOutEntityTeleport(int id, double x, double y, double z, float yaw, float pitch, boolean onGround, boolean heightCorrection) {
 		try {
-			Class packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutEntityTeleport");
+			Class<?> packetClass = Reflection.nmsClassResolver.resolve("PacketPlayOutEntityTeleport");
 			Object teleportPacket;
 			if (Minecraft.VERSION.olderThan(Minecraft.Version.v1_8_R1)) {
 				teleportPacket = packetClass.getConstructor(int.class, int.class, int.class, int.class, byte.class, byte.class, boolean.class, boolean.class)

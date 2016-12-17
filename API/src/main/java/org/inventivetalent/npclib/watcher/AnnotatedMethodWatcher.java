@@ -24,7 +24,7 @@ public class AnnotatedMethodWatcher extends MethodWatcher {
 	public AnnotatedMethodWatcher(Object toWatch, boolean searchSuper) {
 		this.toWatch = toWatch;
 		if (searchSuper) {
-			Class superClazz = toWatch.getClass();
+			Class<?> superClazz = toWatch.getClass();
 			while (superClazz != null) {
 				register(superClazz);
 				superClazz = superClazz.getSuperclass();

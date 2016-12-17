@@ -2,7 +2,7 @@ package org.inventivetalent.npclib.ai;
 
 import org.inventivetalent.npclib.npc.NPCAbstract;
 
-public class AIAbstract<N extends NPCAbstract> {
+public class AIAbstract<N extends NPCAbstract<?, ?>> {
 
 	private N npc;
 

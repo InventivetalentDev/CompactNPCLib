@@ -104,7 +104,7 @@ public enum NPCType {
 	PLAYER("PLAYER", NPCPlayer.class),;
 
 	private static final Map<EntityType, NPCType>                   entityTypeMap = Maps.newHashMap();
-	private static final Map<Class<? extends NPCAbstract>, NPCType> classMap      = Maps.newHashMap();
+	private static final Map<Class<? extends NPCAbstract<?, ?>>, NPCType> classMap      = Maps.newHashMap();
 
 	static {
 		for (NPCType npcType : values()) {
@@ -118,14 +118,14 @@ public enum NPCType {
 	}
 
 	@Getter private EntityType                   entityType;
-	@Getter private Class<? extends NPCAbstract> npcClass;
+	@Getter private Class<? extends NPCAbstract<?, ?>> npcClass;
 
-	NPCType(EntityType entityType, Class<? extends NPCAbstract> npcClass) {
+	NPCType(EntityType entityType, Class<? extends NPCAbstract<?, ?>> npcClass) {
 		this.entityType = entityType;
 		this.npcClass = npcClass;
 	}
 
-	NPCType(String entityTypeName, Class<? extends NPCAbstract> npcClass) {
+	NPCType(String entityTypeName, Class<? extends NPCAbstract<?, ?>> npcClass) {
 		try {
 			this.entityType = EntityType.valueOf(entityTypeName);
 			this.npcClass = npcClass;
@@ -138,7 +138,7 @@ public enum NPCType {
 		return entityTypeMap.get(checkNotNull(entityType));
 	}
 
-	public static NPCType forNpcClass(Class<? extends NPCAbstract> clazz) {
+	public static NPCType forNpcClass(Class<? extends NPCAbstract<?, ?>> clazz) {
 		return classMap.get(clazz);
 	}
 

@@ -17,7 +17,7 @@ public class NPCDeathEvent extends NPCEvent implements Cancellable {
 	private String                        damageSourceName;
 	private EntityDamageEvent.DamageCause damageCause;
 
-	public NPCDeathEvent(NPCAbstract npc, String damageSourceName, EntityDamageEvent.DamageCause damageCause) {
+	public NPCDeathEvent(NPCAbstract<?, ?> npc, String damageSourceName, EntityDamageEvent.DamageCause damageCause) {
 		super(npc);
 		this.damageSourceName = damageSourceName;
 		this.damageCause = damageCause;
