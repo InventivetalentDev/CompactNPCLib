@@ -19,6 +19,7 @@ public class MethodWatcher {
 	/**
 	 * Called for <code>non-void</code> methods.
 	 *
+	 * @param thiz The object instance to call the method on.
 	 * @param methodSignature signature of the called method
 	 * @param superSwitch     {@link SuperSwitch} to decide the super-call behaviour
 	 * @param args            method arguments

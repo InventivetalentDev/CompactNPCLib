@@ -1,5 +1,6 @@
 package org.inventivetalent.npclib.registry;
 
+import com.avaje.ebean.validation.NotNull;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import javassist.ClassPool;
@@ -20,8 +21,11 @@ import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.reflection.resolver.ConstructorResolver;
 import org.inventivetalent.reflection.resolver.FieldResolver;
 import org.inventivetalent.reflection.resolver.MethodResolver;
+import org.inventivetalent.reflection.resolver.ResolverQuery;
+import org.inventivetalent.reflection.resolver.wrapper.MethodWrapper;
 
-import java.lang.reflect.Constructor;
+		import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -98,11 +102,24 @@ public class NPCRegistry implements Iterable<NPCAbstract<?, ?>> {
 
 	static void injectEntity(Class<?> clazz, int id, String name) {
 		Class<?> EntityTypes = Reflection.nmsClassResolver.resolveSilent("EntityTypes");
-		FieldResolver fieldResolver = new FieldResolver(EntityTypes);
+		if(Minecraft.VERSION.newerThan(Minecraft.Version.v1_11_R1)) {
+			MethodResolver methodResolver = new MethodResolver(EntityTypes);
+			MethodWrapper method = methodResolver.resolveWrapper(new ResolverQuery("a", int.class,
+					String.class, Class.class, String.class));
+			if(method.exists()) {
+				method.getMethod().setAccessible(true);
+				method.invoke(null, id, name, clazz, name);
+			} else {
+				NPCLib.logger.warning("Could not inject " + clazz.getSimpleName() + " as " + name +
+						" with id " + id + " due to incompatible Minecraft verson!");
+			}
+		} else {
+			FieldResolver fieldResolver = new FieldResolver(EntityTypes);
 
-		((Map) fieldResolver.resolveWrapper("c").get(null)).put(name, clazz);
-		((Map) fieldResolver.resolveWrapper("d").get(null)).put(clazz, name);
-		((Map) fieldResolver.resolveWrapper("f").get(null)).put(clazz, Integer.valueOf(id));
+			((Map) fieldResolver.resolveWrapper("c").get(null)).put(name, clazz);
+			((Map) fieldResolver.resolveWrapper("d").get(null)).put(clazz, name);
+			((Map) fieldResolver.resolveWrapper("f").get(null)).put(clazz, Integer.valueOf(id));
+		}
 		NPCLib.logger.info("Injected " + clazz.getSimpleName() + " as " + name + " with id " + id);
 	}
 
@@ -164,6 +181,7 @@ public class NPCRegistry implements Iterable<NPCAbstract<?, ?>> {
 		try {
 			NPCInfo npcInfo = NPCInfo.of(npcClass);
 			NPCEntity npcEntity = createPlayerEntity(location, npcInfo, gameProfile);
+			System.out.println(npcEntity);
 			return wrapAndInitEntity(npcEntity, location, npcInfo, npcClass);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -255,7 +273,7 @@ public class NPCRegistry implements Iterable<NPCAbstract<?, ?>> {
 	}
 
 	protected <T extends NPCAbstract<?, ?>> T wrapAndInitEntity(NPCEntity entity, Location location, NPCInfo npcInfo,
-			Class<T> npcClass) throws Exception {
+																Class<T> npcClass) throws Exception {
 		// NPCAbstract npcAbstract = (NPCAbstract) new
 		// ConstructorResolver(npcClass).resolveFirstConstructorSilent().newInstance(entity);
 		NPCAbstract<?, ?> npcAbstract = entity.getNPC();
