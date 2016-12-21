@@ -181,7 +181,6 @@ public class NPCRegistry implements Iterable<NPCAbstract<?, ?>> {
 		try {
 			NPCInfo npcInfo = NPCInfo.of(npcClass);
 			NPCEntity npcEntity = createPlayerEntity(location, npcInfo, gameProfile);
-			System.out.println(npcEntity);
 			return wrapAndInitEntity(npcEntity, location, npcInfo, npcClass);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
