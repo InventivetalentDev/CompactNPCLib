@@ -27,14 +27,14 @@ public class NPCInfo {
 	private final String[]                   extraPackages;
 	private final String[]                   extraFields;
 	private final String[]                   extraMethods;
-	private       Class                      npcClass;
+	private       Class<?>                   npcClass;
 
 	public static NPCInfo of(NPC annotation) {
 		checkNotNull(annotation);
 		return new NPCInfo(annotation.id(), checkNotNull(annotation.type()), checkNotNull(annotation.bukkit()), checkNotNull(emptyToNull(annotation.nms())), checkNotNull(annotation.entity()), annotation.constructors(), annotation.extraPackages(), annotation.extraFields(), annotation.extraMethods());
 	}
 
-	public static NPCInfo of(Class clazz) {
+	public static NPCInfo of(Class<?> clazz) {
 		checkNotNull(clazz);
 		checkArgument(!Modifier.isAbstract(clazz.getModifiers()), "Cannot use @NPC on abstract class");
 		checkArgument(!clazz.isInterface(), "Cannot use @NPC on interface");

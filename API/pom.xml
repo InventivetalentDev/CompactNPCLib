@@ -1,137 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2016 inventivetalent.
-  ~
-  ~  Redistribution and use in source and binary forms, with or without modification, are
-  ~  permitted provided that the following conditions are met:
-  ~
-  ~     1. Redistributions of source code must retain the above copyright notice, this list of
-  ~        conditions and the following disclaimer.
-  ~
-  ~     2. Redistributions in binary form must reproduce the above copyright notice, this list
-  ~        of conditions and the following disclaimer in the documentation and/or other materials
-  ~        provided with the distribution.
-  ~
-  ~  THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED
-  ~  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
-  ~  FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR
-  ~  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-  ~  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-  ~  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-  ~  ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-  ~  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-  ~  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  ~
-  ~  The views and conclusions contained in the software and documentation are those of the
-  ~  authors and contributors and should not be interpreted as representing official policies,
-  ~  either expressed or implied, of anybody else.
-  -->
+   ~ Copyright 2016 inventivetalent.
+   ~
+   ~  Redistribution and use in source and binary forms, with or without modification, are
+   ~  permitted provided that the following conditions are met:
+   ~
+   ~     1. Redistributions of source code must retain the above copyright notice, this list of
+   ~        conditions and the following disclaimer.
+   ~
+   ~     2. Redistributions in binary form must reproduce the above copyright notice, this list
+   ~        of conditions and the following disclaimer in the documentation and/or other materials
+   ~        provided with the distribution.
+   ~
+   ~  THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED
+   ~  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+   ~  FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR
+   ~  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+   ~  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+   ~  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+   ~  ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+   ~  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+   ~  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+   ~
+   ~  The views and conclusions contained in the software and documentation are those of the
+   ~  authors and contributors and should not be interpreted as representing official policies,
+   ~  either expressed or implied, of anybody else.
+   -->
 
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>parent</artifactId>
-        <groupId>org.inventivetalent.npc-lib</groupId>
-        <version>parent</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>parent</artifactId>
+		<groupId>org.inventivetalent.npc-lib</groupId>
+		<version>parent</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
 
-    <artifactId>api</artifactId>
-    <version>${npclib.version}</version>
+	<artifactId>api</artifactId>
+	<version>${npclib.version}</version>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.10.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
-            <version>1.10.2-R0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.9.4-R0.1-SNAPSHOT</version>
-        </dependency>
+	<repositories>
+		<repository>
+			<id>inventive-repo</id>
+			<url>https://repo.inventivetalent.org/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>spigot-repo</id>
+			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
 
-        <dependency>
-            <groupId>org.inventivetalent.packetlistener</groupId>
-            <artifactId>api</artifactId>
-            <version>${packetlistener.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.inventivetalent</groupId>
-            <artifactId>reflectionhelper</artifactId>
-            <version>${reflection.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.inventivetalent</groupId>
-            <artifactId>pluginannotations</artifactId>
-            <version>${annotations.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.inventivetalent</groupId>
-            <artifactId>mc-wrappers</artifactId>
-            <version>${wrappers.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.inventivetalent</groupId>
-            <artifactId>vectors</artifactId>
-            <version>${vectors.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.inventivetalent</groupId>
-            <artifactId>boundingboxapi</artifactId>
-            <version>${boundingbox.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.inventivetalent</groupId>
-            <artifactId>apimanager</artifactId>
-            <version>${apimanager.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.inventivetalent</groupId>
-            <artifactId>nbt-lib</artifactId>
-            <version>${nbt.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.inventivetalent.nicknamer</groupId>
-            <artifactId>api</artifactId>
-            <version>${nicknamer.version}</version>
-        </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigot</artifactId>
+			<version>1.11-R0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>craftbukkit</artifactId>
+			<version>1.11-R0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.inventivetalent</groupId>
+			<artifactId>reflectionhelper</artifactId>
+			<version>${reflection.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.inventivetalent</groupId>
+			<artifactId>pluginannotations</artifactId>
+			<version>${annotations.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.inventivetalent</groupId>
+			<artifactId>mc-wrappers</artifactId>
+			<version>${wrappers.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.inventivetalent</groupId>
+			<artifactId>vectors</artifactId>
+			<version>${vectors.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.inventivetalent</groupId>
+			<artifactId>boundingboxapi</artifactId>
+			<version>${boundingbox.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.inventivetalent</groupId>
+			<artifactId>apimanager</artifactId>
+			<version>${apimanager.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.inventivetalent</groupId>
+			<artifactId>nbt-lib</artifactId>
+			<version>${nbt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.inventivetalent.nicknamer</groupId>
+			<artifactId>api</artifactId>
+			<version>${nicknamer.version}</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.inventivetalent</groupId>
-            <artifactId>mcstats-apimanager</artifactId>
-            <version>R7</version>
-        </dependency>
+		<dependency>
+			<groupId>org.inventivetalent</groupId>
+			<artifactId>mcstats-apimanager</artifactId>
+			<version>R7</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.16.8</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.6.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>19.0</version>
-        </dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.8</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>19.0</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.20.0-GA</version>
-        </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>org.javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.20.0-GA</version>
+		</dependency>
+	</dependencies>
 
 </project>

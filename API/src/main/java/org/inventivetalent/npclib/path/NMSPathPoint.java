@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 
 public class NMSPathPoint extends PathPoint {
 
-	static final Class               nmsPathPoint                 = Reflection.nmsClassResolver.resolveSilent("PathPoint");
+	static final Class<?>            nmsPathPoint                 = Reflection.nmsClassResolver.resolveSilent("PathPoint");
 	static final FieldResolver       PathPointFieldResolver       = new FieldResolver(nmsPathPoint);
 	static final ConstructorResolver PathPointConstructorResolver = new ConstructorResolver(nmsPathPoint);
 

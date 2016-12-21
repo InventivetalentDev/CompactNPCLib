@@ -110,7 +110,7 @@ public class ClassGenerator {
 				"}", generated));
 
 		// @ExtraMethods in the entity interface
-		Class superInterface = npcInfo.getEntity();
+		Class<?> superInterface = npcInfo.getEntity();
 		while (superInterface != null) {
 			for (Method method : superInterface.getMethods()) {
 				ExtraMethod annotation = method.getAnnotation(ExtraMethod.class);
@@ -132,7 +132,7 @@ public class ClassGenerator {
 		Map<String, Method> overridableMethods = new HashMap<>();
 		Set<String> ignoredMethods = new HashSet<>();
 
-		Class entityClass = npcInfo.getNMSClass();
+		Class<?> entityClass = npcInfo.getNMSClass();
 		while (entityClass != null) {
 			for (Method method : entityClass.getDeclaredMethods()) {
 				String signature = method.getName() + Arrays.toString(method.getParameterTypes());
@@ -198,7 +198,7 @@ public class ClassGenerator {
 		String paramString = joiner.join(paramStrings);
 		String callString = joiner.join(callStrings);
 		String objectCallString = joiner.join(objectCallStrings);
-		String superCallString = joiner.join(superCallStrings);
+		//String superCallString = joiner.join(superCallStrings);
 
 		String methodString = String.format("%1$s %2$s %3$s(%4$s) {\n",// Override method
 				access, returnType, name, paramString);
@@ -275,7 +275,7 @@ public class ClassGenerator {
 	static String reAssignContainers(Class<?>[] paramTypes) {
 		StringBuilder stringBuilder = new StringBuilder();
 		int i = 0;
-		for (Class c : paramTypes) {
+		for (Class<?> c : paramTypes) {
 			stringBuilder.append("param").append(i).append(" = (");
 			if (c.isPrimitive()) {
 				Class<?> wrapped = Primitives.wrap(c);

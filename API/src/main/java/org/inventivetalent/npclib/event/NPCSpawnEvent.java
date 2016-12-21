@@ -16,7 +16,7 @@ public class NPCSpawnEvent extends NPCEvent {
 	private static HandlerList handlerList = new HandlerList();
 	private CreatureSpawnEvent.SpawnReason spawnReason;
 
-	public NPCSpawnEvent(NPCAbstract npc, CreatureSpawnEvent.SpawnReason spawnReason) {
+	public NPCSpawnEvent(NPCAbstract<?, ?> npc, CreatureSpawnEvent.SpawnReason spawnReason) {
 		super(npc);
 		this.spawnReason = spawnReason;
 	}
