@@ -43,10 +43,10 @@
     </modules>
 
     <properties>
-        <npclib.version>2.3.0</npclib.version>
+        <npclib.version>2.3.1</npclib.version>
 
         <packetlistener.version>3.4.3</packetlistener.version>
-        <reflection.version>1.10.4-SNAPSHOT</reflection.version>
+        <reflection.version>1.11.0-SNAPSHOT</reflection.version>
         <annotations.version>1.4.3</annotations.version>
         <wrappers.version>1.0.1</wrappers.version>
         <vectors.version>1.0.0</vectors.version>

@@ -175,7 +175,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	// Watched
 
-	@Watch("void m()")
+	@Watch({"void A_()", "void t_()", "void m()"}) // A_() is 1.11, m() is 1.9 and 1.10, t_() is 1.8
 	public void onBaseTick(SuperSwitch superSwitch) {
 		tickAI();
 	}
