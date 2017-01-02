@@ -36,7 +36,7 @@ public class NPCCollisionEvent extends NPCEvent {
 
 	private Entity entity;
 
-	public NPCCollisionEvent(NPCAbstract npc, Entity with) {
+	public NPCCollisionEvent(NPCAbstract<?, ?> npc, Entity with) {
 		super(npc);
 		this.entity = with;
 	}

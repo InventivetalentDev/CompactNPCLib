@@ -48,7 +48,8 @@ public class NPCDamageEvent extends NPCEvent implements Cancellable {
 	private float                         amount;
 	private Entity                        damager;
 
-	public NPCDamageEvent(NPCAbstract npc, String damageSourceName, EntityDamageEvent.DamageCause damageCause, float amount, Entity damager) {
+	public NPCDamageEvent(NPCAbstract<?, ?> npc, String damageSourceName, EntityDamageEvent.DamageCause damageCause,
+			float amount, Entity damager) {
 		super(npc);
 
 		this.damageSourceName = damageSourceName;

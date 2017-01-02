@@ -7,9 +7,9 @@ import org.inventivetalent.npclib.npc.NPCAbstract;
 public abstract class NPCNBTEvent extends NPCEvent {
 
 	private final Object nbtTagHandle;
-	private final NBTTag nbtTag;
+	private final NBTTag<?> nbtTag;
 
-	public NPCNBTEvent(NPCAbstract npc, Object nbtTagHandle, NBTTag nbtTag) {
+	public NPCNBTEvent(NPCAbstract<?, ?> npc, Object nbtTagHandle, NBTTag<?> nbtTag) {
 		super(npc);
 		this.nbtTagHandle = nbtTagHandle;
 		this.nbtTag = nbtTag;
@@ -19,7 +19,7 @@ public abstract class NPCNBTEvent extends NPCEvent {
 		return nbtTagHandle;
 	}
 
-	public NBTTag getNbtTag() {
+	public NBTTag<?> getNbtTag() {
 		return nbtTag;
 	}
 }

@@ -26,12 +26,12 @@ public abstract class NPCInsentientAbstract<N extends NPCEntityInsentient, B ext
 		return AccessUtil.setAccessible(Reflection.nmsClassResolver.resolve("EntityInsentient").getDeclaredField("goalSelector")).get(getNpcEntity());
 	}
 
-	public Collection getGoalListB() throws ReflectiveOperationException {
-		return (Collection) AccessUtil.setAccessible(Reflection.nmsClassResolver.resolve("PathfinderGoalSelector").getDeclaredField("b")).get(getGoalSelector());
+	public Collection<?> getGoalListB() throws ReflectiveOperationException {
+		return (Collection<?>) AccessUtil.setAccessible(Reflection.nmsClassResolver.resolve("PathfinderGoalSelector").getDeclaredField("b")).get(getGoalSelector());
 	}
 
-	public Collection getGoalListC() throws ReflectiveOperationException {
-		return (Collection) AccessUtil.setAccessible(Reflection.nmsClassResolver.resolve("PathfinderGoalSelector").getDeclaredField("c")).get(getGoalSelector());
+	public Collection<?> getGoalListC() throws ReflectiveOperationException {
+		return (Collection<?>) AccessUtil.setAccessible(Reflection.nmsClassResolver.resolve("PathfinderGoalSelector").getDeclaredField("c")).get(getGoalSelector());
 	}
 
 	public void clearGoalSelector() {
@@ -47,12 +47,12 @@ public abstract class NPCInsentientAbstract<N extends NPCEntityInsentient, B ext
 		return AccessUtil.setAccessible(Reflection.nmsClassResolver.resolve("EntityInsentient").getDeclaredField("targetSelector")).get(getNpcEntity());
 	}
 
-	public Collection getTargetListB() throws ReflectiveOperationException {
-		return (Collection) AccessUtil.setAccessible(Reflection.nmsClassResolver.resolve("PathfinderGoalSelector").getDeclaredField("b")).get(getTargetSelector());
+	public Collection<?> getTargetListB() throws ReflectiveOperationException {
+		return (Collection<?>) AccessUtil.setAccessible(Reflection.nmsClassResolver.resolve("PathfinderGoalSelector").getDeclaredField("b")).get(getTargetSelector());
 	}
 
-	public Collection getTargetListC() throws ReflectiveOperationException {
-		return (Collection) AccessUtil.setAccessible(Reflection.nmsClassResolver.resolve("PathfinderGoalSelector").getDeclaredField("c")).get(getTargetSelector());
+	public Collection<?> getTargetListC() throws ReflectiveOperationException {
+		return (Collection<?>) AccessUtil.setAccessible(Reflection.nmsClassResolver.resolve("PathfinderGoalSelector").getDeclaredField("c")).get(getTargetSelector());
 	}
 
 	public void clearTargetSelector() {

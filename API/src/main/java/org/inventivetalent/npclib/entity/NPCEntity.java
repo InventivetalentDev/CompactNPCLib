@@ -14,7 +14,7 @@ public interface NPCEntity {
 	@ExtraMethod("public NPCAbstract getNPC() {\n"
 						 + "  return this.$npc;\n"
 						 + "}")
-	NPCAbstract getNPC();
+	NPCAbstract<?, ?> getNPC();
 
 	//	<T extends Entity> T getBukkitEntity();
 
@@ -30,6 +30,10 @@ public interface NPCEntity {
 
 	void setLocation(double x, double y, double z, float yaw, float pitch);
 
+	// The EnumMoveType was added in 1.11 as an anticheat feature.
+	@ExtraMethod("public void move(double x, double y, double z) {\n"
+			+ "  move(EnumMoveType.SELF, x, y, z);\n"
+			+ "}")
 	void move(double x, double y, double z);
 
 	// Helpers

@@ -39,7 +39,7 @@ public class NPCVelocityEvent extends NPCEvent implements Cancellable {
 	private double  y;
 	private double  z;
 
-	public NPCVelocityEvent(NPCAbstract npc, double x, double y, double z) {
+	public NPCVelocityEvent(NPCAbstract<?, ?> npc, double x, double y, double z) {
 		super(npc);
 		this.x = x;
 		this.y = y;
