@@ -18,7 +18,6 @@ import org.inventivetalent.packetlistener.handler.PacketOptions;
 import org.inventivetalent.packetlistener.handler.ReceivedPacket;
 import org.inventivetalent.packetlistener.handler.SentPacket;
 import org.inventivetalent.reflection.minecraft.Minecraft;
-import org.mcstats.APIMetricsLite;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -144,13 +143,6 @@ public class NPCLib implements API {
 
 		String version = getVersion();
 		logger.info("Version is " + version);
-		try {
-			APIMetricsLite metrics = new APIMetricsLite(plugin, "CompactNPCLib", version);
-			if (metrics.start()) {
-				logger.info("Metrics started");
-			}
-		} catch (Exception e) {
-		}
 	}
 
 	@Override
