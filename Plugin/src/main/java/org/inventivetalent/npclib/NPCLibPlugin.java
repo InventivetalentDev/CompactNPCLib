@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.inventivetalent.apihelper.APIManager;
 import org.inventivetalent.npclib.command.SpawnCommands;
+import org.inventivetalent.npclib.metrics.Metrics;
 import org.inventivetalent.npclib.registry.NPCRegistry;
 import org.inventivetalent.pluginannotations.PluginAnnotations;
 import org.inventivetalent.update.spiget.SpigetUpdate;
@@ -33,6 +34,8 @@ public class NPCLibPlugin extends JavaPlugin implements Listener {
 
 		Bukkit.getPluginManager().registerEvents(this, this);
 		PluginAnnotations.COMMAND.load(this, new SpawnCommands(this));
+
+		new Metrics(this);
 
 		SpigetUpdate spigetUpdate = new SpigetUpdate(this, 5853).setUserAgent("NPCLib/" + getDescription().getVersion()).setVersionComparator(VersionComparator.SEM_VER);
 		spigetUpdate.checkForUpdate(new UpdateCallback() {
