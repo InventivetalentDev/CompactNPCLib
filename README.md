@@ -1,6 +1,6 @@
 # CompactNPCLib
 
-[![Build Status](http://ci.inventivetalent.org/job/CompactNPCLib/badge/icon)](https://ci.inventivetalent.org/job/CompactNPCLib/)
+[![Build Status](https://travis-ci.org/InventivetalentDev/CompactNPCLib.svg?branch=master)](https://travis-ci.org/InventivetalentDev/CompactNPCLib)
 
 Library to create NPCs.  
 
