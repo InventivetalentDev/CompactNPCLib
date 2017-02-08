@@ -64,6 +64,7 @@ public enum NPCType {
 	HORSE("HORSE", NPCHorse.class),
 	RABBIT("RABBIT", NPCRabbit.class),
 	POLAR_BEAR("POLAR_BEAR", NPCPolarBear.class),
+	LLAMA("LLAMA", NPCLlama.class),
 
 	VILLAGER("VILLAGER", NPCVillager.class),
 
