@@ -32,6 +32,8 @@ public enum NPCType {
 	DROPPED_ITEM("DROPPED_ITEM", NPCItem.class),
 	EXPERIENCE_ORB("EXPERIENCE_ORB", NPCExperienceOrb.class),
 
+	HUSK("HUSK", NPCHusk.class),
+
 	ARMOR_STAND("ARMOR_STAND", NPCArmorStand.class),
 
 	CREEPER("CREEPER", NPCCreeper.class),
