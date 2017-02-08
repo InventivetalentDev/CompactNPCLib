@@ -67,7 +67,7 @@ public enum NPCType {
 
 	VILLAGER("VILLAGER", NPCVillager.class),
 
-	PLAYER("PLAYER", NPCPlayer.class),;
+	PLAYER("PLAYER", NPCPlayer.class);
 
 	private static final Map<EntityType, NPCType>                         entityTypeMap = Maps.newHashMap();
 	private static final Map<Class<? extends NPCAbstract<?, ?>>, NPCType> classMap      = Maps.newHashMap();
