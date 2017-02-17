@@ -1,7 +1,7 @@
 # CompactNPCLib
 
 [![Build Status](https://travis-ci.org/InventivetalentDev/CompactNPCLib.svg?branch=master)](https://travis-ci.org/InventivetalentDev/CompactNPCLib)
-[![GitHub version](https://badge.fury.io/gh/InventivetalentDev%2FCompactNPCLib.svg)](https://badge.fury.io/gh/InventivetalentDev%2FCompactNPCLib)
+[![GitHub release](https://img.shields.io/github/release/InventivetalentDev/CompactNPCLib.svg)](https://github.com/InventivetalentDev/CompactNPCLib/releases/latest)
 
 Library to create NPCs.  
 
