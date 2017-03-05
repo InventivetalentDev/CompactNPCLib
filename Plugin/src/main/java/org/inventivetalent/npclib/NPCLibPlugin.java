@@ -19,6 +19,8 @@ public class NPCLibPlugin extends JavaPlugin implements Listener {
 
 	@Override
 	public void onLoad() {
+		NPCLib.debug = getConfig().getBoolean("debug");
+
 		APIManager.registerAPI(npcLibInstance, this);
 	}
 
@@ -27,7 +29,6 @@ public class NPCLibPlugin extends JavaPlugin implements Listener {
 		saveDefaultConfig();
 
 		NPCLib.logger = getLogger();
-		NPCLib.debug = getConfig().getBoolean("debug");
 
 		APIManager.initAPI(NPCLib.class);
 		pluginNpcRegistry = NPCLib.createRegistry(this);
