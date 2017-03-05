@@ -349,10 +349,12 @@ public class ClassGenerator {
 
 		generated.addMethod(CtMethod.make("public void sendPacket(Packet packet) {}", generated));// TODO: NPCPacketEvent?
 
-		try {
-			generated.writeFile("generated");
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (NPCLib.debug) {
+			try {
+				generated.writeFile("generated");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return generated.toClass(INPCPlayerConnection.class.getClassLoader(), INPCPlayerConnection.class.getProtectionDomain());
 	}
@@ -420,10 +422,12 @@ public class ClassGenerator {
 		generated.addMethod(CtMethod.make("protected void doBeginRead() throws Exception {}", generated));
 		generated.addMethod(CtMethod.make("protected void doWrite(ChannelOutboundBuffer channelOutboundBuffer) throws Exception {}", generated));
 
-		try {
-			generated.writeFile("generated");
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (NPCLib.debug) {
+			try {
+				generated.writeFile("generated");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return generated.toClass(INPCChannel.class.getClassLoader(), INPCChannel.class.getProtectionDomain());
 	}
