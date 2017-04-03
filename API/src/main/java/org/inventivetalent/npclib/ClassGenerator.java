@@ -5,6 +5,7 @@ import com.google.common.primitives.Primitives;
 import com.google.common.reflect.Invokable;
 import javassist.*;
 import org.inventivetalent.npclib.annotation.ExtraMethod;
+import org.inventivetalent.npclib.annotation.ExtraMethods;
 import org.inventivetalent.npclib.annotation.NPCInfo;
 import org.inventivetalent.npclib.entity.NPCEntity;
 import org.inventivetalent.reflection.minecraft.Minecraft;
@@ -115,7 +116,18 @@ public class ClassGenerator {
 			for (Method method : superInterface.getMethods()) {
 				ExtraMethod annotation = method.getAnnotation(ExtraMethod.class);
 				if (annotation != null) {
-					generated.addMethod(CtMethod.make(annotation.value(), generated));
+					if(checkExtraVersionConditions(annotation)) {
+						generated.addMethod(CtMethod.make(annotation.value(), generated));
+					}
+				}
+
+				ExtraMethods annotation1 = method.getAnnotation(ExtraMethods.class);
+				if (annotation1 != null) {
+					for (ExtraMethod extraMethod : annotation1.value()) {
+						if(checkExtraVersionConditions(annotation)) {
+							generated.addMethod(CtMethod.make(extraMethod.value(), generated));
+						}
+					}
 				}
 			}
 			superInterface = superInterface.getSuperclass();
@@ -167,6 +179,31 @@ public class ClassGenerator {
 			}
 		}
 		return generated.toClass(NPCEntity.class.getClassLoader(), NPCEntity.class.getProtectionDomain());
+	}
+
+	static boolean checkExtraVersionConditions(ExtraMethod annotation) {
+		Minecraft.Version currentVersion = Minecraft.VERSION;
+
+		if (annotation.forVersion().length == 0 && annotation.fromVersion() == Minecraft.Version.UNKNOWN && annotation.untilVersion() == Minecraft.Version.UNKNOWN) {
+			// No version condition specified, just generate it
+			return true;
+		}
+
+		if (annotation.fromVersion() != Minecraft.Version.UNKNOWN && currentVersion.newerThan(annotation.fromVersion())) {
+			return true;
+		}
+		if (annotation.untilVersion() != Minecraft.Version.UNKNOWN && currentVersion.olderThan(annotation.untilVersion())) {
+			return true;
+		}
+		if (annotation.forVersion().length > 0) {
+			for (Minecraft.Version version : annotation.forVersion()) {
+				if (version == currentVersion) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	static CtMethod makeOverrideMethod(Method method, CtClass declaring) throws CannotCompileException {
@@ -312,10 +349,12 @@ public class ClassGenerator {
 
 		generated.addMethod(CtMethod.make("public void sendPacket(Packet packet) {}", generated));// TODO: NPCPacketEvent?
 
-		try {
-			generated.writeFile("generated");
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (NPCLib.debug) {
+			try {
+				generated.writeFile("generated");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return generated.toClass(INPCPlayerConnection.class.getClassLoader(), INPCPlayerConnection.class.getProtectionDomain());
 	}
@@ -383,10 +422,12 @@ public class ClassGenerator {
 		generated.addMethod(CtMethod.make("protected void doBeginRead() throws Exception {}", generated));
 		generated.addMethod(CtMethod.make("protected void doWrite(ChannelOutboundBuffer channelOutboundBuffer) throws Exception {}", generated));
 
-		try {
-			generated.writeFile("generated");
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (NPCLib.debug) {
+			try {
+				generated.writeFile("generated");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return generated.toClass(INPCChannel.class.getClassLoader(), INPCChannel.class.getProtectionDomain());
 	}

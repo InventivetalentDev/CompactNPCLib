@@ -5,6 +5,7 @@ import org.inventivetalent.npclib.annotation.ExtraMethod;
 import org.inventivetalent.npclib.annotation.NPCInfo;
 import org.inventivetalent.npclib.npc.NPCAbstract;
 import org.inventivetalent.npclib.watcher.MethodWatcher;
+import org.inventivetalent.reflection.minecraft.Minecraft;
 import org.inventivetalent.vectors.d3.Vector3DDouble;
 
 public interface NPCEntity {
@@ -31,9 +32,10 @@ public interface NPCEntity {
 	void setLocation(double x, double y, double z, float yaw, float pitch);
 
 	// The EnumMoveType was added in 1.11 as an anticheat feature.
-	@ExtraMethod("public void move(double x, double y, double z) {\n"
+	@ExtraMethod(value = "public void move(double x, double y, double z) {\n"
 			+ "  move(EnumMoveType.SELF, x, y, z);\n"
-			+ "}")
+			+ "}",
+				 fromVersion = Minecraft.Version.v1_11_R1)
 	void move(double x, double y, double z);
 
 	// Helpers
