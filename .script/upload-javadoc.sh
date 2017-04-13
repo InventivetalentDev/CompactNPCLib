@@ -14,4 +14,4 @@ if [ -n "$GITHUB_TOKEN" ]; then
     # This works because the API key can replace your password.
     git push -f -q https://InventiveBot:$GITHUB_TOKEN@github.com/InventivetalentDev/CompactNPCLib gh-pages &2>/dev/null
     cd "$TRAVIS_BUILD_DIR"
-endif
+fi
