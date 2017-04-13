@@ -56,7 +56,6 @@
         <nbt.version>1.0.1-SNAPSHOT</nbt.version>
         <nicknamer.version>3.13.1-SNAPSHOT</nicknamer.version>
       
-        <github.global.userName>InventiveBot</github.global.userName>
         <github.global.server>github</github.global.server>
     </properties>
 
