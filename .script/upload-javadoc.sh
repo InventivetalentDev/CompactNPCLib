@@ -5,7 +5,7 @@ if [ -n "$GITHUB_TOKEN" ]; then
     cd docs
     git init
     git checkout -b gh-pages || git checkout gh-pageswd
-    cp $TRAVIS_BUILD_DIR/target/site/apidocs .
+    cp -R $TRAVIS_BUILD_DIR/target/site/apidocs .
     git add .
     git config --global user.email "git-bot@inventivetalent.org"
     git config --global user.name "InventiveBot"
