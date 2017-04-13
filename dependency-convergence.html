@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>parent - Reactor Dependency Convergence</title>
+    <title>api - Reactor Dependency Convergence</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -17,7 +17,7 @@
   <body class="composite">
     <div id="banner">
                     <div id="bannerLeft">
-                parent
+                api
                 </div>
                     <div class="clear">
         <hr/>
@@ -28,9 +28,9 @@
                     
                 <div class="xleft">
         <span id="publishDate">Last Published: 2017-04-13</span>
-                  &nbsp;| <span id="projectVersion">Version: parent</span>
+                  &nbsp;| <span id="projectVersion">Version: 2.5.0-SNAPSHOT</span>
                       </div>
-            <div class="xright">                    <a href="./" title="parent">parent</a>
+            <div class="xright">                    <a href="./" title="api">api</a>
               
                     
       </div>
@@ -42,13 +42,10 @@
       <div id="navcolumn">
              
                     
-                                          <h5>Modules</h5>
+                                <h5>Parent Project</h5>
                   <ul>
                   <li class="none">
-                          <a href="api/index.html" title="Unnamed - org.inventivetalent.npc-lib:api:jar:2.5.0-SNAPSHOT">Unnamed - org.inventivetalent.npc-lib:api:jar:2.5.0-SNAPSHOT</a>
-            </li>
-                  <li class="none">
-                          <a href="plugin/index.html" title="Unnamed - org.inventivetalent.npc-lib:plugin:jar:2.5.0-SNAPSHOT">Unnamed - org.inventivetalent.npc-lib:plugin:jar:2.5.0-SNAPSHOT</a>
+                          <a href="../index.html" title="parent">parent</a>
             </li>
           </ul>
                        <h5>Project Documentation</h5>
@@ -56,6 +53,9 @@
                                                                                                                                                                                                             <li class="expanded">
                           <a href="project-info.html" title="Project Information">Project Information</a>
                     <ul>
+                      <li class="none">
+                          <a href="dependencies.html" title="Dependencies">Dependencies</a>
+            </li>
                       <li class="none">
             <strong>Dependency Convergence</strong>
           </li>
@@ -67,9 +67,6 @@
             </li>
                       <li class="none">
                           <a href="index.html" title="About">About</a>
-            </li>
-                      <li class="none">
-                          <a href="modules.html" title="Project Modules">Project Modules</a>
             </li>
                       <li class="none">
                           <a href="plugin-management.html" title="Plugin Management">Plugin Management</a>
@@ -111,7 +108,7 @@
 <td>48</td></tr>
 <tr class="b">
 <th>Number of unique artifacts (NOA):</th>
-<td>59</td></tr>
+<td>62</td></tr>
 <tr class="a">
 <th>Number of version-conflicting artifacts (NOC):</th>
 <td>6</td></tr>
@@ -120,7 +117,7 @@
 <td>14</td></tr>
 <tr class="a">
 <th>Convergence (NOD/NOA):</th>
-<td><img alt="[Error]" src="images/icon_error_sml.gif" />&#160;<b>81 %</b></td></tr>
+<td><img alt="[Error]" src="images/icon_error_sml.gif" />&#160;<b>77 %</b></td></tr>
 <tr class="b">
 <th>Ready for release (100% convergence and no SNAPSHOTS):</th>
 <td><img alt="[Error]" src="images/icon_error_sml.gif" />&#160;<b>Error</b><br />You do not have 100% convergence.<br />You have SNAPSHOT dependencies.</td></tr></table></div>
@@ -315,7 +312,7 @@
 <td width="25%">3.13.1-SNAPSHOT</td>
 <td>
 <ol style="list-style-type: decimal">
-<li>org.inventivetalent.npc-lib:api:jar:2.5.0-SNAPSHOT<br />\-&#160;org.inventivetalent.nicknamer:api:jar:3.13.1-SNAPSHOT:compile<br /></li><br /></ol></td></tr></table></td></tr></table></div>
+<li>org.inventivetalent.npc-lib:plugin:jar:2.5.0-SNAPSHOT<br />\-&#160;org.inventivetalent.npc-lib:api:jar:2.5.0-SNAPSHOT:compile<br />&#160;&#160;&#160;\-&#160;org.inventivetalent.nicknamer:api:jar:3.13.1-SNAPSHOT:compile<br /></li><br /></ol></td></tr></table></td></tr></table></div>
 <div class="section">
 <h4>org.inventivetalent:apimanager<a name="org.inventivetalent:apimanager"></a></h4>
 <table border="0" class="bodyTable">
@@ -375,7 +372,7 @@
 <td width="25%">1.0.1-SNAPSHOT</td>
 <td>
 <ol style="list-style-type: decimal">
-<li>org.inventivetalent.npc-lib:api:jar:2.5.0-SNAPSHOT<br />\-&#160;org.inventivetalent:nbt-lib:jar:1.0.1-SNAPSHOT:compile<br /></li><br /></ol></td></tr></table></td></tr></table></div>
+<li>org.inventivetalent.npc-lib:plugin:jar:2.5.0-SNAPSHOT<br />\-&#160;org.inventivetalent.npc-lib:api:jar:2.5.0-SNAPSHOT:compile<br />&#160;&#160;&#160;\-&#160;org.inventivetalent:nbt-lib:jar:1.0.1-SNAPSHOT:compile<br /></li><br /></ol></td></tr></table></td></tr></table></div>
 <div class="section">
 <h4>org.inventivetalent:pluginannotations<a name="org.inventivetalent:pluginannotations"></a></h4>
 <table border="0" class="bodyTable">
@@ -387,7 +384,7 @@
 <td width="25%">1.4.7-SNAPSHOT</td>
 <td>
 <ol style="list-style-type: decimal">
-<li>org.inventivetalent.npc-lib:api:jar:2.5.0-SNAPSHOT<br />\-&#160;org.inventivetalent:pluginannotations:jar:1.4.7-SNAPSHOT:compile<br /></li><br /></ol></td></tr></table></td></tr></table></div>
+<li>org.inventivetalent.npc-lib:plugin:jar:2.5.0-SNAPSHOT<br />\-&#160;org.inventivetalent.npc-lib:api:jar:2.5.0-SNAPSHOT:compile<br />&#160;&#160;&#160;\-&#160;org.inventivetalent:pluginannotations:jar:1.4.7-SNAPSHOT:compile<br /></li><br /></ol></td></tr></table></td></tr></table></div>
 <div class="section">
 <h4>org.inventivetalent:reflectionhelper<a name="org.inventivetalent:reflectionhelper"></a></h4>
 <table border="0" class="bodyTable">
