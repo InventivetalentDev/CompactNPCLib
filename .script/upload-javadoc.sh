@@ -1,7 +1,7 @@
 #!/bin/sh
 if [ -n "$GITHUB_TOKEN" ]; then
     cd "$TRAVIS_BUILD_DIR"
-    git clone https://github.com/InventivetalentDev/CompactNPCLib.git
+    git clone https://github.com/InventivetalentDev/CompactNPCLib.git docs
     cd docs
     git init
     git checkout -b gh-pages || git checkout gh-pageswd
