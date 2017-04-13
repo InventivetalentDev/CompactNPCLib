@@ -5,7 +5,8 @@ if [ -n "$GITHUB_TOKEN" ]; then
     git init
     git checkout -b gh-pages || git checkout gh-pages
     git add .
-    git -c user.name='InventiveBot' -c user.email='git-bot@inventivetalent.org' 
+    git config --global user.email "git-bot@inventivetalent.org"
+    git config --global user.name "InventiveBot"
     git commit -m "Update Javadoc"
     # Make sure to make the output quiet, or else the API token will leak!
     # This works because the API key can replace your password.
