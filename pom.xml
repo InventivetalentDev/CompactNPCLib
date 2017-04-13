@@ -55,8 +55,6 @@
         <apimanager.version>1.0.3-SNAPSHOT</apimanager.version>
         <nbt.version>1.0.1-SNAPSHOT</nbt.version>
         <nicknamer.version>3.13.1-SNAPSHOT</nicknamer.version>
-      
-        <github.global.server>github</github.global.server>
     </properties>
 
     <build>
@@ -81,25 +79,6 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-          <plugin>
-            <groupId>com.github.github</groupId>
-            <artifactId>site-maven-plugin</artifactId>
-            <version>0.12</version>
-            <configuration>
-              <message>Creating site for ${project.version}</message>
-              <repositoryOwner>InventivetalentDev</repositoryOwner>
-              <repositoryName>CompactNPCLib</repositoryName>
-              <merge>true</merge>
-            </configuration>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>site</goal>
-                </goals>
-                <phase>site</phase>
-              </execution>
-            </executions>
-          </plugin>
         </plugins>
     </build>
 
