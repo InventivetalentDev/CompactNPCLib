@@ -3,9 +3,6 @@ jdk:
 - oraclejdk8
 
 script: "mvn javadoc:aggregate deploy --settings settings.xml"
-before_script:
-  - "chmod +x .script/upload-javadoc.sh"
-after_success: ".script/upload-javadoc.sh"
 env:
   global:
   - secure: "qxDGdJ+QcUTNU3ACL0wLT06CmQhuN/gyi1op/sBWLP1MKR1WBbgsdCeoLNu5JWt008v3rU+cBrk8ZL0zGcnc12BGWqiHmbWX6Y0nHeI7crBxtXV2Nbjb5XXP3PvO5m+2s29Lb4CCUVmgBxPiaKVNbIm6Ax6UMYTvQW+MIh556XCtemhDGqswqgQDptSzk+WPUd86cFhGLTMd1vP8qs0h/Kos34bpF8D+Zi37zbxF4piuS4Z39xKJtkwD96HFbAfY9Cz59WCycj3x5v7Gcyj4k3c5ji6MRq6BEzX1gDJVuwpT+TgJMByAhomNvwmyZdEA48YC5+5CbQ76w1RbzPok79FcsRlvMDccxETMpnuF51BF4vtyMQSSadnJjAh2B0vAbZroroXbI26ndroB5xhloNl3ogHvkGeIpufJTwiWvEUsTP5JkvM+b15+lHbiudh/uLblc0rWX+ld3npwOeZ0sV5gznt+mwKDW+Gz+FIiurJAURIIszHxh3YC2O20ylSAjcKjvF359kQpv0YyOIpOpjXe9XgZFeCzadzXh+RKj1tuQbDbk8/2w+n6/JipwPtdJOfxQKbXg2CQQQaIIgBMV7KvlzxfLqjio4L8G87XAbQKxbsLVFwr1wQN8DQ7LCli13TBjCFkTwKCyatol+cDYsgO0zYjIQo6/n8zkbx8Pn4="
