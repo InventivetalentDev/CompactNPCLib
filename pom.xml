@@ -36,6 +36,7 @@
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
     <version>parent</version>
+    <url>https://github.com/InventivetalentDev/CompactNPCLib</url>
 
     <modules>
         <module>API</module>
@@ -55,6 +56,7 @@
         <nbt.version>1.0.1-SNAPSHOT</nbt.version>
         <nicknamer.version>3.13.1-SNAPSHOT</nicknamer.version>
       
+        <github.global.userName>InventiveBot</github.global.userName>
         <github.global.server>github</github.global.server>
     </properties>
 
