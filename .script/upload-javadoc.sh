@@ -9,6 +9,6 @@ if [ -n "$GITHUB_TOKEN" ]; then
     git commit -m "Update Javadoc"
     # Make sure to make the output quiet, or else the API token will leak!
     # This works because the API key can replace your password.
-    git push -f -q https://InventiveBot:$GITHUB_TOKEN@github.com/InventivetalentDev/CompactNPCLibs gh-pages &2>/dev/null
+    git push -f -q https://InventiveBot:$GITHUB_TOKEN@github.com/InventivetalentDev/CompactNPCLib gh-pages &2>/dev/null
     cd "$TRAVIS_BUILD_DIR"
   fi
