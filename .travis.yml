@@ -3,6 +3,8 @@ jdk:
 - oraclejdk8
 
 script: "mvn deploy --settings settings.xml"
+before_script:
+  - "chmod +x .script/upload-javadoc.sh"
 after_success: ".script/upload-javadoc.sh"
 env:
   global:
