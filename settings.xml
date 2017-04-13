@@ -13,6 +13,6 @@
         <server>
             <id>github</id>
             <password>${env.GITHUB_TOKEN}</password>
-            </server>
+        </server>
     </servers>
 </settings>
