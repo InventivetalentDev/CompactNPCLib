@@ -54,6 +54,8 @@
         <apimanager.version>1.0.3-SNAPSHOT</apimanager.version>
         <nbt.version>1.0.1-SNAPSHOT</nbt.version>
         <nicknamer.version>3.13.1-SNAPSHOT</nicknamer.version>
+      
+        <github.global.server>github</github.global.server>
     </properties>
 
     <build>
