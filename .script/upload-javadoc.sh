@@ -1,5 +1,5 @@
 #!/bin/sh
-if [ -n "$GITHUB_API_KEY" ]; then
+if [ -n "$GITHUB_TOKEN" ]; then
     cd "$TRAVIS_BUILD_DIR"
     mkdir docs
     cd docs
@@ -12,6 +12,6 @@ if [ -n "$GITHUB_API_KEY" ]; then
     git commit -m "Update Javadoc"
     # Make sure to make the output quiet, or else the API token will leak!
     # This works because the API key can replace your password.
-    git push -f -q https://InventiveBot:$GITHUB_API_KEY@github.com/InventivetalentDev/CompactNPCLibs gh-pages &2>/dev/null
+    git push -f -q https://InventiveBot:$GITHUB_TOKEN@github.com/InventivetalentDev/CompactNPCLibs gh-pages &2>/dev/null
     cd "$TRAVIS_BUILD_DIR"
 endif
