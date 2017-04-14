@@ -8,7 +8,7 @@ git clone --quiet --branch=gh-pages https://${GITHUB_TOKEN}@github.com/Inventive
 
 cd gh-pages
 git rm -rf .
-cp -Rf $TRAVIS_BUILD_DIR/target/site .
+cp -Rf $TRAVIS_BUILD_DIR/target/site/apidocs .
 git add -f .
 git commit -m "Javadoc for build $TRAVIS_BUILD_NUMBER"
 git push -fq origin gh-pages > /dev/null
