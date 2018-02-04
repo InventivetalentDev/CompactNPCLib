@@ -1,14 +1,17 @@
-if [ -n "$GITHUB_API_KEY" ]; then
-    cd "$TRAVIS_BUILD_DIR"
-    mkdir docs
-    cd docs
-    git init
-    git checkout -b gh-pages || git checkout gh-pages
-    git add .
-    git -c user.name='InventiveBot' -c user.email='git-bot@inventivetalent.org' 
-    git commit -m Update Javadoc
-    # Make sure to make the output quiet, or else the API token will leak!
-    # This works because the API key can replace your password.
-    git push -f -q https://InventiveBot:$GITHUB_API_KEY@github.com/InventivetalentDev/CompactNPCLibs gh-pages &2>/dev/null
-    cd "$TRAVIS_BUILD_DIR"
-  fi
+#!/bin/bash
+echo -e "Uploading Javadoc...\n"
+
+cd $HOME
+git config --global user.email "git-bot@inventivetalent.org"
+git config --global user.name "InventiveBot"
+git clone --quiet --branch=gh-pages https://${GITHUB_TOKEN}@github.com/InventivetalentDev/CompactNPCLib gh-pages > /dev/null
+
+cd gh-pages
+git rm -rf .
+cp -Rf $TRAVIS_BUILD_DIR/target/site/apidocs .
+git add -f .
+git commit -m "Javadoc for #$TRAVIS_BUILD_NUMBER"
+git push -fq origin gh-pages > /dev/null
+
+echo -e "Uploaded Javadoc\n"
+ 

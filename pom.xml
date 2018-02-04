@@ -36,6 +36,7 @@
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
     <version>parent</version>
+    <url>https://github.com/InventivetalentDev/CompactNPCLib</url>
 
     <modules>
         <module>API</module>
