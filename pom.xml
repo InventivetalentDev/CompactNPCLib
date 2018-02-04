@@ -46,14 +46,14 @@
         <npclib.version>2.5.0-SNAPSHOT</npclib.version>
 
         <packetlistener.version>3.5.0</packetlistener.version>
-        <reflection.version>1.11.0-SNAPSHOT</reflection.version>
+        <reflection.version>1.13.0-SNAPSHOT</reflection.version>
         <annotations.version>1.4.7-SNAPSHOT</annotations.version>
         <wrappers.version>1.0.3-SNAPSHOT</wrappers.version>
         <vectors.version>1.0.0</vectors.version>
         <boundingbox.version>1.2.3</boundingbox.version>
         <apimanager.version>1.0.3-SNAPSHOT</apimanager.version>
         <nbt.version>1.0.1-SNAPSHOT</nbt.version>
-        <nicknamer.version>3.13.1-SNAPSHOT</nicknamer.version>
+        <nicknamer.version>3.14.1-SNAPSHOT</nicknamer.version>
     </properties>
 
     <build>
