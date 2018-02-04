@@ -381,6 +381,7 @@ public class ClassGenerator {
 		generated.addField(CtField.make("private ChannelMetadata metadata;", generated));
 		generated.addField(CtField.make("private boolean open = false;", generated));
 
+		// IMPORTANT: Initialize the metadata *first*, because the config needs a non-null metadata to be present when initialized
 		generated.addConstructor(CtNewConstructor.make("public NPCChannel(io.netty.channel.Channel parent) {"
 				+ "  super(parent);\n"
 				+ "  this.metadata = new ChannelMetadata(false);\n"
