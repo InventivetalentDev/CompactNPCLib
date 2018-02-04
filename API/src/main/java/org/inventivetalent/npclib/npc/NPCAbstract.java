@@ -241,7 +241,7 @@ public abstract class NPCAbstract<N extends NPCEntity, B extends Entity> {
 
 	//NBT
 
-	@Watch("* e(NBTTagCompound)")
+	@Watch({"* e(NBTTagCompound)","* save(NBTTagCompound)"})
 	public void onNBTWrite(final ObjectContainer<Object> nbtTagCompound) {
 		NPCLib.debug("Writing", this.getClass().getName(), "to NBT");
 
