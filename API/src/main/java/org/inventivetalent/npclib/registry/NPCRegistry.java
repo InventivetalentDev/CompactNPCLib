@@ -1,6 +1,5 @@
 package org.inventivetalent.npclib.registry;
 
-import com.avaje.ebean.validation.NotNull;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import javassist.ClassPool;
@@ -24,8 +23,7 @@ import org.inventivetalent.reflection.resolver.MethodResolver;
 import org.inventivetalent.reflection.resolver.ResolverQuery;
 import org.inventivetalent.reflection.resolver.wrapper.MethodWrapper;
 
-		import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
+import java.lang.reflect.Constructor;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -71,8 +69,7 @@ public class NPCRegistry implements Iterable<NPCAbstract<?, ?>> {
 	/**
 	 * Injects the specified NPC classes, so the entities can be loaded properly by the server
 	 *
-	 * @param classes
-	 *            classes to inject
+	 * @param classes classes to inject
 	 */
 	public static void injectClasses(Class<?>... classes) {
 		for (Class<?> clazz : classes) {
@@ -83,30 +80,35 @@ public class NPCRegistry implements Iterable<NPCAbstract<?, ?>> {
 		}
 	}
 
-	static Class<?> getOrGenerateClass(NPCInfo npcType) {
-		if (generatedClasses.containsKey(npcType)) {
-			return generatedClasses.get(npcType);
+	static Class<?> getOrGenerateClass(NPCInfo npcInfo) {
+		if (generatedClasses.containsKey(npcInfo)) {
+			return generatedClasses.get(npcInfo);
 		}
 		ClassPool classPool = ClassPool.getDefault();
 		try {
-			Class<?> generated = ClassGenerator.generateEntityClass(classPool, npcType);
-			generatedClasses.put(npcType, generated);
-			if (npcType.getId() != -1) {
-				injectEntity(generated, npcType.getId(), npcType.getNPCClassName());
+			Class<?> generated = ClassGenerator.generateEntityClass(classPool, npcInfo);
+			generatedClasses.put(npcInfo, generated);
+			if (npcInfo.getId() != -1) {
+				injectEntity(generated, npcInfo.getId(), npcInfo.getNPCClassName());
 			}// -1 -> special entity, don't inject
 			return generated;
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			System.err.println("[NPCLib] Failed to inject Entity " + npcInfo.getType());
+			System.err.println("[NPCLib] It won't be available for usage by plugins.");
+			if (NPCLib.debug) {
+				e.printStackTrace();
+			}
 		}
+		return null;
 	}
 
 	static void injectEntity(Class<?> clazz, int id, String name) {
 		Class<?> EntityTypes = Reflection.nmsClassResolver.resolveSilent("EntityTypes");
-		if(Minecraft.VERSION.newerThan(Minecraft.Version.v1_11_R1)) {
+		if (Minecraft.VERSION.newerThan(Minecraft.Version.v1_11_R1)) {
 			MethodResolver methodResolver = new MethodResolver(EntityTypes);
 			MethodWrapper method = methodResolver.resolveWrapper(new ResolverQuery("a", int.class,
 					String.class, Class.class, String.class));
-			if(method.exists()) {
+			if (method.exists()) {
 				method.getMethod().setAccessible(true);
 				method.invoke(null, id, name, clazz, name);
 			} else {
@@ -126,12 +128,9 @@ public class NPCRegistry implements Iterable<NPCAbstract<?, ?>> {
 	/**
 	 * Creates and spawns the specified NPC Entity
 	 *
-	 * @param location
-	 *            {@link Location} to spawn the entity at
-	 * @param npcClass
-	 *            NPC-Class to spawn
-	 * @param <T>
-	 *            a NPC class extending {@link NPCAbstract}
+	 * @param location {@link Location} to spawn the entity at
+	 * @param npcClass NPC-Class to spawn
+	 * @param <T>      a NPC class extending {@link NPCAbstract}
 	 * @return the spawned NPC Entity
 	 */
 	public <T extends NPCAbstract<?, ?>> T spawnNPC(Location location, Class<T> npcClass) {
@@ -149,10 +148,8 @@ public class NPCRegistry implements Iterable<NPCAbstract<?, ?>> {
 	/**
 	 * Creates and spawns the specified NPC Type
 	 *
-	 * @param location
-	 *            {@link Location} to spawn the entity at
-	 * @param npcType
-	 *            type of the NPC
+	 * @param location {@link Location} to spawn the entity at
+	 * @param npcType  type of the NPC
 	 * @return the spawned NPC Entity
 	 */
 
@@ -163,14 +160,10 @@ public class NPCRegistry implements Iterable<NPCAbstract<?, ?>> {
 	/**
 	 * Creates and spawns a player NPC entity
 	 *
-	 * @param location
-	 *            {@link Location} to spawn the entity at
-	 * @param npcClass
-	 *            NPC-Class to spawn
-	 * @param gameProfile
-	 *            {@link GameProfileWrapper} to use for the player
-	 * @param <T>
-	 *            a NPC class extending {@link NPCHumanAbstract}
+	 * @param location    {@link Location} to spawn the entity at
+	 * @param npcClass    NPC-Class to spawn
+	 * @param gameProfile {@link GameProfileWrapper} to use for the player
+	 * @param <T>         a NPC class extending {@link NPCHumanAbstract}
 	 * @return the spawned NPC entity
 	 */
 	public <T extends NPCHumanAbstract<?, ?>> T spawnPlayerNPC(Location location, Class<T> npcClass,
@@ -190,16 +183,11 @@ public class NPCRegistry implements Iterable<NPCAbstract<?, ?>> {
 	/**
 	 * Creates and spawns a player NPC entity
 	 *
-	 * @param location
-	 *            {@link Location} to spawn the entity at
-	 * @param npcClass
-	 *            NPC-Class to spawn
-	 * @param uuid
-	 *            {@link UUID} of the player
-	 * @param name
-	 *            Name of the player
-	 * @param <T>
-	 *            a NPC class extending {@link NPCHumanAbstract}
+	 * @param location {@link Location} to spawn the entity at
+	 * @param npcClass NPC-Class to spawn
+	 * @param uuid     {@link UUID} of the player
+	 * @param name     Name of the player
+	 * @param <T>      a NPC class extending {@link NPCHumanAbstract}
 	 * @return the spawned NPC entity
 	 */
 	public <T extends NPCHumanAbstract<?, ?>> T spawnPlayerNPC(Location location, Class<T> npcClass, UUID uuid, String name) {
@@ -238,6 +226,9 @@ public class NPCRegistry implements Iterable<NPCAbstract<?, ?>> {
 		}
 
 		Class<?> clazz = getOrGenerateClass(npcInfo);
+		if (clazz == null) {
+			throw new RuntimeException("Entity " + npcInfo.getType() + " is not available in this version!");
+		}
 
 		try {
 			// noinspection unchecked
@@ -251,14 +242,17 @@ public class NPCRegistry implements Iterable<NPCAbstract<?, ?>> {
 
 	protected EntityPlayer createPlayerEntity(Location location, NPCInfo npcInfo, GameProfileWrapper gameProfile) {
 		Class<?> clazz = getOrGenerateClass(npcInfo);
+		if (clazz == null) {
+			throw new RuntimeException("Entity " + npcInfo.getType() + " is not available in this version!");
+		}
 		try {
 			Object minecraftServer = new MethodResolver(Bukkit.getServer().getClass()).resolveWrapper("getServer")
 					.invoke(Bukkit.getServer());
 			Object worldServer = Minecraft.getHandle(location.getWorld());
 			Object interactManager = new ConstructorResolver(
 					Reflection.nmsClassResolver.resolve("PlayerInteractManager"))
-							.resolve(new Class[] { Reflection.nmsClassResolver.resolve("World") })
-							.newInstance(worldServer);
+					.resolve(new Class[] { Reflection.nmsClassResolver.resolve("World") })
+					.newInstance(worldServer);
 
 			// noinspection unchecked
 			Constructor<?> constructor = clazz.getConstructor(Reflection.nmsClassResolver.resolve("MinecraftServer"),
@@ -272,7 +266,7 @@ public class NPCRegistry implements Iterable<NPCAbstract<?, ?>> {
 	}
 
 	protected <T extends NPCAbstract<?, ?>> T wrapAndInitEntity(NPCEntity entity, Location location, NPCInfo npcInfo,
-																Class<T> npcClass) throws Exception {
+			Class<T> npcClass) throws Exception {
 		// NPCAbstract npcAbstract = (NPCAbstract) new
 		// ConstructorResolver(npcClass).resolveFirstConstructorSilent().newInstance(entity);
 		NPCAbstract<?, ?> npcAbstract = entity.getNPC();
