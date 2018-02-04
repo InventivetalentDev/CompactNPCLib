@@ -377,15 +377,21 @@ public class ClassGenerator {
 		classPool.importPackage("org.inventivetalent.npclib.entity.generated");
 		classPool.importPackage("org.inventivetalent.npclib.entity.generated.netty");
 
+		generated.addField(CtField.make("private ChannelConfig config;", generated));
+		generated.addField(CtField.make("private ChannelMetadata metadata;", generated));
+		generated.addField(CtField.make("private boolean open = false;", generated));
+
 		generated.addConstructor(CtNewConstructor.make("public NPCChannel(io.netty.channel.Channel parent) {"
 				+ "  super(parent);\n"
+				+ "  this.metadata = new ChannelMetadata(false);\n"
+				+ "  this.config = new DefaultChannelConfig(this);\n"
 				+ "}", generated));
 		generated.addConstructor(CtNewConstructor.make("public NPCChannel() {\n"
 				+ "  super(null);\n"
+				+ "  this.metadata = new ChannelMetadata(false);\n"
+				+ "  this.config = new DefaultChannelConfig(this);\n"
 				+ "}", generated));
 
-		generated.addField(CtField.make("private final ChannelConfig config = new DefaultChannelConfig(this);", generated));
-		generated.addField(CtField.make("private boolean open = false;", generated));
 
 		generated.addMethod(CtMethod.make("public ChannelConfig config() {"
 				+ "  this.config.setAutoRead(true);\n"
@@ -402,7 +408,7 @@ public class ClassGenerator {
 				+ "  return false;\n"
 				+ "}", generated));
 		generated.addMethod(CtMethod.make("public ChannelMetadata metadata() {\n"
-				+ "  return null;\n"
+				+ "  return this.metadata;\n"
 				+ "}", generated));
 		generated.addMethod(CtMethod.make("protected io.netty.channel.AbstractChannel.AbstractUnsafe newUnsafe() {\n"
 				+ "  return null;\n"
