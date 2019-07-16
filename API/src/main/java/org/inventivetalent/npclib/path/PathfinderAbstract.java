@@ -29,11 +29,6 @@ public abstract class PathfinderAbstract<N extends NPCAbstract<?, ?>> extends AI
 	public void tick() {
 		super.tick();
 
-		for (int i = 0; i < this.pathEntity.getLength(); i++) {
-			NMSPathPoint point = this.pathEntity.getPoint(i);
-			getNpcWorld().spawnParticle(Particle.FLAME, point.getX() + .5, point.getY() + .5, point.getZ() + .5, 1, 0, 0, 0, 0, null);
-		}
-
 		if (this.currentPoint == null) {
 			// We have no points!
 			finished = true;
