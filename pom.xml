@@ -44,7 +44,7 @@
     </modules>
 
     <properties>
-        <npclib.version>2.5.1-SNAPSHOT</npclib.version>
+        <npclib.version>2.5.2-SNAPSHOT</npclib.version>
 
         <packetlistener.version>3.5.0</packetlistener.version>
         <reflection.version>1.13.1-SNAPSHOT</reflection.version>
