@@ -50,7 +50,7 @@
         <reflection.version>1.13.1-SNAPSHOT</reflection.version>
         <annotations.version>1.4.7-SNAPSHOT</annotations.version>
         <wrappers.version>1.0.3-SNAPSHOT</wrappers.version>
-        <vectors.version>1.0.0</vectors.version>
+        <vectors.version>1.0.1-SNAPSHOT</vectors.version>
         <boundingbox.version>1.2.3</boundingbox.version>
         <apimanager.version>1.0.3-SNAPSHOT</apimanager.version>
         <nbt.version>1.0.1-SNAPSHOT</nbt.version>
