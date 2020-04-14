@@ -47,7 +47,7 @@
         <npclib.version>2.5.2-SNAPSHOT</npclib.version>
 
         <packetlistener.version>3.5.0</packetlistener.version>
-        <reflection.version>1.13.1-SNAPSHOT</reflection.version>
+        <reflection.version>1.14.8-SNAPSHOT</reflection.version>
         <annotations.version>1.4.7-SNAPSHOT</annotations.version>
         <wrappers.version>1.0.3-SNAPSHOT</wrappers.version>
         <vectors.version>1.0.0</vectors.version>
